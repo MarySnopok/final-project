@@ -1,41 +1,57 @@
-import MapView from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+// import { Map } from "./components/Map";
+import React, { useState } from "react";
+import { Card } from "./ui_fractions/Card";
+import { NavBar } from "./ui_fractions/NavBar";
+import { Box } from "./ui_fractions/Box";
+// import { Paragraph } from "./ui_fractions/Paragraph";
+import { Heading } from "./ui_fractions/Heading";
+import { GeneralButton } from "./ui_fractions/Button";
+import { NavButton } from "./ui_fractions/NavButton";
+import { PressTag } from "./ui_fractions/Tags";
+// import { Input } from "./ui_fractions/Input";
+
+// import colors from "./utils/colors.json";
+
+// import { Text } from "react-native";
 
 export default function App() {
+  const [text, onChangeText] = useState("Useless Text");
+  console.log("text from inout", text);
+
+  const handleChange = (event) => {
+    const { name, type, text } = event;
+    let processedData = text;
+    if (type === "text") {
+      processedData = text;
+    } else if (type === "number") {
+      processedData = text;
+    }
+    onChangeText(processedData);
+  };
   return (
-    <View style={styles.container}>
-      <MapView style={styles.map} defaultZoom={15} region={{ latitude: 37.8024, longitude: -122.4351 }}>
-        <MapView.Polyline
-          coordinates={[
-            { latitude: 37.8025259, longitude: -122.4351431 },
-            { latitude: 37.7896386, longitude: -122.421646 },
-            { latitude: 37.7665248, longitude: -122.4161628 },
-            { latitude: 37.7734153, longitude: -122.4577787 },
-            { latitude: 37.7948605, longitude: -122.4596065 },
-            { latitude: 37.8025259, longitude: -122.4351431 },
-          ]}
-          path={[
-            { lat: 37.8025259, lng: -122.4351431 },
-            { lat: 37.7896386, lng: -122.421646 },
-            { lat: 37.7665248, lng: -122.4161628 },
-          ]}
-          strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
-          strokeWidth={6}
-        />
-      </MapView>
-    </View>
+    <>
+      <Card>
+        <Heading children={"LogIn"} />
+        <Box>
+          {/* <Input onChangeText={(text) => onChangeText(text)} placeholder={"username"} value={text} defaultValue={text}></Input> */}
+          {/* <Input name="username" type="text" value={text} onChange={handleChange} /> */}
+          {/* <Paragraph children={"This is the text that will be represented as a paragrapth"} /> */}
+          <PressTag children={"Near me"} />
+        </Box>
+        <Box>
+          {/* <Paragraph children={"This is the text that will be represented as a paragrapth"} /> */}
+          <PressTag children={"Near me"} />
+        </Box>
+        <GeneralButton children={"submit"} />
+      </Card>
+
+      <NavBar>
+        <NavButton children={"HOME"} />
+        <NavButton children={"Profile"} />
+        <NavButton children={"history"} />
+      </NavBar>
+
+      {/* <Map /> */}
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
-});

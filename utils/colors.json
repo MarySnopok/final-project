@@ -1,0 +1,10 @@
+[
+    {
+        "rosybrown":"rgba(255, 227, 227, 0.78)",
+        "black": "#000000",
+        "lightgrey": "#d3d3d3",
+        "grey": "rgb(156, 144, 144)",
+        "white": "#ffffff",
+        "font" : "#775B5B"
+    }
+]
