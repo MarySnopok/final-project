@@ -4,6 +4,6 @@
   status = 200
 
 [build]
-  base = "frontend/"
+  base = "front/"
   publish = "build/"
   command = "expo build:web"
