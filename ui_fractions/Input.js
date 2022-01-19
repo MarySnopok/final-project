@@ -4,11 +4,12 @@ import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 export const Input = ({ value, name, type, onChange, placeholder }) => {
   return (
     <SafeAreaView>
-      {value.length >= 1 && value.length < 5 ? (
-        <TextInput style={styles.alert} value={value} onChangeText={(text) => onChange({ name, type, text })} placeholder={placeholder} />
-      ) : (
-        <TextInput style={styles.normal} value={value} onChangeText={(text) => onChange({ name, type, text })} placeholder={placeholder} />
-      )}
+      <TextInput
+        style={value.length >= 1 && value.length < 5 ? styles.alert : styles.normal}
+        value={value}
+        onChangeText={(text) => onChange({ name, type, text })}
+        placeholder={placeholder}
+      />
     </SafeAreaView>
   );
 };
