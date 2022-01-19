@@ -5,6 +5,19 @@
         "lightgrey": "#d3d3d3",
         "grey": "rgb(156, 144, 144)",
         "white": "#ffffff",
-        "font" : "#775B5B"
+        "font" : "#775B5B",
+        "alert": "#DC143C",
+        "fire": "#B22222",
+        "paleo": "#DB7093",
+        "alertBackground": "rgb(250, 216, 216)",
+        "normalBackground":"rgb(213, 255, 245)",
+        "antacid": "#353535",
+        "earth": "#3c6e71",
+        "brick": "#bc4749",
+        "plum":"#9C0643",
+        "dark": "#121212",
+        "error": "#CF6679",
+        "secondary":"#64FFDA",
+        "primary":"#BB86FC"
     }
 ]

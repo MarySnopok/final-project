@@ -1,13 +1,9 @@
 import colors from "../utils/colors.json";
 import { StyleSheet, TouchableHighlight, Text } from "react-native";
-import React, { useState } from "react";
 
 export const GeneralButton = ({ children }) => {
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(count + 1);
-
   return (
-    <TouchableHighlight style={styles.btn} underlayColor={colors[0].grey} activeOpacity={0.78} onPress={onPress}>
+    <TouchableHighlight style={styles.btn} underlayColor={colors[0].primary} activeOpacity={0.78}>
       <Text style={styles.content}>{children}</Text>
     </TouchableHighlight>
   );
@@ -20,15 +16,15 @@ const styles = StyleSheet.create({
     justifySelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 22,
-    paddingTop: 22,
-    paddingRight: 24,
-    paddingLeft: 24,
-    margin: 24,
-    backgroundColor: colors[0].font,
+    paddingBottom: 18,
+    paddingTop: 18,
+    paddingRight: 22,
+    paddingLeft: 22,
+    margin: 16,
+    backgroundColor: colors[0].dark,
     borderRadius: 36,
-    borderColor: colors[0].white,
-    borderWidth: 1,
+    borderColor: colors[0].secondary,
+    borderWidth: 2,
     zIndex: 12,
   },
 
@@ -36,7 +32,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: "medium",
     letterSpacing: 1,
-    fontWeight: "normal",
+    fontWeight: "bolder",
     color: colors[0].white,
     textTransform: "uppercase",
   },

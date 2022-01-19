@@ -8,7 +8,9 @@ export const Card = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors[0].grey,
+    backgroundColor: colors[0].dark,
+    borderWidth: 2,
+    borderColor: colors[0].primary,
     alignItems: "center",
     justifyContent: "center",
     padding: 8,

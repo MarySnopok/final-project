@@ -7,7 +7,7 @@ export const PressTag = ({ children }) => {
   const onPress = () => setCount(count + 1);
 
   return (
-    <TouchableHighlight style={styles.btn} underlayColor={colors[0].grey} activeOpacity={0.78} onPress={onPress}>
+    <TouchableHighlight style={styles.btn} underlayColor={colors[0].secondary} activeOpacity={0.78} onPress={onPress}>
       <Text style={styles.content}>{children}</Text>
     </TouchableHighlight>
   );
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 24,
     margin: 24,
-    backgroundColor: colors[0].font,
+    backgroundColor: colors[0].primary,
     borderRadius: 6,
     zIndex: 14,
   },
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: "medium",
     letterSpacing: 1,
-    fontWeight: "normal",
+    fontWeight: "bolder",
     color: colors[0].white,
     textTransform: "capitalize",
   },

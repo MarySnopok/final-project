@@ -1,22 +1,18 @@
 import { StyleSheet, Text } from "react-native";
 import colors from "../utils/colors.json";
 
-export const Paragraph = ({ children }) => {
+export const Subtext = ({ children }) => {
   return <Text style={styles.typography}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
   typography: {
-    flex: 0.5,
-    alignSelf: "center",
-    justifySelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
     padding: 8,
     margin: 8,
     color: colors[0].white,
-    fontSize: "medium",
-    lineHeight: 30,
+    fontSize: "smaller",
+    lineHeight: 20,
     zIndex: 12,
   },
 });
