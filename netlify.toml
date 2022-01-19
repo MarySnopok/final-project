@@ -3,7 +3,3 @@
   to = "/"
   status = 200
 
-[build]
-  base = "front/"
-  publish = "build/"
-  command = "expo build:web"
