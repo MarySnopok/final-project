@@ -67,7 +67,7 @@ export const SignUp = () => {
         <Link to="/entrypage" style={{ textDecoration: "none" }} color={colors[0].font}>
           <NavButton children={"back"} />
         </Link>
-        <Link to="/login" style={{ textDecoration: "none" }} color={colors[0].font}>
+        <Link to="/signin" style={{ textDecoration: "none" }} color={colors[0].font}>
           <NavButton children={"log in"} />
         </Link>
       </NavBar>

@@ -65,7 +65,7 @@ export const LogIn = () => {
   //     },
   //     body: JSON.stringify({ username, password }),
   //   };
-  //   fetch(API_URL("login"), options)
+  //   fetch(API_URL("signin"), options)
   //     .then((res) => res.json())
   //     .then((data) => {
   //       console.log(data);

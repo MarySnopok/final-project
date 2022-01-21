@@ -9,7 +9,7 @@ export const EntryPage = () => {
     <>
       <Map />
       <NavBar>
-        <Link to="/login" style={{ textDecoration: "none" }} color={colors[0].font}>
+        <Link to="/signin" style={{ textDecoration: "none" }} color={colors[0].font}>
           <NavButton children={"log in"} />
         </Link>
         <Link to="/signup" style={{ textDecoration: "none" }} color={colors[0].font}>

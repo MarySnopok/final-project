@@ -37,7 +37,7 @@ export default function App() {
             <Route path="/entrypage" element={<EntryPage />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
+            <Route path="/signin" element={<LogIn />} />
           </Routes>
         </BrowserRouter>
       </Provider>
