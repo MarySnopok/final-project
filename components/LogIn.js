@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import { useSelector, useDispatch, batch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch, batch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import { Card } from "../ui_fractions/Card";
@@ -15,23 +15,17 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 
 import colors from "../utils/colors.json";
 
-// import { API_URL } from "../utils/constants";
-// import user from "../reducers/user";
+import { API_URL } from "../utils/constants";
+import user from "../reducers/user";
 
 export const LogIn = () => {
-  const [text, onChangeText] = useState("");
-  const [password, onPasswordChange] = useState("");
+  const [text, setChangeText] = useState("");
+  const [password, setPasswordChange] = useState("");
 
-  // const accessToken = useSelector((store) => store.user.accessToken);
+  const accessToken = useSelector((store) => store.user.accessToken);
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     navigate("/");
-  //   }
-  // }, [accessToken, navigate]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     const { name, type, text } = event;
@@ -41,7 +35,7 @@ export const LogIn = () => {
     } else if (type === "number") {
       processedData = text;
     }
-    onChangeText(processedData);
+    setChangeText(processedData);
   };
   const handlePasswordChange = (event) => {
     const { name, type, text } = event;
@@ -50,42 +44,49 @@ export const LogIn = () => {
     } else if (newPassword.length < 5) {
       console.log("too short");
     }
-    onPasswordChange(newPassword);
+    setPasswordChange(newPassword);
   };
   console.log("text", text);
   console.log("password", password);
 
-  // const onButtonPress = () => {
-  //   setUsername("");
-  //   setPassword("");
-  //   const options = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ username, password }),
-  //   };
-  //   fetch(API_URL("signin"), options)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       if (data.success) {
-  //         batch(() => {
-  //           dispatch(user.actions.setUserId(data.response.userId));
-  //           dispatch(user.actions.setUsername(data.response.username));
-  //           dispatch(user.actions.setAccessToken(data.response.accessToken));
-  //           dispatch(user.actions.setError(null));
-  //         });
-  //       } else {
-  //         batch(() => {
-  //           dispatch(user.actions.setUserId(null));
-  //           dispatch(user.actions.setUsername(null));
-  //           dispatch(user.actions.setAccessToken(null));
-  //           dispatch(user.actions.setError(data.response));
-  //         });
-  //       }
-  //     });
-  // };
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/profile");
+    }
+  }, [accessToken, navigate]);
+
+  const onButtonPress = () => {
+    console.log("login pressed");
+    setChangeText("");
+    setPasswordChange("");
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: text, password: password }),
+    };
+    fetch(API_URL("signin"), options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          batch(() => {
+            dispatch(user.actions.setUserId(data.response.userId));
+            dispatch(user.actions.setUsername(data.response.username));
+            dispatch(user.actions.setAccessToken(data.response.accessToken));
+            dispatch(user.actions.setError(null));
+          });
+        } else {
+          batch(() => {
+            dispatch(user.actions.setUserId(null));
+            dispatch(user.actions.setUsername(null));
+            dispatch(user.actions.setAccessToken(null));
+            dispatch(user.actions.setError(data.response));
+          });
+        }
+      });
+  };
 
   return (
     <>

@@ -6,18 +6,16 @@ import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
 
 // import { API_URL } from "../utils/constants";
-// import thoughts from "../reducers/thoughts";
 
 export const Profile = () => {
-  //   const thoughtsItems = useSelector((store) => store.thoughts.items);
   const accessToken = useSelector((store) => store.user.accessToken);
 
-  //   const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!accessToken) {
-      navigate("/login");
+      navigate("/signin");
     }
   }, [accessToken, navigate]);
 
@@ -29,7 +27,7 @@ export const Profile = () => {
   //       },
   //     };
 
-  //     fetch(API_URL("thoughts"), options)
+  //     fetch(API_URL("profile"), options)
   //       .then((res) => res.json())
   //       .then((data) => {
   //         if (data.success) {

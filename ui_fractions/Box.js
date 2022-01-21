@@ -7,10 +7,10 @@ export const Box = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
+    flex: 0.7,
     backgroundColor: colors[0].dark,
     borderColor: colors[0].primary,
-    borderWidth: 2,
+    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
     justifySelf: "center",
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     padding: 8,
     zIndex: 8,
     margin: 8,
-    borderRadius: 8,
+    borderRadius: 4,
 
     // width: Dimensions.get("window").width,
     // height: Dimensions.get("window").height,

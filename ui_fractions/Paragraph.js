@@ -1,13 +1,17 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import colors from "../utils/colors.json";
 
 export const Paragraph = ({ children }) => {
-  return <Text style={styles.typography}>{children}</Text>;
+  return (
+    <View>
+      <Text style={styles.typography}>{children}</Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   typography: {
-    flex: 0.5,
+    flex: 0.7,
     alignSelf: "center",
     justifySelf: "center",
     alignItems: "center",

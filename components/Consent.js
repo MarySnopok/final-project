@@ -23,21 +23,22 @@ export const Consent = () => {
             We want to get your consent to use your current geo-location data. Please note that by proceeding further you are providing your consent for data
             processing.
           </Paragraph>
+          <ConsentContainer>
+            <BouncyCheckbox
+              size={25}
+              isChecked={true}
+              fillColor={colors[0].primary}
+              unfillColor={colors[0].white}
+              iconStyle={{ borderColor: colors[0].primary }}
+              textStyle={{ fontFamily: "JosefinSans-Regular" }}
+              onPress={(isChecked) => {
+                onCheckMarkChange(isChecked);
+              }}
+            />
+            <Subtext>Yes, I do agree to share my geo-location data, while using the app.</Subtext>
+          </ConsentContainer>
         </Box>
-        <ConsentContainer>
-          <BouncyCheckbox
-            size={25}
-            isChecked={true}
-            fillColor={colors[0].primary}
-            unfillColor={colors[0].white}
-            iconStyle={{ borderColor: colors[0].primary }}
-            textStyle={{ fontFamily: "JosefinSans-Regular" }}
-            onPress={(isChecked) => {
-              onCheckMarkChange(isChecked);
-            }}
-          />
-          <Subtext>Yes, I do agree to share my geo-location data, while using the app.</Subtext>
-        </ConsentContainer>
+
         {check && (
           <Link to="/entrypage" style={{ textDecoration: "none" }} color={colors[0].white}>
             <GeneralButton children={"ok"} />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "../ui_fractions/Card";
 
@@ -10,12 +10,23 @@ import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 
+import { useSelector, useDispatch, batch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { API_URL } from "../utils/constants";
+import user from "../reducers/user";
+
 import colors from "../utils/colors.json";
 
 export const SignUp = () => {
-  const [text, onChangeText] = useState("");
-  const [password, onPasswordChange] = useState("");
-  const [email, onEmailChange] = useState("");
+  const [text, setChangeText] = useState("");
+  const [password, setPasswordChange] = useState("");
+  const [email, setEmailChange] = useState("");
+
+  const accessToken = useSelector((store) => store.user.accessToken);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     const { name, type, text } = event;
@@ -25,7 +36,7 @@ export const SignUp = () => {
     } else if (type === "number") {
       processedData = text;
     }
-    onChangeText(processedData);
+    setChangeText(processedData);
   };
   const handlePasswordChange = (event) => {
     const { name, type, text } = event;
@@ -34,18 +45,63 @@ export const SignUp = () => {
     } else if (newPassword.length < 5) {
       console.log("too short");
     }
-    onPasswordChange(newPassword);
+    setPasswordChange(newPassword);
   };
 
   const handleEmailChange = (event) => {
     const { name, type, text } = event;
     let newEmail = text;
-    onEmailChange(newEmail);
+    setEmailChange(newEmail);
   };
 
   console.log("text", text);
   console.log("password", password);
   console.log("email", email);
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/profile");
+    }
+  }, [accessToken, navigate]);
+
+  const onButtonPress = () => {
+    setChangeText("");
+    setPasswordChange("");
+    setEmailChange("");
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: text, password: password, email: email }),
+    };
+    fetch(API_URL("signup"), options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          batch(() => {
+            dispatch(user.actions.setUserId(data.response.userId));
+            dispatch(user.actions.setUsername(data.response.username));
+            dispatch(user.actions.setAccessToken(data.response.accessToken));
+            dispatch(user.actions.setEmail(data.response.email));
+            dispatch(user.actions.setError(null));
+          });
+        } else {
+          batch(() => {
+            dispatch(user.actions.setUserId(null));
+            dispatch(user.actions.setUsername(null));
+            dispatch(user.actions.setAccessToken(null));
+            dispatch(user.actions.setEmail(null));
+            dispatch(user.actions.setError(data.response));
+          });
+        }
+      })
+      .catch((e) => {
+        console.log("singup error", e);
+        console.error(e);
+      });
+  };
   return (
     <>
       <Card>
@@ -54,9 +110,7 @@ export const SignUp = () => {
         <Input name="password" placeholder={"password"} type="text" value={password} onChange={handlePasswordChange} />
         <Input name="email" placeholder={"email"} type="text" value={email} onChange={handleEmailChange} />
         {password.length >= 5 && text !== "" && email !== "" ? (
-          <Link to="/*" style={{ textDecoration: "none" }} color={colors[0].font}>
-            <GeneralButton children={"submit"} />
-          </Link>
+          <GeneralButton children={"submit"} onPress={onButtonPress} />
         ) : (
           <ConsentContainer>
             <Subtext>password should be over 5 characters.</Subtext>

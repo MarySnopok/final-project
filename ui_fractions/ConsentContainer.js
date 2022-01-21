@@ -6,12 +6,12 @@ export const ConsentContainer = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.1,
+    flex: 0.3,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     zIndex: 12,
-    margin: 20,
+    margin: 8,
     padding: 8,
   },
 });
