@@ -1,12 +1,20 @@
-// import { Map } from "./components/Map";
-import { useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Consent } from "./components/Consent";
 import { LogIn } from "./components/LogIn";
 import { SignUp } from "./components/SignUp";
 import { EntryPage } from "./components/EntryPage";
+import { NotFound } from "./components/NotFound";
+import { Provider } from "react-redux";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
-import { PressTag } from "./ui_fractions/Tags";
+import user from "./reducers/user";
+
+const reducer = combineReducers({
+  user: user.reducer,
+});
+
+const store = configureStore({ reducer });
 
 export default function App() {
   const [text, onChangeText] = useState("Useless Text");
@@ -22,35 +30,17 @@ export default function App() {
   };
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Consent />} />
-          <Route path="/entrypage" element={<EntryPage />} />
-          <Route path="*" element={<PressTag children={"Search more"} />} />
-          <Route path="/input" element={<PressTag children={"Near me"} />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
-          {/* <Card> */}
-          {/* <Heading children={"LogIn"} /> */}
-          {/* <Box> */}
-          {/* <Input onChangeText={(text) => onChangeText(text)} placeholder={"username"} value={text} defaultValue={text}></Input> */}
-          {/* <Input name="username" type="text" value={text} onChange={handleChange} /> */}
-          {/* <Paragraph children={"This is the text that will be represented as a paragrapth"} /> */}
-          {/* <PressTag children={"Near me"} /> */}
-          {/* </Box> */}
-          {/* <Box> */}
-          {/* <Paragraph children={"This is the text that will be represented as a paragrapth"} /> */}
-
-          {/* <PressTag children={"Near me"} /> */}
-          {/* </Box> */}
-
-          {/* <Subtext children={"Yes, I do agree with the Terms and conditions of use."} />
-        <GeneralButton children={"submit"} />
-      </Card> */}
-        </Routes>
-      </BrowserRouter>
-
-      {/* <Map /> */}
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Consent />} />
+            <Route path="/entrypage" element={<EntryPage />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<LogIn />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </>
   );
 }
