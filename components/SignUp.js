@@ -1,22 +1,16 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Card } from "../ui_fractions/Card";
-
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Heading } from "../ui_fractions/Heading";
-import { NavBar } from "../ui_fractions/NavBar";
-import { NavButton } from "../ui_fractions/NavButton";
+import { NavSection } from "../ui_fractions/NavSection";
 import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
-
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
-
-import colors from "../utils/colors.json";
 
 export const SignUp = () => {
   const [text, setChangeText] = useState("");
@@ -117,14 +111,12 @@ export const SignUp = () => {
           </ConsentContainer>
         )}
       </Card>
-      <NavBar>
-        <Link to="/entrypage" style={{ textDecoration: "none" }} color={colors[0].font}>
-          <NavButton children={"back"} />
-        </Link>
-        <Link to="/signin" style={{ textDecoration: "none" }} color={colors[0].font}>
-          <NavButton children={"log in"} />
-        </Link>
-      </NavBar>
+      <NavSection
+        routes={[
+          { title: "back", link: "/entrypage" },
+          { title: "log in", link: "/signin" },
+        ]}
+      />
     </>
   );
 };

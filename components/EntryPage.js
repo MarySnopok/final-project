@@ -1,21 +1,35 @@
+import { useSelector } from "react-redux";
+
 import { Map } from "./Map";
-import { NavBar } from "../ui_fractions/NavBar";
-import { NavButton } from "../ui_fractions/NavButton";
-import { Link } from "react-router-dom";
-import colors from "../utils/colors.json";
+import { NavSection } from "../ui_fractions/NavSection";
+import user from "../reducers/user";
 
 export const EntryPage = () => {
+  const accessToken = useSelector((store) => store.user.accessToken);
+  console.log("accessTockem", accessToken);
   return (
     <>
-      <Map />
-      <NavBar>
-        <Link to="/signin" style={{ textDecoration: "none" }} color={colors[0].font}>
-          <NavButton children={"log in"} />
-        </Link>
-        <Link to="/signup" style={{ textDecoration: "none" }} color={colors[0].font}>
-          <NavButton children={"sign up"} />
-        </Link>
-      </NavBar>
+      {!accessToken ? (
+        <>
+          <Map />
+          <NavSection
+            routes={[
+              { title: "log in", link: "/signin" },
+              { title: "sign up", link: "/signup" },
+            ]}
+          />
+        </>
+      ) : (
+        <>
+          <Map />
+          <NavSection
+            routes={[
+              { title: "error", link: "/*" },
+              { title: "profile", link: "/profile" },
+            ]}
+          />
+        </>
+      )}
     </>
   );
 };

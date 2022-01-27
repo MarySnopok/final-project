@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import { Consent } from "./components/Consent";
 import { LogIn } from "./components/LogIn";
 import { Profile } from "./components/Profile";
@@ -21,7 +21,8 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-        <BrowserRouter>
+        {/* <BrowserRouter> */}
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Consent />} />
             <Route path="/entrypage" element={<EntryPage />} />
@@ -30,7 +31,8 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
+          {/* </BrowserRouter> */}
+        </HashRouter>
       </Provider>
     </>
   );

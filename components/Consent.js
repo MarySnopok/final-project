@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { Link } from "react-router-dom";
 import { Card } from "../ui_fractions/Card";
@@ -9,9 +10,17 @@ import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Heading } from "../ui_fractions/Heading";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import colors from "../utils/colors.json";
+import user from "../reducers/user";
 
 export const Consent = () => {
   const [check, onCheckMarkChange] = useState(true);
+  const accessToken = useSelector((store) => store.user.accessToken);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(user.actions.setAccessToken(null));
+    }
+  }, [accessToken]);
 
   console.log(">>>", check);
   return (
@@ -27,9 +36,9 @@ export const Consent = () => {
             <BouncyCheckbox
               size={25}
               isChecked={true}
-              fillColor={colors[0].primary}
+              fillColor={colors[0].earth}
               unfillColor={colors[0].white}
-              iconStyle={{ borderColor: colors[0].primary }}
+              iconStyle={{ borderColor: colors[0].white }}
               textStyle={{ fontFamily: "JosefinSans-Regular" }}
               onPress={(isChecked) => {
                 onCheckMarkChange(isChecked);

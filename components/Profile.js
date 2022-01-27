@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
+import { NavSection } from "../ui_fractions/NavSection";
 
-// import { API_URL } from "../utils/constants";
+import user from "../reducers/user";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
+  const username = useSelector((store) => store.user.username);
 
   // const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,8 +43,16 @@ export const Profile = () => {
   //   }, [accessToken, dispatch]);
 
   return (
-    <Card>
-      <Heading>This is a logged in area - profile etc </Heading>
-    </Card>
+    <>
+      <Card>
+        <Heading>Welcome {username}!</Heading>
+      </Card>
+      <NavSection
+        routes={[
+          { title: "home", link: "/entrypage" },
+          { title: "log out", link: "/" },
+        ]}
+      />
+    </>
   );
 };

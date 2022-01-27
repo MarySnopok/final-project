@@ -8,9 +8,9 @@ export const NavBar = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 0.07,
-    borderTopColor: colors[0].primary,
+    borderTopColor: colors[0].earth,
     backgroundColor: colors[0].dark,
-    borderTopWidth: 2,
+    borderTopWidth: 4,
     bottom: 0,
     left: 0,
     right: 0,
