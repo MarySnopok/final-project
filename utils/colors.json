@@ -16,7 +16,8 @@
         "plum":"#9C0643",
         "dark": "#121212",
         "error": "#CF6679",
-        "secondary":"#64FFDA",
-        "primary":"#DB7093"
+        "secondary":"#727cf5",
+        "primary":"#DB7093",
+        "transparent":"transparent"
     }
 ]

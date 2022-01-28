@@ -3,7 +3,7 @@ import { StyleSheet, TouchableHighlight, Text } from "react-native";
 
 export const GeneralButton = ({ children, onPress }) => {
   return (
-    <TouchableHighlight onPress={onPress} style={styles.btn} underlayColor={colors[0].grey} activeOpacity={0.78}>
+    <TouchableHighlight onPress={onPress} style={styles.btn} underlayColor={colors[0].transparent} activeOpacity={0.78}>
       <Text style={styles.content}>{children}</Text>
     </TouchableHighlight>
   );
@@ -21,8 +21,10 @@ const styles = StyleSheet.create({
     paddingRight: 22,
     paddingLeft: 22,
     margin: 16,
-    backgroundColor: colors[0].earth,
+    backgroundColor: colors[0].secondary,
     borderRadius: 36,
+    borderWidth: 2,
+    borderColor: colors[0].secondary,
     zIndex: 12,
   },
 

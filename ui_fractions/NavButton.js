@@ -7,7 +7,7 @@ export const NavButton = ({ children }) => {
   const onPress = () => setCount(count + 1);
 
   return (
-    <TouchableHighlight style={styles.navbtn} underlayColor={colors[0].primary} activeOpacity={0.78} onPress={onPress}>
+    <TouchableHighlight style={styles.navbtn} underlayColor={colors[0].transparent} activeOpacity={0.78} onPress={onPress}>
       <Text style={styles.content}>{children}</Text>
     </TouchableHighlight>
   );
@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     margin: 8,
-    backgroundColor: colors[0].dark,
+    backgroundColor: colors[0].secondary,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: colors[0].primary,
+    borderColor: colors[0].secondary,
     zIndex: 12,
   },
 

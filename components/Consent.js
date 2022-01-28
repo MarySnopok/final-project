@@ -8,7 +8,7 @@ import { Paragraph } from "../ui_fractions/Paragraph";
 import { Subtext } from "../ui_fractions/Subtext";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Heading } from "../ui_fractions/Heading";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { CheckBox } from "../ui_fractions/CheckBox";
 import colors from "../utils/colors.json";
 import user from "../reducers/user";
 
@@ -33,13 +33,8 @@ export const Consent = () => {
             processing.
           </Paragraph>
           <ConsentContainer>
-            <BouncyCheckbox
-              size={25}
+            <CheckBox
               isChecked={true}
-              fillColor={colors[0].earth}
-              unfillColor={colors[0].white}
-              iconStyle={{ borderColor: colors[0].white }}
-              textStyle={{ fontFamily: "JosefinSans-Regular" }}
               onPress={(isChecked) => {
                 onCheckMarkChange(isChecked);
               }}
@@ -57,3 +52,17 @@ export const Consent = () => {
     </>
   );
 };
+
+{
+  /* <BouncyCheckbox
+              size={25}
+              isChecked={true}
+              fillColor={colors[0].secondary}
+              unfillColor={colors[0].white}
+              iconStyle={{ borderColor: colors[0].white }}
+              textStyle={{ fontFamily: "JosefinSans-Regular" }}
+              onPress={(isChecked) => {
+                onCheckMarkChange(isChecked);
+              }}
+            /> */
+}

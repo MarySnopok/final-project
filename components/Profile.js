@@ -7,6 +7,8 @@ import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
 
 import user from "../reducers/user";
+import { FavoriteRoute } from "../ui_fractions/FavoriteRoute";
+import { SubHeading } from "../ui_fractions/SubHeading";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -45,7 +47,20 @@ export const Profile = () => {
   return (
     <>
       <Card>
-        <Heading>Welcome {username}!</Heading>
+        <Heading>Hi {username}!</Heading>
+        <SubHeading>Your favorite routes:</SubHeading>
+
+        <FavoriteRoute isChecked={false} text={"Route 1"} />
+
+        <FavoriteRoute isChecked={false} text={"Route 1"} />
+
+        <FavoriteRoute isChecked={false} text={"Route 1"} />
+
+        <FavoriteRoute isChecked={false} text={"Route 1"} />
+
+        <FavoriteRoute isChecked={false} text={"Route 1"} />
+
+        <FavoriteRoute isChecked={false} text={"Route 1"} />
       </Card>
       <NavSection
         routes={[
