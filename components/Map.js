@@ -1,10 +1,50 @@
 import MapView from "react-native-maps";
 import { StyleSheet, View, Dimensions } from "react-native";
+import { GeneralButton } from "../ui_fractions/GeneralButton";
+import { Loader } from "../ui_fractions/Loader";
+
+import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
+import { useDispatch, useSelector } from "react-redux";
+
+// temporary lang and lot
+const lat = 59.122;
+const long = 18.108;
 
 export const Map = () => {
+  const dispatch = useDispatch();
+  const routesStatus = useSelector(selectRoutesStatus);
+  const routes = useSelector(selectRoutes);
+
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} defaultZoom={15} region={{ latitude: 37.8024, longitude: -122.4351 }}>
+      <View style={styles.buttonContainer}>
+        {routesStatus === "init" && (
+          <GeneralButton
+            onPress={() =>
+              dispatch(
+                fetchRoutes({
+                  lat,
+                  long,
+                })
+              )
+            }
+          >
+            Find near routes
+          </GeneralButton>
+        )}
+        {routesStatus === "loading" && <Loader />}
+      </View>
+      <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
+        {routes.map((route) => (
+          <MapView.Polyline
+            path={route.members
+              .filter((el) => el.type === "way")
+              .flatMap((mem) => mem.geometry)
+              .map((el) => ({ ...el, lng: el.lon }))}
+            strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
+            strokeWidth={6}
+          />
+        ))}
         <MapView.Polyline
           coordinates={[
             { latitude: 37.8025259, longitude: -122.4351431 },
@@ -34,9 +74,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     zIndex: 0,
+    position: "relative",
   },
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height - 40,
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    height: 100,
+    zIndex: 5,
   },
 });
