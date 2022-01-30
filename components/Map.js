@@ -2,6 +2,7 @@ import MapView from "react-native-maps";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
+import colors from "../utils/colors";
 
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,14 +30,15 @@ export const Map = () => {
               )
             }
           >
-            Find near routes
+            Search near me
           </GeneralButton>
         )}
-        {routesStatus === "loading" && <Loader />}
+        {routesStatus === "loading" && <Loader size={100} color={colors[0].primary} />}
       </View>
       <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
         {routes.map((route) => (
           <MapView.Polyline
+            key={route.id}
             path={route.members
               .filter((el) => el.type === "way")
               .flatMap((mem) => mem.geometry)
@@ -45,7 +47,7 @@ export const Map = () => {
             strokeWidth={6}
           />
         ))}
-        <MapView.Polyline
+        {/* <MapView.Polyline
           coordinates={[
             { latitude: 37.8025259, longitude: -122.4351431 },
             { latitude: 37.7896386, longitude: -122.421646 },
@@ -61,7 +63,7 @@ export const Map = () => {
           ]}
           strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
           strokeWidth={6}
-        />
+        /> */}
       </MapView>
     </View>
   );
@@ -83,8 +85,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: "absolute",
     bottom: 20,
-    left: 0,
-    right: 0,
+    left: 100,
+    right: 100,
     height: 100,
     zIndex: 5,
   },

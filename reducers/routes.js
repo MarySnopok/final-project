@@ -4,7 +4,7 @@ import { API_URL } from "../utils/constants";
 
 // First, create the thunk
 export const fetchRoutes = createAsyncThunk("routes/fetchRoutes", async ({ lat, long }) => {
-  const response = await fetch(`${API_URL("tracks")}?lat=${lat}&long=${long}`);
+  const response = await fetch(API_URL("tracks") + "?" + encodeURI(`lat=${lat}&long=${long}`));
   return response.json();
 });
 
