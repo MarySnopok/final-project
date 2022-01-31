@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   btn: {
     flex: 0.02,
     alignSelf: "center",
-    justifySelf: "center",
+    // justifySelf: "center",
     alignItems: "center",
     justifyContent: "center",
     padding: 24,
@@ -29,9 +29,11 @@ const styles = StyleSheet.create({
 
   content: {
     textAlign: "center",
-    fontSize: "medium",
+    // fontSize: "medium",
+    fontSize: 14,
     letterSpacing: 1,
-    fontWeight: "bolder",
+    fontWeight: "normal",
+    // fontWeight: 300,
     color: colors[0].white,
     textTransform: "capitalize",
   },

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "flex-start",
     justifyContent: "space-evenly",
-    justifySelf: "flex-end",
+    // justifySelf: "flex-end",
     alignSelf: "stretch",
     flexDirection: "row",
     padding: 8,

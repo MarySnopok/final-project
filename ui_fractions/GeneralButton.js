@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   btn: {
     flex: 0.01,
     alignSelf: "center",
-    justifySelf: "center",
+    // justifySelf: "center",
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: 20,
@@ -26,13 +26,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors[0].secondary,
     zIndex: 12,
+    fontSize: 12,
   },
 
   content: {
     textAlign: "center",
-    fontSize: "medium",
+    // fontSize: "medium",
+    fontSize: 12,
     letterSpacing: 1,
     fontWeight: "normal",
+    // fontWeight: 300,
     color: colors[0].white,
     textTransform: "uppercase",
   },

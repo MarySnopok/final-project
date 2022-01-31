@@ -9,11 +9,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.7,
     backgroundColor: colors[0].dark,
-    borderColor: colors[0].primary,
+    borderColor: colors[0].white,
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
-    justifySelf: "center",
     alignSelf: "center",
     padding: 8,
     zIndex: 8,

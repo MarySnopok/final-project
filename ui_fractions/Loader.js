@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 export const Loader = ({ size, color }) => (
-  <View style={[styles.container, styles.horizontal]}>
+  <View style={styles.container}>
     <ActivityIndicator size={size} color={color} />
   </View>
 );
@@ -9,11 +9,13 @@ export const Loader = ({ size, color }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-  },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    zIndex: 20,
+    position: "fixed",
+    top: 200,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });

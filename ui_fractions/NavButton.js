@@ -32,8 +32,10 @@ const styles = StyleSheet.create({
 
   content: {
     textAlign: "center",
-    fontSize: "smaller",
-    fontWeight: "bolder",
+    // fontSize: "smaller",
+    fontSize: 14,
+    fontWeight: "normal",
+    // fontWeight: 300,
     color: colors[0].white,
     textTransform: "lowercase",
   },

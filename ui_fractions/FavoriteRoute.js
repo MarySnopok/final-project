@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
-    justifySelf: "flex-start",
+    // justifySelf: "flex-start",
     alignSelf: "stretch",
     padding: 8,
     zIndex: 8,
