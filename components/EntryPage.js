@@ -24,7 +24,7 @@ export const EntryPage = () => {
           <Map />
           <NavSection
             routes={[
-              { title: "error", link: "/*" },
+              { title: "history", link: "/history" },
               { title: "profile", link: "/profile" },
             ]}
           />

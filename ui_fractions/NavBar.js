@@ -7,7 +7,7 @@ export const NavBar = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.07,
+    flex: 1,
     borderTopColor: colors[0].secondary,
     backgroundColor: colors[0].dark,
     borderTopWidth: 2,
@@ -16,13 +16,12 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "flex-start",
     justifyContent: "space-evenly",
-    // justifySelf: "flex-end",
     alignSelf: "stretch",
     flexDirection: "row",
     padding: 8,
     zIndex: 4,
-
-    // width: Dimensions.get("window").width,
-    // height: Dimensions.get("window").height,
+    maxHeight: 50,
+    maxWidth: Dimensions.get("window").width,
+    marginBottom: 40,
   },
 });

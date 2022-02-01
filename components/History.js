@@ -11,7 +11,7 @@ import user from "../reducers/user";
 import { FavoriteRoute } from "../ui_fractions/FavoriteRoute";
 import { SubHeading } from "../ui_fractions/SubHeading";
 
-export const Profile = () => {
+export const History = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
 
@@ -48,8 +48,8 @@ export const Profile = () => {
   return (
     <>
       <Card>
-        <Heading>Hi {username}!</Heading>
-        <SubHeading>Your favorite routes:</SubHeading>
+        <Heading>History</Heading>
+        <SubHeading>{username}'s visited routes:</SubHeading>
         <View>
           <FavoriteRoute isChecked={false} text={"Route name 1"} distance={"7.5km"} duration={"2.30h"} difficulty={"moderate"} />
 
@@ -65,7 +65,7 @@ export const Profile = () => {
       <NavSection
         routes={[
           { title: "home", link: "/entrypage" },
-          { title: "history", link: "/history" },
+          { title: "profile", link: "/profile" },
           { title: "log out", link: "/" },
         ]}
       />

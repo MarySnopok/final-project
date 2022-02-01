@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import { Consent } from "./components/Consent";
 import { LogIn } from "./components/LogIn";
 import { Profile } from "./components/Profile";
+import { History } from "./components/History";
 import { SignUp } from "./components/SignUp";
 import { EntryPage } from "./components/EntryPage";
 import { NotFound } from "./components/NotFound";
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<LogIn />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/history" element={<History />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           {/* </BrowserRouter> */}

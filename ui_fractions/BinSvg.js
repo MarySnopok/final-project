@@ -1,10 +1,10 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
 
-export const SvgComponent = (props) => (
+export const BinSvg = (props) => (
   <Svg
-    height="24%"
-    width="24%"
+    height="50%"
+    width="30%"
     aria-hidden="true"
     data-prefix="far"
     data-icon="trash-alt"

@@ -1,11 +1,7 @@
 import colors from "../utils/colors.json";
 import { StyleSheet, TouchableHighlight, Text } from "react-native";
-import React, { useState } from "react";
 
-export const NavButton = ({ children }) => {
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(count + 1);
-
+export const NavButton = ({ children, onPress }) => {
   return (
     <TouchableHighlight style={styles.navbtn} underlayColor={colors[0].transparent} activeOpacity={0.78} onPress={onPress}>
       <Text style={styles.content}>{children}</Text>

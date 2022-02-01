@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     margin: 8,
     borderRadius: 8,
     zIndex: 2,
+    // maxHeight: Dimensions.get("window").height - 50,
     // width: Dimensions.get("window").width,
-    // height: Dimensions.get("window").height,
   },
 });
