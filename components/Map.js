@@ -45,6 +45,7 @@ export const Map = () => {
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
                 strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
                 strokeWidth={6}
+                coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
               />
             ))
         )}
