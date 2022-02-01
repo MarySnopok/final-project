@@ -1,5 +1,7 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+//import { Routes, Route, HashRouter } from "react-router-dom";
+// import { Route, Router, Routes, Link } from "react-router";
+import { Router, Routes, Route } from "./ui_fractions/router/react-router";
 import { Consent } from "./components/Consent";
 import { LogIn } from "./components/LogIn";
 import { Profile } from "./components/Profile";
@@ -24,10 +26,9 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-        {/* <BrowserRouter> */}
-        <HashRouter>
+        <Router>
           <Routes>
-            <Route path="/" element={<Consent />} />
+            <Route exact path="/" element={<Consent />} />
             <Route path="/entrypage" element={<EntryPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<LogIn />} />
@@ -35,8 +36,7 @@ export default function App() {
             <Route path="/history" element={<History />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          {/* </BrowserRouter> */}
-        </HashRouter>
+        </Router>
       </Provider>
     </>
   );

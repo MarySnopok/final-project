@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { Card } from "../ui_fractions/Card";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Heading } from "../ui_fractions/Heading";
@@ -11,6 +11,7 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
+import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
@@ -83,25 +84,29 @@ export const LogIn = () => {
   };
 
   return (
-    <>
-      <Card>
-        <Heading>Log In</Heading>
-        <Input name="username" placeholder={"username"} type="text" value={text} onChange={handleUsernameChange} />
-        <Input name="password" placeholder={"password"} type="text" value={password} onChange={handlePasswordChange} />
-        {password.length >= 5 && text !== "" ? (
-          <GeneralButton children={"submit"} onPress={onButtonPress} />
-        ) : (
-          <ConsentContainer>
-            <Subtext>please add your credentials.</Subtext>
-          </ConsentContainer>
-        )}
-      </Card>
-      <NavSection
-        routes={[
-          { title: "back", link: "/entrypage" },
-          { title: "sign up", link: "/signup" },
-        ]}
-      />
-    </>
+    <LayoutRoot>
+      <LayoutFlex>
+        <Card>
+          <Heading>Log In</Heading>
+          <Input name="username" placeholder={"username"} type="text" value={text} onChange={handleUsernameChange} />
+          <Input name="password" placeholder={"password"} type="text" value={password} onChange={handlePasswordChange} />
+          {password.length >= 5 && text !== "" ? (
+            <GeneralButton children={"submit"} onPress={onButtonPress} />
+          ) : (
+            <ConsentContainer>
+              <Subtext>please add your credentials.</Subtext>
+            </ConsentContainer>
+          )}
+        </Card>
+      </LayoutFlex>
+      <LayoutNavbar>
+        <NavSection
+          routes={[
+            { title: "back", link: "/entrypage" },
+            { title: "sign up", link: "/signup" },
+          ]}
+        />
+      </LayoutNavbar>
+    </LayoutRoot>
   );
 };

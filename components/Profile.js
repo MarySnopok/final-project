@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { View } from "react-native-web";
-
+import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
@@ -46,29 +46,33 @@ export const Profile = () => {
   //   }, [accessToken, dispatch]);
 
   return (
-    <>
-      <Card>
-        <Heading>Hi {username}!</Heading>
-        <SubHeading>Your favorite routes:</SubHeading>
-        <View>
-          <FavoriteRoute isChecked={false} text={"Route name 1"} distance={"7.5km"} duration={"2.30h"} difficulty={"moderate"} />
+    <LayoutRoot>
+      <LayoutFlex>
+        <Card>
+          <Heading>Hi {username}!</Heading>
+          <SubHeading>Your favorite routes:</SubHeading>
+          <View>
+            <FavoriteRoute isChecked={false} text={"Route name 1"} distance={"7.5km"} duration={"2.30h"} difficulty={"moderate"} />
 
-          <FavoriteRoute isChecked={false} text={"Route name 2"} distance={"14.5km"} duration={"6.30h"} difficulty={"hard"} />
+            <FavoriteRoute isChecked={false} text={"Route name 2"} distance={"14.5km"} duration={"6.30h"} difficulty={"hard"} />
 
-          <FavoriteRoute isChecked={false} text={"Route name 3"} distance={"0.5km"} duration={"0.20h"} difficulty={"easy"} />
+            <FavoriteRoute isChecked={false} text={"Route name 3"} distance={"0.5km"} duration={"0.20h"} difficulty={"easy"} />
 
-          <FavoriteRoute isChecked={false} text={"Route name 4"} distance={"3.5km"} duration={"1.00h"} difficulty={"moderate"} />
+            <FavoriteRoute isChecked={false} text={"Route name 4"} distance={"3.5km"} duration={"1.00h"} difficulty={"moderate"} />
 
-          <FavoriteRoute isChecked={false} text={"Route name 5"} distance={"1.5km"} duration={"0.30h"} difficulty={"easy"} />
-        </View>
-      </Card>
-      <NavSection
-        routes={[
-          { title: "home", link: "/entrypage" },
-          { title: "history", link: "/history" },
-          { title: "log out", link: "/" },
-        ]}
-      />
-    </>
+            <FavoriteRoute isChecked={false} text={"Route name 5"} distance={"1.5km"} duration={"0.30h"} difficulty={"easy"} />
+          </View>
+        </Card>
+      </LayoutFlex>
+      <LayoutNavbar>
+        <NavSection
+          routes={[
+            { title: "home", link: "/entrypage" },
+            { title: "history", link: "/history" },
+            { title: "log out", link: "/" },
+          ]}
+        />
+      </LayoutNavbar>
+    </LayoutRoot>
   );
 };

@@ -36,17 +36,18 @@ export const Map = () => {
         {routesStatus === "loading" && <Loader size={100} color={colors[0].primary} />}
       </View>
       <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
-        {routes.map((route) => (
-          <MapView.Polyline
-            key={route.id}
-            path={route.members
-              .filter((el) => el.type === "way")
-              .flatMap((mem) => mem.geometry)
-              .map((el) => ({ ...el, lng: el.lon }))}
-            strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
-            strokeWidth={6}
-          />
-        ))}
+        {routes.map((route) =>
+          route.members
+            .filter((el) => el.type === "way")
+            .map((geom) => (
+              <MapView.Polyline
+                key={geom.ref}
+                path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
+                strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
+                strokeWidth={6}
+              />
+            ))
+        )}
         {/* <MapView.Polyline
           coordinates={[
             { latitude: 37.8025259, longitude: -122.4351431 },
@@ -78,10 +79,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
     position: "relative",
   },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height - 40,
-  },
+  map: { flex: 1, width: "100%" },
   buttonContainer: {
     position: "absolute",
     bottom: 20,

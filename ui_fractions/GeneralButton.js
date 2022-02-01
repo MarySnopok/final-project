@@ -11,7 +11,7 @@ export const GeneralButton = ({ children, onPress }) => {
 
 const styles = StyleSheet.create({
   btn: {
-    flex: 0.01,
+    //flex: 0.01,
     alignSelf: "center",
     // justifySelf: "center",
     alignItems: "center",

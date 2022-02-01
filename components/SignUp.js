@@ -7,10 +7,11 @@ import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { useSelector, useDispatch, batch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
+import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 
 export const SignUp = () => {
   const [text, setChangeText] = useState("");
@@ -97,26 +98,30 @@ export const SignUp = () => {
       });
   };
   return (
-    <>
-      <Card>
-        <Heading>Sign Up</Heading>
-        <Input name="username" placeholder={"username"} type="text" value={text} onChange={handleUsernameChange} />
-        <Input name="password" placeholder={"password"} type="text" value={password} onChange={handlePasswordChange} />
-        <Input name="email" placeholder={"email"} type="text" value={email} onChange={handleEmailChange} />
-        {password.length >= 5 && text !== "" && email !== "" ? (
-          <GeneralButton children={"submit"} onPress={onButtonPress} />
-        ) : (
-          <ConsentContainer>
-            <Subtext>password should be over 5 characters.</Subtext>
-          </ConsentContainer>
-        )}
-      </Card>
-      <NavSection
-        routes={[
-          { title: "back", link: "/entrypage" },
-          { title: "log in", link: "/signin" },
-        ]}
-      />
-    </>
+    <LayoutRoot>
+      <LayoutFlex>
+        <Card>
+          <Heading>Sign Up</Heading>
+          <Input name="username" placeholder={"username"} type="text" value={text} onChange={handleUsernameChange} />
+          <Input name="password" placeholder={"password"} type="text" value={password} onChange={handlePasswordChange} />
+          <Input name="email" placeholder={"email"} type="text" value={email} onChange={handleEmailChange} />
+          {password.length >= 5 && text !== "" && email !== "" ? (
+            <GeneralButton children={"submit"} onPress={onButtonPress} />
+          ) : (
+            <ConsentContainer>
+              <Subtext>password should be over 5 characters.</Subtext>
+            </ConsentContainer>
+          )}
+        </Card>
+      </LayoutFlex>
+      <LayoutNavbar>
+        <NavSection
+          routes={[
+            { title: "back", link: "/entrypage" },
+            { title: "log in", link: "/signin" },
+          ]}
+        />
+      </LayoutNavbar>
+    </LayoutRoot>
   );
 };

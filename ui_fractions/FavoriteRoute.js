@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 4,
     flexDirection: "column",
-    maxWidth: Dimensions.get("window").width,
+    // maxWidth: Dimensions.get("window").width,
   },
   container: {
     flex: 1,

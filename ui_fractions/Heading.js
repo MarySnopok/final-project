@@ -7,7 +7,7 @@ export const Heading = ({ children }) => {
 
 const styles = StyleSheet.create({
   typography: {
-    flex: 0.01,
+    //flex: 0.01,
     alignSelf: "center",
     // justifySelf: "flex-start",
     alignItems: "center",
