@@ -7,7 +7,6 @@ export const SubHeading = ({ children }) => {
 
 const styles = StyleSheet.create({
   typography: {
-    flex: 0.01,
     padding: 8,
     margin: 8,
     color: colors[0].white,

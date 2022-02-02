@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 20,
     position: "absolute",
-    top: -200,
+    top: -400,
     bottom: 0,
     left: 0,
     right: 0,

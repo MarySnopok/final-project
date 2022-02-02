@@ -7,7 +7,7 @@ export const Box = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.7,
+    flex: 0.5,
     backgroundColor: colors[0].dark,
     borderColor: colors[0].white,
     borderWidth: 2,

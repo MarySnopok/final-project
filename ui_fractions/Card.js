@@ -12,10 +12,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
-    margin: 8,
-    borderRadius: 8,
     zIndex: 2,
-    // maxHeight: Dimensions.get("window").height - 50,
-    // width: Dimensions.get("window").width,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
 });

@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 8,
     color: colors[0].white,
-    // fontSize: "small",
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: 20,
     zIndex: 12,
+    textAlign: "center",
   },
 });

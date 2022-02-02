@@ -6,7 +6,6 @@ export const ConsentContainer = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 0.3,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",

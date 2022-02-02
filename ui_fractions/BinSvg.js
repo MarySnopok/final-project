@@ -3,8 +3,6 @@ import Svg, { Path } from "react-native-svg";
 
 export const BinSvg = (props) => (
   <Svg
-    height="50%"
-    width="30%"
     aria-hidden="true"
     data-prefix="far"
     data-icon="trash-alt"

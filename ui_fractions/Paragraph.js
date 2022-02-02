@@ -11,17 +11,14 @@ export const Paragraph = ({ children }) => {
 
 const styles = StyleSheet.create({
   typography: {
-    flex: 0.7,
     alignSelf: "center",
-    // justifySelf: "center",
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
     margin: 8,
     color: colors[0].white,
-    // fontSize: "medium",
     fontSize: 16,
-    lineHeight: 30,
+    lineHeight: 26,
     zIndex: 12,
   },
 });

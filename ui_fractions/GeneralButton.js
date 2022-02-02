@@ -1,11 +1,13 @@
 import colors from "../utils/colors.json";
-import { StyleSheet, TouchableHighlight, Text } from "react-native";
+import { StyleSheet, TouchableHighlight, Text, SafeAreaView } from "react-native";
 
 export const GeneralButton = ({ children, onPress }) => {
   return (
-    <TouchableHighlight onPress={onPress} style={styles.btn} underlayColor={colors[0].transparent} activeOpacity={0.78}>
-      <Text style={styles.content}>{children}</Text>
-    </TouchableHighlight>
+    <SafeAreaView>
+      <TouchableHighlight onPress={onPress} style={styles.btn} underlayColor={colors[0].transparent} activeOpacity={0.78}>
+        <Text style={styles.content}>{children}</Text>
+      </TouchableHighlight>
+    </SafeAreaView>
   );
 };
 

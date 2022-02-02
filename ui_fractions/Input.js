@@ -5,7 +5,7 @@ export const Input = ({ value, name, type, onChange, placeholder }) => {
   return (
     <SafeAreaView>
       <TextInput
-        style={value.length >= 1 && value.length < 5 ? styles.alert : styles.normal}
+        style={name === "password" && value.length >= 1 && value.length < 5 ? styles.alert : styles.normal}
         value={value}
         onChangeText={(text) => onChange({ name, type, text })}
         placeholder={placeholder}
@@ -17,9 +17,8 @@ export const Input = ({ value, name, type, onChange, placeholder }) => {
 const styles = StyleSheet.create({
   alert: {
     color: colors[0].error,
-    flex: 1,
+    width: 240,
     alignSelf: "center",
-    // justifySelf: "center",
     padding: 12,
     margin: 8,
     backgroundColor: colors[0].alertBackground,
@@ -31,9 +30,8 @@ const styles = StyleSheet.create({
   },
   normal: {
     color: colors[0].dark,
-    flex: 1,
+    width: 240,
     alignSelf: "center",
-    // justifySelf: "center",
     padding: 12,
     margin: 8,
     backgroundColor: colors[0].normalBackground,

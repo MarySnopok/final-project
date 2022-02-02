@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
-    margin: 24,
+    marginBottom: 20,
     color: colors[0].white,
     // fontSize: "large",
     fontSize: 20,

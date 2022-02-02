@@ -3,8 +3,6 @@ import Svg, { Path } from "react-native-svg";
 
 export const HikerSvg = (props) => (
   <Svg
-    height="18%"
-    width="18%"
     aria-hidden="true"
     data-prefix="fas"
     data-icon="hiking"

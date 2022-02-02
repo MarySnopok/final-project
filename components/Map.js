@@ -1,39 +1,80 @@
+import { useState, useEffect } from "react";
 import MapView from "react-native-maps";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
+import { NoRoutes } from "../ui_fractions/NoRoutes";
 import colors from "../utils/colors";
 
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
 import { useDispatch, useSelector } from "react-redux";
 
+import * as Location from "expo-location";
+
 // temporary lang and lot
-const lat = 59.122;
-const long = 18.108;
+// const lat = 59.122;
+// const long = 18.108;
+
+// let lat = 12.544;
+// let long = 100.444;
 
 export const Map = () => {
+  const [{ lat, long }, setCoordinates] = useState({ lat: 59.544, long: 10.444 });
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const routesStatus = useSelector(selectRoutesStatus);
   const routes = useSelector(selectRoutes);
+
+  const getLocation = async () => {
+    console.time("foo");
+    setLoading(true);
+    const data = await Location.requestForegroundPermissionsAsync();
+    console.timeEnd("foo");
+    if (data.status !== "granted") {
+      console.log("Permission to access location was denied");
+    } else {
+      const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest });
+      console.log("locationdata", locationData);
+
+      console.log("lat", locationData.coords.latitude);
+      console.log("long", locationData.coords.longitude);
+      setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude });
+      // lat = locationData.coords.latitude;
+      // long = locationData.coords.longitude;
+      dispatch(
+        fetchRoutes({
+          lat: locationData.coords.latitude,
+          long: locationData.coords.longitude,
+        })
+      );
+    }
+    setLoading(false);
+  };
+  console.log("routes", routes);
+
+  if (!routes.length && routesStatus === "fulfilled") {
+    return <NoRoutes>Sorry no routes found near you</NoRoutes>;
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         {routesStatus === "init" && (
           <GeneralButton
-            onPress={() =>
-              dispatch(
-                fetchRoutes({
-                  lat,
-                  long,
-                })
-              )
-            }
+            // onPress={() =>
+            //   dispatch(
+            //     fetchRoutes({
+            //       lat,
+            //       long,
+            //     })
+            //   )
+            // }
+            onPress={getLocation}
           >
-            Search near me
+            Search
           </GeneralButton>
         )}
-        {routesStatus === "loading" && <Loader size={100} color={colors[0].primary} />}
+        {(routesStatus === "loading" || loading) && <Loader size={100} color={colors[0].primary} />}
       </View>
       <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
         {routes.map((route) =>
@@ -43,7 +84,7 @@ export const Map = () => {
               <MapView.Polyline
                 key={geom.ref}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
-                strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
+                strokeColor={colors[0].secondary} // fallback for when `strokeColors` is not supported by the map-provider
                 strokeWidth={6}
                 coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
               />

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { View } from "react-native-web";
+import { View, StyleSheet } from "react-native";
 
 import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
@@ -52,7 +52,7 @@ export const History = () => {
         <Card>
           <Heading>History</Heading>
           <SubHeading>{username}'s visited routes:</SubHeading>
-          <View>
+          <View style={styles.container}>
             <FavoriteRoute isChecked={false} text={"Route name 1"} distance={"7.5km"} duration={"2.30h"} difficulty={"moderate"} />
 
             <FavoriteRoute isChecked={false} text={"Route name 2"} distance={"14.5km"} duration={"6.30h"} difficulty={"hard"} />
@@ -77,3 +77,12 @@ export const History = () => {
     </LayoutRoot>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 0.8,
+    margin: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

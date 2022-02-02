@@ -8,14 +8,13 @@ export const ExtraInfo = ({ children }) => {
 const styles = StyleSheet.create({
   typography: {
     flex: 1,
-    padding: 8,
-    margin: 0,
     color: colors[0].white,
     fontSize: 16,
     alignItems: "center",
     // justifyContent: "baseline",
     justifyContent: "center",
     // lineHeight: 18,
+    paddingBottom: 8,
     zIndex: 12,
     flexWrap: "wrap",
     flexDirection: "column",
