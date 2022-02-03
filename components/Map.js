@@ -7,6 +7,7 @@ import { NoRoutes } from "../ui_fractions/NoRoutes";
 import colors from "../utils/colors";
 
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
+import ui, { setLoading, setError } from "../reducers/ui";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as Location from "expo-location";
@@ -20,27 +21,31 @@ import * as Location from "expo-location";
 
 export const Map = () => {
   const [{ lat, long }, setCoordinates] = useState({ lat: 59.544, long: 10.444 });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const routesStatus = useSelector(selectRoutesStatus);
   const routes = useSelector(selectRoutes);
+  const isLoading = useSelector((store) => store.ui.loading);
+
+  useEffect(() => {
+    dispatch(ui.actions.setLoading(false));
+  }, [dispatch]);
 
   const getLocation = async () => {
-    console.time("foo");
-    setLoading(true);
+    // console.time("foo");
+    dispatch(ui.actions.setLoading(true));
     const data = await Location.requestForegroundPermissionsAsync();
-    console.timeEnd("foo");
+    // console.timeEnd("foo");
     if (data.status !== "granted") {
       console.log("Permission to access location was denied");
     } else {
-      const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest });
+      const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
       console.log("locationdata", locationData);
 
       console.log("lat", locationData.coords.latitude);
       console.log("long", locationData.coords.longitude);
       setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude });
-      // lat = locationData.coords.latitude;
-      // long = locationData.coords.longitude;
+
       dispatch(
         fetchRoutes({
           lat: locationData.coords.latitude,
@@ -48,7 +53,7 @@ export const Map = () => {
         })
       );
     }
-    setLoading(false);
+    dispatch(ui.actions.setLoading(false));
   };
   console.log("routes", routes);
 
@@ -74,7 +79,7 @@ export const Map = () => {
             Search
           </GeneralButton>
         )}
-        {(routesStatus === "loading" || loading) && <Loader size={100} color={colors[0].primary} />}
+        {(routesStatus === "loading" || isLoading) && <Loader size={100} color={colors[0].primary} />}
       </View>
       <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
         {routes.map((route) =>

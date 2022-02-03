@@ -14,10 +14,12 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import user from "./reducers/user";
 import routes from "./reducers/routes";
+import ui from "./reducers/ui";
 
 const reducer = combineReducers({
   user: user.reducer,
   routes: routes.reducer,
+  ui: ui.reducer,
 });
 
 const store = configureStore({ reducer });
@@ -41,3 +43,9 @@ export default function App() {
     </>
   );
 }
+
+// const errorStatus = useSelector((store) => store.ui.error);
+
+// if (errorStatus === true) {
+//   return <Opps />;
+// }
