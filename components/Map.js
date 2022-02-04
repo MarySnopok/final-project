@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
 import { NoRoutes } from "../ui_fractions/NoRoutes";
+import { CarouselSlider } from "../ui_fractions/Carousel";
 import colors from "../utils/colors";
 
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
@@ -113,6 +114,7 @@ export const Map = () => {
           strokeWidth={6}
         /> */}
       </MapView>
+      <CarouselSlider />
     </View>
   );
 };
