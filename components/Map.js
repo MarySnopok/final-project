@@ -61,11 +61,11 @@ export const Map = () => {
   };
   console.log("routes", routes);
 
-  const routeColors = useMemo(() => {
-    return routes.reduce((acc, val) => {
-      return { ...acc, [val.id]: pickRandomBackground() };
-    }, {});
-  }, [routes]);
+  // const routeColors = useMemo(() => {
+  //   return routes.reduce((acc, val) => {
+  //     return { ...acc, [val.id]: pickRandomBackground() };
+  //   }, {});
+  // }, [routes]);
 
   if (!routes.length && routesStatus === "fulfilled") {
     return <NoRoutes>Sorry no routes found near you</NoRoutes>;
@@ -89,6 +89,7 @@ export const Map = () => {
       <MapView
         style={styles.map}
         defaultZoom={10}
+        userInterfaceStyle="dark"
         region={{ latitude: LATITUDE, longitude: LONGITUDE, latitudeDelta: LATITUDE_DELTA, longitudeDelta: LONGITUDE_DELTA }}
         // strokeColor={pickRandomBackground()} // fallback for when `strokeColors` is not supported by the map-provider
         // strokeWidth={6}
@@ -100,11 +101,11 @@ export const Map = () => {
               <MapView.Polyline
                 key={geom.ref}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
-                strokeColor={routeColors[route.id]} // fallback for when `strokeColors` is not supported by the map-provider
-                strokeWidth={6}
+                strokeColor={route.color} // fallback for when `strokeColors` is not supported by the map-provider
+                strokeWidth={3}
                 coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
                 options={{
-                  strokeColor: routeColors[route.id],
+                  strokeColor: route.color,
                   strokeOpacity: 1,
                   strokeWeight: 3,
                 }}
@@ -112,7 +113,7 @@ export const Map = () => {
             ))
         )}
       </MapView>
-      {routes && <CarouselSlider routes={routes} routeColors={routeColors} />}
+      {routes && <CarouselSlider routes={routes} />}
     </View>
   );
 };

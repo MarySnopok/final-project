@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { pickRandomBackground } from "../utils/constants";
 
 import { API_URL } from "../utils/constants";
 
@@ -23,7 +24,10 @@ const routes = createSlice({
 
     builder.addCase(fetchRoutes.fulfilled, (state, action) => {
       console.log("ACTIONS", action);
-      const data = action.payload.response.data;
+      const data = action.payload.response.data.map((route) => {
+        route.color = pickRandomBackground();
+        return route;
+      });
       state.status = "fulfilled";
       state.routes = data;
     });

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFavoriteRoutes, isRouteFavorite, saveFavorite } from "../reducers/user";
 import { ActivityIndicator } from "react-native";
 
-export const RouteCard = ({ route, color }) => {
+export const RouteCard = ({ route }) => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const dispatch = useDispatch();
   const [loadingSaveFavorite, setLoadingSaveFavorite] = useState(false);
@@ -30,7 +30,7 @@ export const RouteCard = ({ route, color }) => {
   };
 
   return (
-    <View key={route.tags.name} style={[styles.slideContainer, styles.slide1, { backgroundColor: color }]}>
+    <View key={route.tags.name} style={[styles.slideContainer, styles.slide1, { backgroundColor: route.color }]}>
       <ConsentContainer style={{ alignItems: "stretch", justifyContent: "space-between" }}>
         <Text style={styles.typography}>{route.tags.name}</Text>
         {loadingSaveFavorite ? <ActivityIndicator /> : isFavorite ? <Text>Already favorite</Text> : <FavButton onPress={addToFavorite} />}
