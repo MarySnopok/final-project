@@ -50,16 +50,6 @@ export const RouteCard = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    bottom: 2,
-    left: 2,
-    right: 2,
-    height: "40%",
-    alignItems: "stretch",
-    justifyContent: "flex-start",
-    flex: 1,
-  },
   slideContainer: {
     flex: 1,
     alignItems: "stretch",
@@ -67,8 +57,7 @@ const styles = StyleSheet.create({
   },
   typography: {
     padding: 8,
-    marginVertical: 18,
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     color: colors[0].dark,
     fontSize: 18,
     lineHeight: 20,
