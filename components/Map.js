@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
 import { NoRoutes } from "../ui_fractions/NoRoutes";
-import { CarouselSlider } from "../ui_fractions/Carousel";
+import { CarouselSlider } from "./Carousel";
 import colors from "../utils/colors";
 
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
@@ -22,7 +22,6 @@ import * as Location from "expo-location";
 
 export const Map = () => {
   const [{ lat, long }, setCoordinates] = useState({ lat: 59.544, long: 10.444 });
-  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const routesStatus = useSelector(selectRoutesStatus);
   const routes = useSelector(selectRoutes);
@@ -65,21 +64,7 @@ export const Map = () => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        {routesStatus === "init" && (
-          <GeneralButton
-            // onPress={() =>
-            //   dispatch(
-            //     fetchRoutes({
-            //       lat,
-            //       long,
-            //     })
-            //   )
-            // }
-            onPress={getLocation}
-          >
-            Search
-          </GeneralButton>
-        )}
+        {routesStatus === "init" && <GeneralButton onPress={getLocation}>Search</GeneralButton>}
         {(routesStatus === "loading" || isLoading) && <Loader size={100} color={colors[0].primary} />}
       </View>
       <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
@@ -114,7 +99,7 @@ export const Map = () => {
           strokeWidth={6}
         /> */}
       </MapView>
-      <CarouselSlider />
+      {routes && <CarouselSlider routes={routes} />}
     </View>
   );
 };

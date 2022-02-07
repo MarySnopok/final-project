@@ -8,6 +8,7 @@ const user = createSlice({
     accessToken: null,
     email: null,
     error: null,
+    favorite: [],
   },
   reducers: {
     setUserId: (store, action) => {
@@ -24,6 +25,10 @@ const user = createSlice({
     },
     setError: (store, action) => {
       store.error = action.payload;
+    },
+    setFavorite: (store, action) => {
+      const favoriteRoute = store.favorite;
+      favoriteRoute.push(action.payload);
     },
   },
 });
