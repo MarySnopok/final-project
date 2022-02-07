@@ -5,14 +5,25 @@ import { ClockSvg } from "./ClockSvg";
 import { HikerSvg } from "./HikerSvg";
 import { StyleSheet, View, Dimensions } from "react-native";
 import colors from "../utils/colors.json";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { deleteFavorite } from "../reducers/user";
+import { ActivityIndicator } from "react-native";
 
-export const FavoriteRoute = ({ text, distance, duration, difficulty }) => {
-  //const
+export const FavoriteRoute = ({ text, distance, duration, difficulty, id }) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const deleteRoute = async () => {
+    setLoading(true);
+    await dispatch(deleteFavorite(id));
+  };
+
   return (
     <View style={styles.maincontainer}>
       <View style={styles.container}>
         <ExtraInfo>{text}</ExtraInfo>
-        <BinButton />
+        {loading ? <ActivityIndicator /> : <BinButton onPress={deleteRoute} />}
       </View>
       <View style={styles.container}>
         <ExtraInfo>

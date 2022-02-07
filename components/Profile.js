@@ -7,20 +7,23 @@ import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
 
-import user from "../reducers/user";
+import user, { fetchProfile, getFavoriteRoutes } from "../reducers/user";
 import { FavoriteRoute } from "../ui_fractions/FavoriteRoute";
 import { SubHeading } from "../ui_fractions/SubHeading";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
-
-  // const dispatch = useDispatch();
+  const favoriteRoutes = useSelector(getFavoriteRoutes);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
+    } else {
+      console.log("try dispatch something");
+      dispatch(fetchProfile());
     }
   }, [accessToken, navigate]);
 
@@ -52,7 +55,17 @@ export const Profile = () => {
           <Heading>Hi {username}!</Heading>
           <SubHeading>Your favorite routes:</SubHeading>
           <View style={styles.container}>
-            <FavoriteRoute isChecked={false} text={"Route name 1"} distance={"7.5km"} duration={"2.30h"} difficulty={"moderate"} />
+            {favoriteRoutes.map((route) => (
+              <FavoriteRoute
+                key={route.id}
+                id={route.id}
+                isChecked={false}
+                text={route.tags.name}
+                distance={route.tags.distance}
+                duration={"2.30h"}
+                difficulty={"moderate"}
+              />
+            ))}
 
             <FavoriteRoute isChecked={false} text={"Route name 2"} distance={"14.5km"} duration={"6.30h"} difficulty={"hard"} />
 

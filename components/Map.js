@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import MapView from "react-native-maps";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
 import { NoRoutes } from "../ui_fractions/NoRoutes";
 import { CarouselSlider } from "./Carousel";
+import { pickRandomBackground } from "../utils/constants";
 import colors from "../utils/colors";
 
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
@@ -38,6 +39,8 @@ export const Map = () => {
     // console.timeEnd("foo");
     if (data.status !== "granted") {
       console.log("Permission to access location was denied");
+      // we won't load anything, just hide loader
+      dispatch(ui.actions.setLoading(false));
     } else {
       const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
       console.log("locationdata", locationData);
@@ -46,20 +49,36 @@ export const Map = () => {
       console.log("long", locationData.coords.longitude);
       setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude });
 
-      dispatch(
+      await dispatch(
         fetchRoutes({
           lat: locationData.coords.latitude,
           long: locationData.coords.longitude,
         })
       );
+      // hide loader when routes fetched
+      dispatch(ui.actions.setLoading(false));
     }
-    dispatch(ui.actions.setLoading(false));
   };
   console.log("routes", routes);
+
+  const routeColors = useMemo(() => {
+    return routes.reduce((acc, val) => {
+      return { ...acc, [val.id]: pickRandomBackground() };
+    }, {});
+  }, [routes]);
 
   if (!routes.length && routesStatus === "fulfilled") {
     return <NoRoutes>Sorry no routes found near you</NoRoutes>;
   }
+
+  // example from https://github.com/react-native-maps/react-native-maps/blob/master/example/examples/DisplayLatLng.js
+  const { width, height } = Dimensions.get("window");
+
+  const ASPECT_RATIO = width / height;
+  const LATITUDE = lat;
+  const LONGITUDE = long;
+  const LATITUDE_DELTA = 0.922;
+  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
   return (
     <View style={styles.container}>
@@ -67,7 +86,13 @@ export const Map = () => {
         {routesStatus === "init" && <GeneralButton onPress={getLocation}>Search</GeneralButton>}
         {(routesStatus === "loading" || isLoading) && <Loader size={100} color={colors[0].primary} />}
       </View>
-      <MapView style={styles.map} defaultZoom={10} region={{ latitude: lat, longitude: long }}>
+      <MapView
+        style={styles.map}
+        defaultZoom={10}
+        region={{ latitude: LATITUDE, longitude: LONGITUDE, latitudeDelta: LATITUDE_DELTA, longitudeDelta: LONGITUDE_DELTA }}
+        // strokeColor={pickRandomBackground()} // fallback for when `strokeColors` is not supported by the map-provider
+        // strokeWidth={6}
+      >
         {routes.map((route) =>
           route.members
             .filter((el) => el.type === "way")
@@ -75,31 +100,19 @@ export const Map = () => {
               <MapView.Polyline
                 key={geom.ref}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
-                strokeColor={colors[0].secondary} // fallback for when `strokeColors` is not supported by the map-provider
+                strokeColor={routeColors[route.id]} // fallback for when `strokeColors` is not supported by the map-provider
                 strokeWidth={6}
                 coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
+                options={{
+                  strokeColor: routeColors[route.id],
+                  strokeOpacity: 1,
+                  strokeWeight: 3,
+                }}
               />
             ))
         )}
-        {/* <MapView.Polyline
-          coordinates={[
-            { latitude: 37.8025259, longitude: -122.4351431 },
-            { latitude: 37.7896386, longitude: -122.421646 },
-            { latitude: 37.7665248, longitude: -122.4161628 },
-            { latitude: 37.7734153, longitude: -122.4577787 },
-            { latitude: 37.7948605, longitude: -122.4596065 },
-            { latitude: 37.8025259, longitude: -122.4351431 },
-          ]}
-          path={[
-            { lat: 37.8025259, lng: -122.4351431 },
-            { lat: 37.7896386, lng: -122.421646 },
-            { lat: 37.7665248, lng: -122.4161628 },
-          ]}
-          strokeColor="#ff3333" // fallback for when `strokeColors` is not supported by the map-provider
-          strokeWidth={6}
-        /> */}
       </MapView>
-      {routes && <CarouselSlider routes={routes} />}
+      {routes && <CarouselSlider routes={routes} routeColors={routeColors} />}
     </View>
   );
 };

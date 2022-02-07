@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { API_URL } from "../utils/constants";
 
-// First, create the thunk
+// First, creat the thunk
 export const fetchRoutes = createAsyncThunk("routes/fetchRoutes", async ({ lat, long }) => {
   const response = await fetch(API_URL("tracks") + "?" + encodeURI(`lat=${lat}&long=${long}`));
   return response.json();
@@ -20,9 +20,8 @@ const routes = createSlice({
     builder.addCase(fetchRoutes.pending, (state) => {
       state.status = "loading";
     });
-    // Add reducers for additional action types here, and handle loading state as needed
+
     builder.addCase(fetchRoutes.fulfilled, (state, action) => {
-      // Add user to the state array
       console.log("ACTIONS", action);
       const data = action.payload.response.data;
       state.status = "fulfilled";
