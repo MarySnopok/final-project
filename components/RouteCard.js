@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     bottom: 2,
     left: 2,
     right: 2,
-    height: "30%",
+    height: "40%",
     alignItems: "stretch",
     justifyContent: "flex-start",
     flex: 1,
