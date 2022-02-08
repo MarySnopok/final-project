@@ -15,6 +15,8 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import user from "./reducers/user";
 import routes from "./reducers/routes";
 import ui from "./reducers/ui";
+import { AuthProvider } from "./components/AuthProvider";
+import { LogOut } from "./components/Logout";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -28,17 +30,21 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<Consent />} />
-            <Route path="/entrypage" element={<EntryPage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/signin" element={<LogIn />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/history" element={<History />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route exact path="/" element={<Consent />} />
+              <Route path="/entrypage" element={<EntryPage />} />
+              <Route path="/entrypage/:id" element={<EntryPage />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<LogIn />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/logout" element={<LogOut />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
       </Provider>
     </>
   );

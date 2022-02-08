@@ -15,15 +15,7 @@ import { LinkButton } from "../ui_fractions/LinkButton";
 
 export const Consent = () => {
   const [check, onCheckMarkChange] = useState(true);
-  const accessToken = useSelector((store) => store.user.accessToken);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (accessToken) {
-      dispatch(user.actions.setAccessToken(null));
-    }
-  }, [accessToken]);
 
-  console.log(">>>", check);
   return (
     <LayoutRoot>
       <Card>

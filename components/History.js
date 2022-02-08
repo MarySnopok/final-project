@@ -37,7 +37,7 @@ export const History = () => {
           routes={[
             { title: "home", link: "/entrypage" },
             { title: "profile", link: "/profile" },
-            { title: "log out", link: "/" },
+            { title: "log out", link: "/logout" },
           ]}
         />
       </LayoutNavbar>

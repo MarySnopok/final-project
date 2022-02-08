@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL } from "../utils/constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL, pickRandomBackground } from "../utils/constants";
 
 // load profile
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async (_, thunkApi) => {
@@ -52,16 +53,18 @@ export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (rou
   return response.json();
 });
 
+const userInitialState = {
+  userId: null,
+  username: null,
+  accessToken: null,
+  email: null,
+  error: null,
+  favorite: [],
+};
+
 const user = createSlice({
   name: "user",
-  initialState: {
-    userId: null,
-    username: null,
-    accessToken: null,
-    email: null,
-    error: null,
-    favorite: [],
-  },
+  initialState: userInitialState,
   reducers: {
     setUserId: (store, action) => {
       store.userId = action.payload;
@@ -71,6 +74,8 @@ const user = createSlice({
     },
     setAccessToken: (store, action) => {
       store.accessToken = action.payload;
+      console.log("setting access token", action.payload);
+      AsyncStorage.setItem("accessToken", action.payload);
     },
     setEmail: (store, action) => {
       store.email = action.payload;
@@ -82,19 +87,36 @@ const user = createSlice({
       const favoriteRoute = store.favorite;
       favoriteRoute.push(action.payload);
     },
+    logout: () => {
+      // remove auth token from storage
+      AsyncStorage.removeItem("accessToken");
+      // reset to initial state
+      return userInitialState;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
       const user = action.payload.response;
-      state.favorite = user.favorite;
+      state.favorite = user.favorite.map((route) => {
+        route.color = pickRandomBackground();
+        return route;
+      });
+      state.username = user.username;
+      state.email = user.email;
     });
     builder.addCase(saveFavorite.fulfilled, (state, action) => {
       const user = action.payload.response;
-      state.favorite = user.favorite;
+      state.favorite = user.favorite.map((route) => {
+        route.color = pickRandomBackground();
+        return route;
+      });
     });
     builder.addCase(deleteFavorite.fulfilled, (state, action) => {
       const user = action.payload.response;
-      state.favorite = user.favorite;
+      state.favorite = user.favorite.map((route) => {
+        route.color = pickRandomBackground();
+        return route;
+      });
     });
   },
 });

@@ -117,7 +117,8 @@ export const SignUp = () => {
       <LayoutNavbar>
         <NavSection
           routes={[
-            { title: "back", link: "/entrypage" },
+            // navigate(-1) the same as going back
+            { title: "back", link: -1 },
             { title: "log in", link: "/signin" },
           ]}
         />

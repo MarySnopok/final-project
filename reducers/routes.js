@@ -9,6 +9,12 @@ export const fetchRoutes = createAsyncThunk("routes/fetchRoutes", async ({ lat, 
   return response.json();
 });
 
+// *** for individual route rendering
+export const fetchOneRoute = createAsyncThunk("routes/fetchOneRoute", async (id) => {
+  const response = await fetch(API_URL("tracks") + "/" + id);
+  return response.json();
+});
+
 const routes = createSlice({
   name: "routes",
   initialState: {
@@ -21,6 +27,11 @@ const routes = createSlice({
     builder.addCase(fetchRoutes.pending, (state) => {
       state.status = "loading";
     });
+    // *** for individual route rendering
+    builder.addCase(fetchOneRoute.pending, (state) => {
+      state.status = "loading";
+      state.routes = [];
+    });
 
     builder.addCase(fetchRoutes.fulfilled, (state, action) => {
       console.log("ACTIONS", action);
@@ -31,9 +42,17 @@ const routes = createSlice({
       state.status = "fulfilled";
       state.routes = data;
     });
+    builder.addCase(fetchOneRoute.fulfilled, (state, action) => {
+      console.log("ACTIONS", action);
+      const data = action.payload.response.data.map((route) => {
+        route.color = pickRandomBackground();
+        return route;
+      });
+      state.status = "fulfilled";
+      state.routes = data;
+    });
   },
 });
-
 export default routes;
 
 export const selectRoutesStatus = (state) => state.routes.status;

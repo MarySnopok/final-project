@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { View, StyleSheet } from "react-native";
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from "react-native";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
@@ -16,38 +16,13 @@ export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
   const favoriteRoutes = useSelector(getFavoriteRoutes);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
-    } else {
-      console.log("try dispatch something");
-      dispatch(fetchProfile());
     }
   }, [accessToken, navigate]);
-
-  //   useEffect(() => {
-  //     const options = {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: accessToken,
-  //       },
-  //     };
-
-  //     fetch(API_URL("profile"), options)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data.success) {
-  //           dispatch(thoughts.actions.setItems(data.response));
-  //           dispatch(thoughts.actions.setError(null));
-  //         } else {
-  //           dispatch(thoughts.actions.setItems([]));
-  //           dispatch(thoughts.actions.setError(data.response));
-  //         }
-  //       });
-  //   }, [accessToken, dispatch]);
 
   return (
     <LayoutRoot>
@@ -55,17 +30,21 @@ export const Profile = () => {
         <Card>
           <Heading>{username}'s favorite routes:</Heading>
           <View style={styles.container}>
-            {favoriteRoutes.map((route) => (
-              <FavoriteRoute
-                key={route.id}
-                id={route.id}
-                isChecked={false}
-                text={route.tags.name}
-                distance={distanceInKm(route)}
-                duration={duration(route)}
-                difficulty={difficulty(route)}
-              />
-            ))}
+            <FlatList
+              data={favoriteRoutes}
+              keyExtractor={(route) => route.id}
+              renderItem={({ item: route }) => (
+                <FavoriteRoute
+                  id={route.id}
+                  isChecked={false}
+                  text={route.tags.name}
+                  distance={distanceInKm(route)}
+                  duration={duration(route)}
+                  difficulty={difficulty(route)}
+                  color={route.color}
+                />
+              )}
+            />
           </View>
         </Card>
       </LayoutFlex>
@@ -74,7 +53,7 @@ export const Profile = () => {
           routes={[
             { title: "home", link: "/entrypage" },
             { title: "history", link: "/history" },
-            { title: "log out", link: "/" },
+            { title: "log out", link: "/logout" },
           ]}
         />
       </LayoutNavbar>
@@ -86,7 +65,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.8,
     margin: 8,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
+    maxWidth: 400,
+    width: "100%",
   },
 });

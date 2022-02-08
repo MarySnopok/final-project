@@ -12,7 +12,6 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
@@ -38,8 +37,6 @@ export const LogIn = () => {
     let newPassword = text;
     setPasswordChange(newPassword);
   };
-  console.log("text", text);
-  console.log("password", password);
 
   useEffect(() => {
     if (accessToken) {
@@ -71,6 +68,7 @@ export const LogIn = () => {
           });
         } else {
           batch(() => {
+            console.log("WE ARE HERE?!");
             dispatch(user.actions.setUserId(null));
             dispatch(user.actions.setUsername(null));
             dispatch(user.actions.setAccessToken(null));
@@ -99,7 +97,8 @@ export const LogIn = () => {
       <LayoutNavbar>
         <NavSection
           routes={[
-            { title: "back", link: "/entrypage" },
+            // navigate(-1) the same as going back
+            { title: "back", link: -1 },
             { title: "sign up", link: "/signup" },
           ]}
         />

@@ -8,11 +8,12 @@ import { CarouselSlider } from "./Carousel";
 import { pickRandomBackground } from "../utils/constants";
 import colors from "../utils/colors";
 
-import routes, { fetchRoutes, selectRoutes, selectRoutesStatus } from "../reducers/routes";
+import routes, { fetchRoutes, selectRoutes, selectRoutesStatus, fetchOneRoute } from "../reducers/routes";
 import ui, { setLoading, setError } from "../reducers/ui";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as Location from "expo-location";
+import { useParams } from "react-router";
 
 // temporary lang and lot
 // const lat = 59.122;
@@ -27,6 +28,17 @@ export const Map = () => {
   const routesStatus = useSelector(selectRoutesStatus);
   const routes = useSelector(selectRoutes);
   const isLoading = useSelector((store) => store.ui.loading);
+
+  // *** for individual route rendering
+  const { id } = useParams();
+  useEffect(() => {
+    if (id) {
+      dispatch(ui.actions.setLoading(true));
+      dispatch(fetchOneRoute(id)).then(() => {
+        dispatch(ui.actions.setLoading(false));
+      });
+    }
+  }, [dispatch, id]);
 
   useEffect(() => {
     dispatch(ui.actions.setLoading(false));
@@ -61,12 +73,6 @@ export const Map = () => {
   };
   console.log("routes", routes);
 
-  // const routeColors = useMemo(() => {
-  //   return routes.reduce((acc, val) => {
-  //     return { ...acc, [val.id]: pickRandomBackground() };
-  //   }, {});
-  // }, [routes]);
-
   if (!routes.length && routesStatus === "fulfilled") {
     return <NoRoutes>Sorry no routes found near you</NoRoutes>;
   }
@@ -95,9 +101,11 @@ export const Map = () => {
         {routes.map((route) =>
           route.members
             .filter((el) => el.type === "way")
+            // uniqBy
+            .filter((el, i, arr) => arr.findIndex((e) => e.ref === el.ref) === i)
             .map((geom) => (
               <MapView.Polyline
-                key={geom.ref}
+                key={geom.ref + route.id}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
                 strokeColor={route.color} // fallback for when `strokeColors` is not supported by the map-provider
                 strokeWidth={3}

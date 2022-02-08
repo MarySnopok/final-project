@@ -7,7 +7,7 @@ import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 
 export const EntryPage = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
-  console.log("accessTockem", accessToken);
+
   return (
     <>
       <LayoutRoot>

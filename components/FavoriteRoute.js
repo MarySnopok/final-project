@@ -10,19 +10,25 @@ import { useState } from "react";
 import { deleteFavorite } from "../reducers/user";
 import { ActivityIndicator, TouchableHighlight } from "react-native";
 import { pickRandomBackground } from "../utils/constants";
+import { useNavigate } from "react-router";
 
-export const FavoriteRoute = ({ text, distance, duration, difficulty, id }) => {
+export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const deleteRoute = async () => {
     setLoading(true);
     await dispatch(deleteFavorite(id));
   };
 
+  // const onPress = () => {
+  //   navigate(`/entrypage/${id}`);
+  // };
+
   return (
-    <TouchableHighlight flex={0.5}>
-      <View style={styles.maincontainer}>
+    <TouchableHighlight>
+      <View style={[styles.maincontainer, { backgroundColor: color }]}>
         <View style={styles.container}>
           <ExtraInfo>{text}</ExtraInfo>
           {loading ? <ActivityIndicator /> : <BinButton onPress={deleteRoute} />}
@@ -50,23 +56,21 @@ export const FavoriteRoute = ({ text, distance, duration, difficulty, id }) => {
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
-    backgroundColor: pickRandomBackground(),
+    // backgroundColor: pickRandomBackground(),
     borderColor: pickRandomBackground(),
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 8,
     paddingHorizontal: 8,
     paddingVertical: 8,
     marginBottom: 8,
     borderRadius: 4,
     flexDirection: "column",
-    width: Dimensions.get("window").width - 20,
-    maxWidth: Dimensions.get("window").width,
+    alignSelf: "stretch",
+    width: "auto",
   },
 
   container: {
-    zIndex: 8,
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
