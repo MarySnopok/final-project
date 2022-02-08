@@ -1,5 +1,6 @@
 import { StyleSheet, View, Dimensions } from "react-native";
 import colors from "../utils/colors.json";
+import { pickRandomBackground } from "../utils/constants";
 
 export const Box = ({ children }) => {
   return <View style={styles.container}>{children}</View>;
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.5,
     backgroundColor: colors[0].dark,
-    borderColor: colors[0].white,
+    borderColor: pickRandomBackground(),
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",

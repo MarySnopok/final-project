@@ -6,10 +6,11 @@ import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
+import { distanceInKm, difficulty, duration } from "../utils/constants";
+import colors from "../utils/colors.json";
 
 import user, { fetchProfile, getFavoriteRoutes } from "../reducers/user";
-import { FavoriteRoute } from "../ui_fractions/FavoriteRoute";
-import { SubHeading } from "../ui_fractions/SubHeading";
+import { FavoriteRoute } from "./FavoriteRoute";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -52,8 +53,7 @@ export const Profile = () => {
     <LayoutRoot>
       <LayoutFlex>
         <Card>
-          <Heading>Hi {username}!</Heading>
-          <SubHeading>Your favorite routes:</SubHeading>
+          <Heading>{username}'s favorite routes:</Heading>
           <View style={styles.container}>
             {favoriteRoutes.map((route) => (
               <FavoriteRoute
@@ -61,19 +61,11 @@ export const Profile = () => {
                 id={route.id}
                 isChecked={false}
                 text={route.tags.name}
-                distance={route.tags.distance}
-                duration={"2.30h"}
-                difficulty={"moderate"}
+                distance={distanceInKm(route)}
+                duration={duration(route)}
+                difficulty={difficulty(route)}
               />
             ))}
-
-            <FavoriteRoute isChecked={false} text={"Route name 2"} distance={"14.5km"} duration={"6.30h"} difficulty={"hard"} />
-
-            <FavoriteRoute isChecked={false} text={"Route name 3"} distance={"0.5km"} duration={"0.20h"} difficulty={"easy"} />
-
-            <FavoriteRoute isChecked={false} text={"Route name 4"} distance={"3.5km"} duration={"1.00h"} difficulty={"moderate"} />
-
-            <FavoriteRoute isChecked={false} text={"Route name 5"} distance={"1.5km"} duration={"0.30h"} difficulty={"easy"} />
           </View>
         </Card>
       </LayoutFlex>

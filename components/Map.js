@@ -84,15 +84,13 @@ export const Map = () => {
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         {routesStatus === "init" && <GeneralButton onPress={getLocation}>Search</GeneralButton>}
-        {(routesStatus === "loading" || isLoading) && <Loader size={100} color={colors[0].primary} />}
+        {(routesStatus === "loading" || isLoading) && <Loader size={"large"} color={colors[0].loader} />}
       </View>
       <MapView
         style={styles.map}
         defaultZoom={10}
         userInterfaceStyle="dark"
         region={{ latitude: LATITUDE, longitude: LONGITUDE, latitudeDelta: LATITUDE_DELTA, longitudeDelta: LONGITUDE_DELTA }}
-        // strokeColor={pickRandomBackground()} // fallback for when `strokeColors` is not supported by the map-provider
-        // strokeWidth={6}
       >
         {routes.map((route) =>
           route.members

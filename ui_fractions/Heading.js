@@ -1,19 +1,27 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import colors from "../utils/colors.json";
 
 export const Heading = ({ children }) => {
-  return <Text style={styles.typography}>{children}</Text>;
+  return (
+    <View style={styles.wrapper}>
+      <Text style={styles.typography}>{children}</Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    // flex: 0.01,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginBottom: 30,
+  },
   typography: {
-    //flex: 0.01,
     alignSelf: "center",
-    // justifySelf: "flex-start",
+
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
-    marginBottom: 20,
     color: colors[0].white,
     // fontSize: "large",
     fontSize: 20,

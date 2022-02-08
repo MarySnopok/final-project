@@ -1,4 +1,5 @@
 import colors from "../utils/colors.json";
+
 const BASE_URL = "https://final-project-backend-hikernav.herokuapp.com";
 // const BASE_URL = "http://localhost:8080";
 
@@ -22,4 +23,41 @@ export const pickRandomBackground = () => {
     leftColors = Object.values(backgrounds);
   }
   return color;
+};
+
+export const distanceRowData = (route) => route.tags.distance;
+export const distanceInKm = (route) => {
+  const newDistance = parseInt(route.tags.distance, 10);
+  if (isNaN(newDistance)) {
+    return null;
+  }
+  return newDistance;
+};
+export const duration = (route) => {
+  const newDuration = Math.round(parseInt(route.tags.distance, 10) / 6);
+  if (isNaN(newDuration)) {
+    return null;
+  }
+  return newDuration;
+};
+export const difficulty = (route) => {
+  const rowDistance = route.tags.distance;
+  const routeDistance = parseInt(rowDistance, 10);
+  const statements = {
+    easy: "easy",
+    medium: "moderate",
+    hard: "hard",
+  };
+  if (!rowDistance) {
+    return statements.medium;
+  }
+  if (routeDistance <= 5) {
+    return statements.easy;
+  }
+  if (routeDistance > 5 && routeDistance <= 10) {
+    return statements.medium;
+  }
+  if (routeDistance > 10) {
+    return statements.hard;
+  }
 };

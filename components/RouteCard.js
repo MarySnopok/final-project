@@ -6,8 +6,10 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { FavButton } from "../ui_fractions/FavButton";
 import { pickRandomBackground } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { getFavoriteRoutes, isRouteFavorite, saveFavorite } from "../reducers/user";
+import { isRouteFavorite, saveFavorite } from "../reducers/user";
 import { ActivityIndicator } from "react-native";
+
+import { RouteDetails } from "./RouteDetails";
 
 export const RouteCard = ({ route }) => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -35,16 +37,7 @@ export const RouteCard = ({ route }) => {
         <Text style={styles.typography}>{route.tags.name}</Text>
         {loadingSaveFavorite ? <ActivityIndicator /> : isFavorite ? <Text>Already favorite</Text> : <FavButton onPress={addToFavorite} />}
       </ConsentContainer>
-      <View style={styles.detailsWrapper}>
-        {route.tags.route && <Text style={styles.details}>{route.tags.route} trail</Text>}
-        {route.tags.distance && <Text style={styles.details}>{parseInt(route.tags.distance, 10)} km</Text>}
-        {route.tags.distance && <Text style={styles.details}>{Math.round(parseInt(route.tags.distance, 10) / 6)} hr</Text>}
-        {route.tags.distance && parseInt(route.tags.distance, 10) >= 12 ? (
-          <Text style={styles.details}>high difficulty</Text>
-        ) : (
-          <Text style={styles.details}>moderate difficulty</Text>
-        )}
-      </View>
+      <RouteDetails route={route} />
     </View>
   );
 };
@@ -64,24 +57,7 @@ const styles = StyleSheet.create({
     zIndex: 12,
     textAlign: "center",
   },
-  detailsWrapper: {
-    alignItems: "center",
-    justifyContent: "flex-start",
-    fontSize: 18,
-  },
-  details: {
-    paddingTop: 4,
-    color: colors[0].dark,
-    fontSize: 16,
-    zIndex: 12,
-  },
   slide1: {
-    backgroundColor: pickRandomBackground(),
-  },
-  slide2: {
-    backgroundColor: pickRandomBackground(),
-  },
-  slide3: {
     backgroundColor: pickRandomBackground(),
   },
 });

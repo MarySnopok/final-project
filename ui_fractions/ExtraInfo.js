@@ -8,7 +8,7 @@ export const ExtraInfo = ({ children }) => {
 const styles = StyleSheet.create({
   typography: {
     flex: 1,
-    color: colors[0].white,
+    color: colors[0].dark,
     fontSize: 16,
     alignItems: "center",
     // justifyContent: "baseline",

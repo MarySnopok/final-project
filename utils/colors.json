@@ -24,6 +24,7 @@
         "error": "#CF6679",
         "secondary":"#727cf5",
         "primary":"#DB7093",
+        "loader":"#f74a83",
         "transparent":"transparent"
     }
 ]

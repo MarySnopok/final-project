@@ -12,6 +12,7 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
@@ -35,10 +36,6 @@ export const LogIn = () => {
   const handlePasswordChange = (event) => {
     const { name, type, text } = event;
     let newPassword = text;
-    if (newPassword.length >= 5) {
-    } else if (newPassword.length < 5) {
-      console.log("too short");
-    }
     setPasswordChange(newPassword);
   };
   console.log("text", text);
