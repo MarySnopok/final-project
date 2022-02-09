@@ -21,5 +21,5 @@ Upcoming features:
 
 ## attribution:
 
-Geo data is provided ny Open Street Maps - https://wiki.openstreetmap.org/wiki/API
+Geo data is provided by Open Street Maps - https://wiki.openstreetmap.org/wiki/API
 Icons - www.fontawesome.com
