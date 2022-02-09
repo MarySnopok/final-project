@@ -1,7 +1,6 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import ui from "../reducers/ui";
 
 export const Loader = ({ size, color }) => {
   const loading = useSelector((store) => store.ui.loading);

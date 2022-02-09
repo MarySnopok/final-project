@@ -4,7 +4,6 @@ const ui = createSlice({
   name: "ui",
   initialState: {
     loading: true,
-    // change error to true to see the error page
     error: false,
   },
   reducers: {

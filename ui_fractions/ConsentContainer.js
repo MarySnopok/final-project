@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     zIndex: 12,
-    // margin: 8,
     padding: 8,
   },
 });

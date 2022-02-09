@@ -10,9 +10,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 8,
     color: colors[0].white,
-    // fontSize: "normal",
     fontSize: 18,
-    // lineHeight: 16,
     zIndex: 12,
   },
 });

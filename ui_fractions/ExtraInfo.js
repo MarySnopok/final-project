@@ -1,8 +1,13 @@
 import { StyleSheet, Text } from "react-native";
 import colors from "../utils/colors.json";
 
-export const ExtraInfo = ({ children }) => {
-  return <Text style={styles.typography}>{children}</Text>;
+export const ExtraInfo = ({ data, comment }) => {
+  return (
+    <Text style={styles.typography}>
+      {data}
+      {comment}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -11,9 +16,7 @@ const styles = StyleSheet.create({
     color: colors[0].dark,
     fontSize: 16,
     alignItems: "center",
-    // justifyContent: "baseline",
     justifyContent: "center",
-    // lineHeight: 18,
     paddingBottom: 8,
     zIndex: 12,
     flexWrap: "wrap",

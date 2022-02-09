@@ -11,22 +11,18 @@ export const Heading = ({ children }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    // flex: 0.01,
     alignItems: "center",
     justifyContent: "flex-start",
     marginBottom: 30,
   },
   typography: {
     alignSelf: "center",
-
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
     color: colors[0].white,
-    // fontSize: "large",
     fontSize: 20,
     fontWeight: "bold",
-    // fontWeight: 300,
     zIndex: 12,
   },
 });

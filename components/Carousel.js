@@ -1,15 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Swiper from "react-native-web-swiper";
-
 import { RouteCard } from "./RouteCard";
 
 export const CarouselSlider = ({ routes }) => {
   if (!routes || routes.length === 0) {
-    console.log("no routes ", routes);
     return null;
   }
-  console.log("routes >", routes);
+
   return (
     <View style={styles.container}>
       <Swiper>

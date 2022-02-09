@@ -13,9 +13,7 @@ export const GeneralButton = ({ children, onPress }) => {
 
 const styles = StyleSheet.create({
   btn: {
-    //flex: 0.01,
     alignSelf: "center",
-    // justifySelf: "center",
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 24,
@@ -32,11 +30,9 @@ const styles = StyleSheet.create({
 
   content: {
     textAlign: "center",
-    // fontSize: "medium",
     fontSize: 16,
     letterSpacing: 1,
     fontWeight: "normal",
-    // fontWeight: 300,
     color: colors[0].white,
     textTransform: "uppercase",
   },

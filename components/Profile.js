@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { Card } from "../ui_fractions/Card";
 import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
 import { distanceInKm, difficulty, duration } from "../utils/constants";
-import colors from "../utils/colors.json";
-
-import user, { fetchProfile, getFavoriteRoutes } from "../reducers/user";
+import user, { getFavoriteRoutes } from "../reducers/user";
 import { FavoriteRoute } from "./FavoriteRoute";
 
 export const Profile = () => {

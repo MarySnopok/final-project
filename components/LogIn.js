@@ -8,7 +8,6 @@ import { NavSection } from "../ui_fractions/NavSection";
 import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
-
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
@@ -16,9 +15,7 @@ import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
   const [password, setPasswordChange] = useState("");
-
   const accessToken = useSelector((store) => store.user.accessToken);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,6 +29,7 @@ export const LogIn = () => {
     }
     setChangeText(processedData);
   };
+
   const handlePasswordChange = (event) => {
     const { name, type, text } = event;
     let newPassword = text;

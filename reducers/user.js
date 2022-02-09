@@ -14,6 +14,7 @@ export const fetchProfile = createAsyncThunk("user/fetchProfile", async (_, thun
   return response.json();
 });
 
+// save fav route
 export const saveFavorite = createAsyncThunk("user/saveFavorite", async (route, thunkApi) => {
   const token = thunkApi.getState().user.accessToken;
 
@@ -34,6 +35,7 @@ export const saveFavorite = createAsyncThunk("user/saveFavorite", async (route, 
   return response.json();
 });
 
+// delete fav route
 export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (routeId, thunkApi) => {
   const token = thunkApi.getState().user.accessToken;
 
@@ -124,5 +126,5 @@ const user = createSlice({
 export default user;
 
 export const getFavoriteRoutes = (state) => state.user.favorite || [];
-// it comes with id as a "string" in favorites, therefore we always convert to string
+// it comes with id as a "string" in favorites, therefore it is always converted to string
 export const isRouteFavorite = (routeId) => (state) => getFavoriteRoutes(state).find((route) => route.id === routeId.toString());

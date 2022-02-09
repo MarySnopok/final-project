@@ -1,6 +1,4 @@
 import React from "react";
-//import { Routes, Route, HashRouter } from "react-router-dom";
-// import { Route, Router, Routes, Link } from "react-router";
 import { Router, Routes, Route } from "./ui_fractions/router/react-router";
 import { Consent } from "./components/Consent";
 import { LogIn } from "./components/LogIn";
@@ -11,12 +9,11 @@ import { EntryPage } from "./components/EntryPage";
 import { NotFound } from "./components/NotFound";
 import { Provider } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-
+import { AuthProvider } from "./components/AuthProvider";
+import { LogOut } from "./components/Logout";
 import user from "./reducers/user";
 import routes from "./reducers/routes";
 import ui from "./reducers/ui";
-import { AuthProvider } from "./components/AuthProvider";
-import { LogOut } from "./components/Logout";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -49,9 +46,3 @@ export default function App() {
     </>
   );
 }
-
-// const errorStatus = useSelector((store) => store.ui.error);
-
-// if (errorStatus === true) {
-//   return <Opps />;
-// }

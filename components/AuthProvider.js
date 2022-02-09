@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     AsyncStorage.getItem("accessToken").then(async (token) => {
       if (token) {
-        console.log("TOKEN WE GOD", token);
+        console.log("TOKEN WE GOT", token);
         dispatch(user.actions.setAccessToken(token));
       }
       setLoading(false);

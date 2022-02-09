@@ -1,26 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import MapView from "react-native-maps";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
 import { NoRoutes } from "../ui_fractions/NoRoutes";
 import { CarouselSlider } from "./Carousel";
-import { pickRandomBackground } from "../utils/constants";
 import colors from "../utils/colors";
-
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus, fetchOneRoute } from "../reducers/routes";
-import ui, { setLoading, setError } from "../reducers/ui";
+import ui from "../reducers/ui";
 import { useDispatch, useSelector } from "react-redux";
-
 import * as Location from "expo-location";
 import { useParams } from "react-router";
-
-// temporary lang and lot
-// const lat = 59.122;
-// const long = 18.108;
-
-// let lat = 12.544;
-// let long = 100.444;
 
 export const Map = () => {
   const [{ lat, long }, setCoordinates] = useState({ lat: 59.544, long: 10.444 });
@@ -45,18 +35,15 @@ export const Map = () => {
   }, [dispatch]);
 
   const getLocation = async () => {
-    // console.time("foo");
     dispatch(ui.actions.setLoading(true));
     const data = await Location.requestForegroundPermissionsAsync();
-    // console.timeEnd("foo");
     if (data.status !== "granted") {
-      console.log("Permission to access location was denied");
-      // we won't load anything, just hide loader
+      // permition was not granted - hiding loader
       dispatch(ui.actions.setLoading(false));
     } else {
       const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
+      // user geodata
       console.log("locationdata", locationData);
-
       console.log("lat", locationData.coords.latitude);
       console.log("long", locationData.coords.longitude);
       setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude });
@@ -71,6 +58,8 @@ export const Map = () => {
       dispatch(ui.actions.setLoading(false));
     }
   };
+
+  // found routes
   console.log("routes", routes);
 
   if (!routes.length && routesStatus === "fulfilled") {
@@ -79,7 +68,6 @@ export const Map = () => {
 
   // example from https://github.com/react-native-maps/react-native-maps/blob/master/example/examples/DisplayLatLng.js
   const { width, height } = Dimensions.get("window");
-
   const ASPECT_RATIO = width / height;
   const LATITUDE = lat;
   const LONGITUDE = long;
@@ -107,7 +95,7 @@ export const Map = () => {
               <MapView.Polyline
                 key={geom.ref + route.id}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
-                strokeColor={route.color} // fallback for when `strokeColors` is not supported by the map-provider
+                strokeColor={route.color}
                 strokeWidth={3}
                 coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
                 options={{

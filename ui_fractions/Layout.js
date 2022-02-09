@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export const LayoutRoot = ({ children }) => <View style={styles.container}>{children}</View>;
 

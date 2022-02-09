@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import colors from "../utils/colors.json";
 import { pickRandomBackground } from "../utils/constants";
 
@@ -19,8 +19,5 @@ const styles = StyleSheet.create({
     zIndex: 8,
     margin: 8,
     borderRadius: 4,
-
-    // width: Dimensions.get("window").width,
-    // height: Dimensions.get("window").height,
   },
 });

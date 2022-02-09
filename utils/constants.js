@@ -5,6 +5,7 @@ const BASE_URL = "https://final-project-backend-hikernav.herokuapp.com";
 
 export const API_URL = (slug) => `${BASE_URL}/${slug}`;
 
+// styling func
 const backgrounds = {
   lightgreen: colors[0].lightGreen,
   lightblue: colors[0].lightBlue,
@@ -25,7 +26,9 @@ export const pickRandomBackground = () => {
   return color;
 };
 
+// manipulations with incoming route details
 export const distanceRowData = (route) => route.tags.distance;
+
 export const distanceInKm = (route) => {
   const newDistance = parseInt(route.tags.distance, 10);
   if (isNaN(newDistance)) {
@@ -33,6 +36,7 @@ export const distanceInKm = (route) => {
   }
   return newDistance;
 };
+
 export const duration = (route) => {
   const newDuration = Math.round(parseInt(route.tags.distance, 10) / 6);
   if (isNaN(newDuration)) {
@@ -40,12 +44,13 @@ export const duration = (route) => {
   }
   return newDuration;
 };
+
 export const difficulty = (route) => {
   const rowDistance = route.tags.distance;
   const routeDistance = parseInt(rowDistance, 10);
   const statements = {
     easy: "easy",
-    medium: "moderate",
+    medium: "medium",
     hard: "hard",
   };
   if (!rowDistance) {

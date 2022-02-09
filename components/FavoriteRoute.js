@@ -3,50 +3,49 @@ import { BinButton } from "../ui_fractions/BinButton";
 import { RoadSvg } from "../ui_fractions/RoadSvg";
 import { ClockSvg } from "../ui_fractions/ClockSvg";
 import { DumbellSvg } from "../ui_fractions/DumbellSvg";
-import { StyleSheet, View, Dimensions } from "react-native";
-import colors from "../utils/colors.json";
+import { StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { deleteFavorite } from "../reducers/user";
 import { ActivityIndicator, TouchableHighlight } from "react-native";
 import { pickRandomBackground } from "../utils/constants";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
   const deleteRoute = async () => {
     setLoading(true);
     await dispatch(deleteFavorite(id));
   };
-
   // const onPress = () => {
   //   navigate(`/entrypage/${id}`);
   // };
-
   return (
     <TouchableHighlight>
       <View style={[styles.maincontainer, { backgroundColor: color }]}>
         <View style={styles.container}>
-          <ExtraInfo>{text}</ExtraInfo>
+          <ExtraInfo data={text} />
           {loading ? <ActivityIndicator /> : <BinButton onPress={deleteRoute} />}
         </View>
-        <View style={styles.container}>
+        <View style={styles.iconsContainer}>
           {distance && (
-            <ExtraInfo>
-              <RoadSvg style={styles.pic} /> {distance}km
-            </ExtraInfo>
+            <View style={styles.iconWrapper}>
+              <RoadSvg style={styles.pic} />
+              <ExtraInfo data={distance} comment={"km"} />
+            </View>
           )}
           {duration && (
-            <ExtraInfo>
-              <ClockSvg style={styles.pic} /> {duration}hr
-            </ExtraInfo>
+            <View style={styles.iconWrapper}>
+              <ClockSvg style={styles.pic} />
+              <ExtraInfo data={duration} comment={"hr"} />
+            </View>
           )}
-          <ExtraInfo>
-            <DumbellSvg style={styles.pic} /> {difficulty}
-          </ExtraInfo>
+          <View style={styles.iconWrapper}>
+            <DumbellSvg style={styles.pic} />
+            <ExtraInfo data={difficulty} />
+          </View>
         </View>
       </View>
     </TouchableHighlight>
@@ -56,7 +55,6 @@ export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color 
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
-    // backgroundColor: pickRandomBackground(),
     borderColor: pickRandomBackground(),
     borderWidth: 2,
     alignItems: "center",
@@ -69,12 +67,25 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     width: "auto",
   },
-
   container: {
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    marginBottom: 8,
+    marginLeft: 8,
+    marginRight: 0,
+  },
+  iconsContainer: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+  iconWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
   },
   pic: {
     height: 20,

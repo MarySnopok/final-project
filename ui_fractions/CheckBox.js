@@ -10,7 +10,6 @@ export const CheckBox = ({ onPress, isChecked }) => {
         fillColor={colors[0].secondary}
         unfillColor={colors[0].white}
         iconStyle={{ borderColor: colors[0].secondary, borderWidth: 2 }}
-        // textStyle={{ fontFamily: "JosefinSans-Regular" }}
         onPress={onPress}
       />
     </>

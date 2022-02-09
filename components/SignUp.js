@@ -8,7 +8,6 @@ import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router";
-
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
@@ -17,9 +16,7 @@ export const SignUp = () => {
   const [text, setChangeText] = useState("");
   const [password, setPasswordChange] = useState("");
   const [email, setEmailChange] = useState("");
-
   const accessToken = useSelector((store) => store.user.accessToken);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,13 +30,10 @@ export const SignUp = () => {
     }
     setChangeText(processedData);
   };
+
   const handlePasswordChange = (event) => {
     const { name, type, text } = event;
     let newPassword = text;
-    if (newPassword.length >= 5) {
-    } else if (newPassword.length < 5) {
-      console.log("too short");
-    }
     setPasswordChange(newPassword);
   };
 
@@ -48,10 +42,6 @@ export const SignUp = () => {
     let newEmail = text;
     setEmailChange(newEmail);
   };
-
-  console.log("text", text);
-  console.log("password", password);
-  console.log("email", email);
 
   useEffect(() => {
     if (accessToken) {
