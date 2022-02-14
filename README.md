@@ -2,8 +2,9 @@
 
 Cross platform Geo-location App developed to work in web and mobile.
 
-![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 13 49 13](https://user-images.githubusercontent.com/83823676/153870724-131a369b-ce08-43e0-8bc8-c817633ae20f.png)
-![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 14 10 15](https://user-images.githubusercontent.com/83823676/153870736-24afe73d-5224-4778-b20c-57c23284f4d7.png)
+![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 13 49 13](https://user-images.githubusercontent.com/83823676/153870909-2e50b01a-c222-4cd3-aa49-ddcb2f5950b4.png)
+
+![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 14 10 15](https://user-images.githubusercontent.com/83823676/153870915-e36e0948-3b36-4a45-a340-584294faf36b.png)
 
 
 # bottom user value:
