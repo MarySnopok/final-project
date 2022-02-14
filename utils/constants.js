@@ -42,6 +42,9 @@ export const duration = (route) => {
   if (isNaN(newDuration)) {
     return null;
   }
+  if (newDuration === 0) {
+    return 0.5;
+  }
   return newDuration;
 };
 
