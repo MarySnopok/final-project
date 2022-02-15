@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors[0].secondary,
     zIndex: 12,
+    maxWidth: 100,
   },
 
   content: {

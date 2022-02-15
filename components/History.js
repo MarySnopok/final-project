@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { StyleSheet } from "react-native";
 import { SubHeading } from "../ui_fractions/SubHeading";
 import { Card } from "../ui_fractions/Card";
-import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 
@@ -23,7 +22,6 @@ export const History = () => {
     <LayoutRoot>
       <LayoutFlex>
         <Card>
-          <Heading>History</Heading>
           <SubHeading>Stay tuned!</SubHeading>
         </Card>
       </LayoutFlex>

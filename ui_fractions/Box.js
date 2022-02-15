@@ -19,5 +19,6 @@ const styles = StyleSheet.create({
     zIndex: 8,
     margin: 8,
     borderRadius: 4,
+    maxWidth: 500,
   },
 });
