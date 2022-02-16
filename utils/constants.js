@@ -38,7 +38,7 @@ export const distanceInKm = (route) => {
 };
 
 export const duration = (route) => {
-  const newDuration = Math.round(parseInt(route.tags.distance, 10) / 6);
+  const newDuration = Math.round(parseInt(route.tags.distance, 10) / 4);
   if (isNaN(newDuration)) {
     return null;
   }
@@ -55,17 +55,22 @@ export const difficulty = (route) => {
     easy: "easy",
     medium: "medium",
     hard: "hard",
+    multi: "multi-day",
+    unknown: "dare to try",
   };
   if (!rowDistance) {
-    return statements.medium;
+    return statements.unknown;
   }
-  if (routeDistance <= 5) {
+  if (routeDistance <= 6) {
     return statements.easy;
   }
-  if (routeDistance > 5 && routeDistance <= 10) {
+  if (routeDistance >= 7 && routeDistance <= 16) {
     return statements.medium;
   }
-  if (routeDistance > 10) {
+  if (routeDistance >= 17 && routeDistance <= 25) {
     return statements.hard;
+  }
+  if (routeDistance >= 26) {
+    return statements.multi;
   }
 };

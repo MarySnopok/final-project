@@ -8,13 +8,14 @@ import { CarouselSlider } from "./Carousel";
 import colors from "../utils/colors";
 import routes, { fetchRoutes, selectRoutes, selectRoutesStatus, fetchOneRoute } from "../reducers/routes";
 import ui from "../reducers/ui";
+import user from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import * as Location from "expo-location";
 import { useParams } from "react-router";
 
 export const Map = () => {
-  const [{ lat, long }, setCoordinates] = useState({ lat: 59.544, long: 10.444 });
   const dispatch = useDispatch();
+  const coordinates = useSelector((store) => store.user.coordinates);
   const routesStatus = useSelector(selectRoutesStatus);
   const routes = useSelector(selectRoutes);
   const isLoading = useSelector((store) => store.ui.loading);
@@ -46,7 +47,7 @@ export const Map = () => {
       console.log("locationdata", locationData);
       console.log("lat", locationData.coords.latitude);
       console.log("long", locationData.coords.longitude);
-      setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude });
+      dispatch(user.actions.setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude }));
 
       await dispatch(
         fetchRoutes({
@@ -69,8 +70,8 @@ export const Map = () => {
   // example from https://github.com/react-native-maps/react-native-maps/blob/master/example/examples/DisplayLatLng.js
   const { width, height } = Dimensions.get("window");
   const ASPECT_RATIO = width / height;
-  const LATITUDE = lat;
-  const LONGITUDE = long;
+  const LATITUDE = coordinates.lat;
+  const LONGITUDE = coordinates.long;
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
@@ -105,6 +106,11 @@ export const Map = () => {
                 }}
               />
             ))
+        )}
+        {LATITUDE === 59.544 && LONGITUDE === 10.444 ? (
+          <Text>Start your search</Text>
+        ) : (
+          <MapView.Marker coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"title"} description={"description"} />
         )}
       </MapView>
       {routes && <CarouselSlider routes={routes} />}

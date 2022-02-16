@@ -62,6 +62,10 @@ const userInitialState = {
   email: null,
   error: null,
   favorite: [],
+  coordinates: {
+    lat: 59.544,
+    long: 10.444,
+  },
 };
 
 const user = createSlice({
@@ -88,6 +92,11 @@ const user = createSlice({
     setFavorite: (store, action) => {
       const favoriteRoute = store.favorite;
       favoriteRoute.push(action.payload);
+    },
+    setCoordinates: (store, action) => {
+      const coordinatesObject = store.coordinates;
+      coordinatesObject.lat = action.payload.lat;
+      coordinatesObject.long = action.payload.long;
     },
     logout: () => {
       // remove auth token from storage
