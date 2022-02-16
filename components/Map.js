@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import MapView from "react-native-maps";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
@@ -110,7 +110,7 @@ export const Map = () => {
         {LATITUDE === 59.544 && LONGITUDE === 10.444 ? (
           <Text>Start your search</Text>
         ) : (
-          <MapView.Marker coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"title"} description={"description"} />
+          <MapView.Marker key={2} coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"your location"} pinColor={"orange"} />
         )}
       </MapView>
       {routes && <CarouselSlider routes={routes} />}
