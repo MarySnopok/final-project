@@ -1,6 +1,8 @@
 # HikerNav-project
 View it live : 
 https://mary-snopok-final-project.netlify.app/
+Backend repo : https://github.com/MarySnopok/final-project-backend
+Heroku: https://final-project-backend-hikernav.herokuapp.com/
 
 
 Cross platform Geo-location App developed to work in web and mobile.
