@@ -30,4 +30,4 @@ Upcoming features:
 ## attribution:
 
 Geo data is provided by Open Street Maps - https://wiki.openstreetmap.org/wiki/API
-Icons - www.fontawesome.com
+All Icons - www.fontawesome.com
