@@ -3,14 +3,14 @@ import { StyleSheet, View } from "react-native";
 import Swiper from "react-native-web-swiper";
 import { RouteCard } from "./RouteCard";
 
-export const CarouselSlider = ({ routes }) => {
+export const CarouselSlider = ({ routes, swiperRef }) => {
   if (!routes || routes.length === 0) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Swiper>
+      <Swiper ref={swiperRef}>
         {routes.map((route) => (
           <RouteCard key={route.tags.name} route={route} />
         ))}

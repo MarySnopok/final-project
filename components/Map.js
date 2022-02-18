@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import MapView from "react-native-maps";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
@@ -63,6 +63,15 @@ export const Map = () => {
   // found routes
   console.log("routes", routes);
 
+  const swiperRef = useRef(null);
+  // const index = swiperRef.current.getActiveIndex();
+  // const actionsOfSwiper = (index) => {
+  //   swiperRef.current.goTo(index);
+  //   swiperRef.current.goToPrev(index-1);
+  //   swiperRef.current.goToNext(index+1);
+
+  // };
+
   if (!routes.length && routesStatus === "fulfilled") {
     return <NoRoutes>Sorry no routes found near you</NoRoutes>;
   }
@@ -113,7 +122,7 @@ export const Map = () => {
           <MapView.Marker key={2} coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"your location"} pinColor={"tomato"} />
         )}
       </MapView>
-      {routes && <CarouselSlider routes={routes} />}
+      {routes && <CarouselSlider swiperRef={swiperRef} routes={routes} />}
     </View>
   );
 };

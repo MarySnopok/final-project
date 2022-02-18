@@ -27,6 +27,7 @@ export const pickRandomBackground = () => {
 };
 
 // manipulations with incoming route details
+
 export const distanceRowData = (route) => route.tags.distance;
 
 export const distanceInKm = (route) => {

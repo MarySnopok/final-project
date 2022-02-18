@@ -31,7 +31,13 @@ export const RouteCard = ({ route }) => {
   return (
     <View key={route.tags.name} style={[styles.slideContainer, styles.slide1, { backgroundColor: route.color }]}>
       <ConsentContainer style={{ alignItems: "stretch", justifyContent: "space-between" }}>
-        {route.tags.name ? <Text style={styles.typography}>{route.tags.name}</Text> : <Text style={styles.typography}>Hiking route</Text>}
+        {route.tags.name ? (
+          <Text style={styles.typography}>{route.tags.name}</Text>
+        ) : (
+          <Text style={styles.typography}>
+            {route.tags.from}-{route.tags.to}
+          </Text>
+        )}
         {loadingSaveFavorite ? <ActivityIndicator /> : isFavorite ? <FavButtonAfter /> : <FavButton onPress={addToFavorite} />}
       </ConsentContainer>
       <RouteDetails route={route} />
