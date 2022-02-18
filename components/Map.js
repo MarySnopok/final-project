@@ -110,7 +110,7 @@ export const Map = () => {
         {LATITUDE === 59.544 && LONGITUDE === 10.444 ? (
           <Text>Start your search</Text>
         ) : (
-          <MapView.Marker key={2} coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"your location"} pinColor={"orange"} />
+          <MapView.Marker key={2} coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"your location"} pinColor={"tomato"} />
         )}
       </MapView>
       {routes && <CarouselSlider routes={routes} />}
