@@ -10,7 +10,7 @@ Heroku: https://final-project-backend-hikernav.herokuapp.com/
 
 ![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 14 19 23](https://user-images.githubusercontent.com/83823676/153871730-1ffbf8c9-80a1-4515-8519-13f31176d008.png)
 ![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 14 19 34](https://user-images.githubusercontent.com/83823676/153871792-ff528f6b-fb49-49ed-8aca-19c9eb322dfb.png)
-![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 14 17 20](https://user-images.githubusercontent.com/83823676/153871364-93c3673b-79d7-457f-a9bf-5b2c947c4408.png)
+![Simulator Screen Shot - iPhone 13 - 2022-02-18 at 12 13 11](https://user-images.githubusercontent.com/83823676/154696807-eda0d878-8639-4912-b7ff-3e3aa00093fe.png)
 ![Simulator Screen Shot - iPhone 13 - 2022-02-14 at 14 15 17](https://user-images.githubusercontent.com/83823676/153871140-40b69eb7-cea1-42c8-8fa2-d1f207748241.png)
 
 # tech-stack : React Native & React Native Web, MongoDB, Node.js, Mongoose, Express.js Expo
