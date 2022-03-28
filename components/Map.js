@@ -74,6 +74,7 @@ export const Map = () => {
             .filter((el, i, arr) => arr.findIndex((e) => e.ref === el.ref) === i)
             .map((geom) => (
               <MapView.Polyline
+                onPress={() => alert("click")}
                 key={geom.ref + route.id}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
                 strokeColor={route.color}

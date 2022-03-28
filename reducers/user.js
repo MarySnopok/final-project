@@ -206,6 +206,9 @@ const user = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
+      if (!action.payload.success) {
+        return state;
+      }
       const user = action.payload.response;
       state.favorite = user.favorite.map((route) => {
         route.color = pickRandomBackground();
