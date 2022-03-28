@@ -12,6 +12,8 @@ import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 
+import { signUpUser } from "../reducers/user";
+
 export const SignUp = () => {
   const [text, setChangeText] = useState("");
   const [password, setPasswordChange] = useState("");
@@ -49,44 +51,13 @@ export const SignUp = () => {
     }
   }, [accessToken, navigate]);
 
-  const onButtonPress = () => {
+  const onButtonPress = async () => {
     setChangeText("");
     setPasswordChange("");
     setEmailChange("");
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: text, password: password, email: email }),
-    };
-    fetch(API_URL("signup"), options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success) {
-          batch(() => {
-            dispatch(user.actions.setUserId(data.response.userId));
-            dispatch(user.actions.setUsername(data.response.username));
-            dispatch(user.actions.setAccessToken(data.response.accessToken));
-            dispatch(user.actions.setEmail(data.response.email));
-            dispatch(user.actions.setError(null));
-          });
-        } else {
-          batch(() => {
-            dispatch(user.actions.setUserId(null));
-            dispatch(user.actions.setUsername(null));
-            dispatch(user.actions.setAccessToken(null));
-            dispatch(user.actions.setEmail(null));
-            dispatch(user.actions.setError(data.response));
-          });
-        }
-      })
-      .catch((e) => {
-        console.log("singup error", e);
-        console.error(e);
-      });
+    await dispatch(signUpUser({ username: text, password, email }));
   };
+
   return (
     <LayoutRoot>
       <LayoutFlex>

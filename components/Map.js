@@ -6,11 +6,10 @@ import { Loader } from "../ui_fractions/Loader";
 import { NoRoutes } from "../ui_fractions/NoRoutes";
 import { CarouselSlider } from "./Carousel";
 import colors from "../utils/colors";
-import routes, { fetchRoutes, selectRoutes, selectRoutesStatus, fetchOneRoute } from "../reducers/routes";
+import routes, { selectRoutes, selectRoutesStatus, fetchOneRoute } from "../reducers/routes";
 import ui from "../reducers/ui";
-import user from "../reducers/user";
+import user, { getUserGeoLocation } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import * as Location from "expo-location";
 import { useParams } from "react-router";
 
 export const Map = () => {
@@ -36,41 +35,13 @@ export const Map = () => {
   }, [dispatch]);
 
   const getLocation = async () => {
-    dispatch(ui.actions.setLoading(true));
-    const data = await Location.requestForegroundPermissionsAsync();
-    if (data.status !== "granted") {
-      // permition was not granted - hiding loader
-      dispatch(ui.actions.setLoading(false));
-    } else {
-      const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
-      // user geodata
-      console.log("locationdata", locationData);
-      console.log("lat", locationData.coords.latitude);
-      console.log("long", locationData.coords.longitude);
-      dispatch(user.actions.setCoordinates({ lat: locationData.coords.latitude, long: locationData.coords.longitude }));
-
-      await dispatch(
-        fetchRoutes({
-          lat: locationData.coords.latitude,
-          long: locationData.coords.longitude,
-        })
-      );
-      // hide loader when routes fetched
-      dispatch(ui.actions.setLoading(false));
-    }
+    await dispatch(getUserGeoLocation());
   };
 
   // found routes
   console.log("routes", routes);
 
   const swiperRef = useRef(null);
-  // const index = swiperRef.current.getActiveIndex();
-  // const actionsOfSwiper = (index) => {
-  //   swiperRef.current.goTo(index);
-  //   swiperRef.current.goToPrev(index-1);
-  //   swiperRef.current.goToNext(index+1);
-
-  // };
 
   if (!routes.length && routesStatus === "fulfilled") {
     return <NoRoutes>Sorry no routes found near you</NoRoutes>;

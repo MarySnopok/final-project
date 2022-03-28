@@ -9,7 +9,7 @@ import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { API_URL } from "../utils/constants";
-import user from "../reducers/user";
+import user, { signInUser } from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 
 export const LogIn = () => {
@@ -42,38 +42,11 @@ export const LogIn = () => {
     }
   }, [accessToken, navigate]);
 
-  const onButtonPress = () => {
+  const onButtonPress = async () => {
     console.log("login pressed");
     setChangeText("");
     setPasswordChange("");
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: text, password: password }),
-    };
-    fetch(API_URL("signin"), options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success) {
-          batch(() => {
-            dispatch(user.actions.setUserId(data.response.userId));
-            dispatch(user.actions.setUsername(data.response.username));
-            dispatch(user.actions.setAccessToken(data.response.accessToken));
-            dispatch(user.actions.setError(null));
-          });
-        } else {
-          batch(() => {
-            console.log("WE ARE HERE?!");
-            dispatch(user.actions.setUserId(null));
-            dispatch(user.actions.setUsername(null));
-            dispatch(user.actions.setAccessToken(null));
-            dispatch(user.actions.setError(data.response));
-          });
-        }
-      });
+    await dispatch(signInUser({ username: text, password: password }));
   };
 
   return (
