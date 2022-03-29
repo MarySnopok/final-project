@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { StyleSheet, View, Text } from "react-native";
 import colors from "../utils/colors.json";
@@ -6,7 +6,7 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import { FavButton, FavButtonAfter } from "../ui_fractions/FavButton";
 import { pickRandomBackground } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { isRouteFavorite, saveFavorite } from "../reducers/user";
+import { isRouteFavorite, saveFavorite, deleteFavorite } from "../reducers/user";
 import { ActivityIndicator } from "react-native";
 import { RouteDetails } from "./RouteDetails";
 
@@ -28,6 +28,16 @@ export const RouteCard = ({ route }) => {
     }
   };
 
+  const deleteFromFavorite = async () => {
+    if (!accessToken) {
+      navigate("/signin");
+    } else {
+      setLoadingSaveFavorite(true);
+      await dispatch(deleteFavorite(route));
+      setLoadingSaveFavorite(false);
+    }
+  };
+
   return (
     <View key={route.tags.name} style={[styles.slideContainer, styles.slide1, { backgroundColor: route.color }]}>
       <ConsentContainer style={{ alignItems: "stretch", justifyContent: "space-between" }}>
@@ -38,7 +48,7 @@ export const RouteCard = ({ route }) => {
             {route.tags.from}-{route.tags.to}
           </Text>
         )}
-        {loadingSaveFavorite ? <ActivityIndicator /> : isFavorite ? <FavButtonAfter /> : <FavButton onPress={addToFavorite} />}
+        {loadingSaveFavorite ? <ActivityIndicator /> : isFavorite ? <FavButtonAfter onPress={deleteFromFavorite} /> : <FavButton onPress={addToFavorite} />}
       </ConsentContainer>
       <RouteDetails route={route} />
     </View>

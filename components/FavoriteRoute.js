@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { deleteFavorite } from "../reducers/user";
 import { ActivityIndicator, TouchableHighlight } from "react-native";
-import { pickRandomBackground } from "../utils/constants";
+
 // import { useNavigate } from "react-router";
 
 export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color }) => {
@@ -55,8 +55,6 @@ export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color 
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
-    borderColor: pickRandomBackground(),
-    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 8,

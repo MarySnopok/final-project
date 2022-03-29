@@ -40,7 +40,7 @@ export const saveFavorite = createAsyncThunk("user/saveFavorite", async (route, 
 });
 
 // delete fav route
-export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (routeId, thunkApi) => {
+export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (route, thunkApi) => {
   const token = thunkApi.getState().user.accessToken;
 
   const response = await fetch(API_URL("favorite"), {
@@ -52,11 +52,12 @@ export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (rou
     },
     body: JSON.stringify({
       route: {
-        id: routeId,
+        id: route.id.toString(),
       },
     }),
   });
-  return response.json();
+  const data = await response.json();
+  return data;
 });
 
 export const signUpUser = createAsyncThunk("user/signup", async (body, thunkApi) => {
