@@ -1,16 +1,22 @@
 import { useEffect, useRef } from "react";
-import MapView from "react-native-maps";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+
 import { GeneralButton } from "../ui_fractions/GeneralButton";
 import { Loader } from "../ui_fractions/Loader";
 import { NoRoutes } from "../ui_fractions/NoRoutes";
 import { CarouselSlider } from "./Carousel";
 import colors from "../utils/colors";
-import routes, { selectRoutes, selectRoutesStatus, fetchOneRoute } from "../reducers/routes";
+import routes, {
+  selectRoutes,
+  selectRoutesStatus,
+  fetchOneRoute,
+} from "../reducers/routes";
 import ui from "../reducers/ui";
 import user, { getUserGeoLocation } from "../reducers/user";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+
+import { MapView } from "./mapview";
 
 export const Map = () => {
   const dispatch = useDispatch();
@@ -55,45 +61,29 @@ export const Map = () => {
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+  const coordinatesIsKnown = !(LATITUDE === 59.544 && LONGITUDE === 10.444);
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        {routesStatus === "init" && <GeneralButton onPress={getLocation}>Search</GeneralButton>}
-        {(routesStatus === "loading" || isLoading) && <Loader size={"large"} color={colors[0].loader} />}
+        {routesStatus === "init" && (
+          <GeneralButton onPress={getLocation}>Search</GeneralButton>
+        )}
+        {(routesStatus === "loading" || isLoading) && (
+          <Loader size={"large"} color={colors[0].loader} />
+        )}
       </View>
       <MapView
-        style={styles.map}
-        defaultZoom={10}
-        userInterfaceStyle="dark"
-        region={{ latitude: LATITUDE, longitude: LONGITUDE, latitudeDelta: LATITUDE_DELTA, longitudeDelta: LONGITUDE_DELTA }}
-      >
-        {routes.map((route) =>
-          route.members
-            .filter((el) => el.type === "way")
-            // uniqBy
-            .filter((el, i, arr) => arr.findIndex((e) => e.ref === el.ref) === i)
-            .map((geom) => (
-              <MapView.Polyline
-                onPress={() => alert("click")}
-                key={geom.ref + route.id}
-                path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
-                strokeColor={route.color}
-                strokeWidth={3}
-                coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
-                options={{
-                  strokeColor: route.color,
-                  strokeOpacity: 1,
-                  strokeWeight: 3,
-                }}
-              />
-            ))
-        )}
-        {LATITUDE === 59.544 && LONGITUDE === 10.444 ? (
-          <Text>Start your search</Text>
-        ) : (
-          <MapView.Marker key={2} coordinate={{ latitude: LATITUDE, longitude: LONGITUDE }} title={"your location"} pinColor={"tomato"} />
-        )}
-      </MapView>
+        lat={LATITUDE}
+        long={LONGITUDE}
+        latDelta={LATITUDE_DELTA}
+        longDelta={LONGITUDE_DELTA}
+        routes={routes}
+        coordinatesIsKnown={coordinatesIsKnown}
+        onRouteClick={(route) => {
+          console.log("route clicked", route);
+        }}
+      />
       {routes && <CarouselSlider swiperRef={swiperRef} routes={routes} />}
     </View>
   );
