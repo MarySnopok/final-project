@@ -1,7 +1,7 @@
 import colors from "../utils/colors.json";
 import { StyleSheet, TouchableHighlight } from "react-native";
-import { HeartSvg } from "./HeartSvg";
-import { ShallowHeartSvg } from "./ShallowHeartSvg";
+import { HeartSvg } from "./svg_components/HeartSvg";
+import { ShallowHeartSvg } from "./svg_components/ShallowHeartSvg";
 
 export const FavButton = ({ onPress }) => {
   return (

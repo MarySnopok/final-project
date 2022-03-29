@@ -1,6 +1,6 @@
 import colors from "../utils/colors.json";
 import { StyleSheet, TouchableHighlight } from "react-native";
-import { BinSvg } from "./BinSvg";
+import { BinSvg } from "./svg_components/BinSvg";
 
 export const BinButton = ({ onPress }) => {
   return (
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 6,
     margin: 8,
-    borderWidth: 2,
+    // borderWidth: 2,
     zIndex: 14,
     borderRadius: 20,
-    borderColor: colors[0].white,
+    // borderColor: colors[0].white,
     backgroundColor: colors[0].transparent,
   },
   pic: {

@@ -6,13 +6,13 @@ import { NavSection } from "../ui_fractions/NavSection";
 import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
-import { useSelector, useDispatch, batch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { API_URL } from "../utils/constants";
-import user from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
-
+import { LogInSvg } from "../ui_fractions/svg_components/LogInSvg";
+import { StyleSheet } from "react-native";
 import { signUpUser } from "../reducers/user";
+import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 
 export const SignUp = () => {
   const [text, setChangeText] = useState("");
@@ -79,11 +79,18 @@ export const SignUp = () => {
         <NavSection
           routes={[
             // navigate(-1) the same as going back
-            { title: "back", link: -1 },
-            { title: "log in", link: "/signin" },
+            { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
+            { title: <LogInSvg style={styles.pic} />, link: "/signin" },
           ]}
         />
       </LayoutNavbar>
     </LayoutRoot>
   );
 };
+
+const styles = StyleSheet.create({
+  pic: {
+    height: 20,
+    width: 20,
+  },
+});

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-import colors from "../utils/colors.json";
+import colors from "../../utils/colors.json";
 
 export const FavSvg = (props) => (
   <Svg

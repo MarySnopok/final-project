@@ -18,8 +18,8 @@
         "lightOrange": "rgba(247, 195, 171,0.7)",
         "dark": "#121212",
         "error": "#CF6679",
-        "secondary":"#727cf5",
-        "primary":"#DB7093",
+        "secondary":"#F57982",
+        "primary":"#727cf5",
         "loader":"#F57982",
         "transparent":"transparent"
     }

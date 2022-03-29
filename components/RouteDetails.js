@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import colors from "../utils/colors.json";
 import { distanceInKm, distanceRowData, duration, difficulty } from "../utils/constants";
-import { DumbellSvg } from "../ui_fractions/DumbellSvg";
-import { ClockSvg } from "../ui_fractions/ClockSvg";
-import { RoadSvg } from "../ui_fractions/RoadSvg";
-import { HikerSvg } from "../ui_fractions/HikerSvg";
+import { DumbellSvg } from "../ui_fractions/svg_components/DumbellSvg";
+import { ClockSvg } from "../ui_fractions/svg_components/ClockSvg";
+import { RoadSvg } from "../ui_fractions/svg_components/RoadSvg";
+import { HikerSvg } from "../ui_fractions/svg_components/HikerSvg";
 
 export const RouteDetails = ({ route }) => {
   return (

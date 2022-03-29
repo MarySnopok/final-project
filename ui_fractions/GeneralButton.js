@@ -5,7 +5,7 @@ export const GeneralButton = ({ children, onPress }) => {
   return (
     <SafeAreaView>
       <TouchableHighlight onPress={onPress} style={styles.btn} underlayColor={colors[0].transparent} activeOpacity={0.78}>
-        <Text style={styles.content}>{children}</Text>
+        {typeof children === "string" ? <Text style={styles.content}>{children}</Text> : children}
       </TouchableHighlight>
     </SafeAreaView>
   );
@@ -16,13 +16,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 20,
     margin: 16,
     backgroundColor: colors[0].secondary,
-    borderRadius: 36,
+    borderRadius: 100,
     borderWidth: 2,
     borderColor: colors[0].secondary,
     zIndex: 12,

@@ -11,6 +11,7 @@ import ui from "../reducers/ui";
 import user, { getUserGeoLocation } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { SearchSvg } from "../ui_fractions/svg_components/SearchSvg";
 
 export const Map = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,11 @@ export const Map = () => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        {routesStatus === "init" && <GeneralButton onPress={getLocation}>Search</GeneralButton>}
+        {routesStatus === "init" && (
+          <GeneralButton onPress={getLocation}>
+            <SearchSvg style={styles.large} />
+          </GeneralButton>
+        )}
         {(routesStatus === "loading" || isLoading) && <Loader size={"large"} color={colors[0].loader} />}
       </View>
       <MapView
@@ -116,5 +121,9 @@ const styles = StyleSheet.create({
     right: 100,
     height: 100,
     zIndex: 5,
+  },
+  large: {
+    height: 24,
+    width: 24,
   },
 });

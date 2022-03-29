@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { StyleSheet, View, Text } from "react-native";
 import colors from "../utils/colors.json";

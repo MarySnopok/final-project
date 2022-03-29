@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch, batch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Card } from "../ui_fractions/Card";
 import { GeneralButton } from "../ui_fractions/GeneralButton";
@@ -8,9 +8,11 @@ import { NavSection } from "../ui_fractions/NavSection";
 import { Subtext } from "../ui_fractions/Subtext";
 import { Input } from "../ui_fractions/Input";
 import { ConsentContainer } from "../ui_fractions/ConsentContainer";
-import { API_URL } from "../utils/constants";
 import user, { signInUser } from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
+import { StyleSheet } from "react-native";
+import { SignUpSvg } from "../ui_fractions/svg_components/SignUpSvg";
+import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
@@ -69,11 +71,18 @@ export const LogIn = () => {
         <NavSection
           routes={[
             // navigate(-1) the same as going back
-            { title: "back", link: -1 },
-            { title: "sign up", link: "/signup" },
+            { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
+            { title: <SignUpSvg style={styles.pic} />, link: "/signup" },
           ]}
         />
       </LayoutNavbar>
     </LayoutRoot>
   );
 };
+
+const styles = StyleSheet.create({
+  pic: {
+    height: 20,
+    width: 20,
+  },
+});

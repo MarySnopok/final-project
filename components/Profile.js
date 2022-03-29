@@ -9,6 +9,9 @@ import { NavSection } from "../ui_fractions/NavSection";
 import { distanceInKm, difficulty, duration } from "../utils/constants";
 import user, { getFavoriteRoutes } from "../reducers/user";
 import { FavoriteRoute } from "./FavoriteRoute";
+import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
+import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
+import { Leave } from "../ui_fractions/svg_components/LeaveSvg";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -49,9 +52,9 @@ export const Profile = () => {
       <LayoutNavbar>
         <NavSection
           routes={[
-            { title: "home", link: "/entrypage" },
-            { title: "history", link: "/history" },
-            { title: "log out", link: "/logout" },
+            { title: <HomeSvg style={styles.pic} color={"white"} />, link: "/entrypage" },
+            { title: <HistorySvg style={styles.pic} />, link: "/history" },
+            { title: <Leave style={styles.large} />, link: "/logout" },
           ]}
         />
       </LayoutNavbar>
@@ -67,5 +70,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: 400,
     width: "100%",
+  },
+  pic: {
+    height: 20,
+    width: 20,
+  },
+  large: {
+    height: 24,
+    width: 24,
   },
 });
