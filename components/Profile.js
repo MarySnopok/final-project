@@ -33,7 +33,7 @@ export const Profile = () => {
               keyExtractor={(route) => route.id}
               renderItem={({ item: route }) => (
                 <FavoriteRoute
-                  id={route.id}
+                  route={route}
                   isChecked={false}
                   text={route.tags.name}
                   distance={distanceInKm(route)}

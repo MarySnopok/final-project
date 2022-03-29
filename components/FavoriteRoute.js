@@ -11,13 +11,13 @@ import { ActivityIndicator, TouchableHighlight } from "react-native";
 
 // import { useNavigate } from "react-router";
 
-export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color }) => {
+export const FavoriteRoute = ({ text, distance, duration, difficulty, route, color }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const deleteRoute = async () => {
     setLoading(true);
-    await dispatch(deleteFavorite(id));
+    await dispatch(deleteFavorite(route));
   };
   // const onPress = () => {
   //   navigate(`/entrypage/${id}`);
