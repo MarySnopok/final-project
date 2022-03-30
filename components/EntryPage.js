@@ -5,8 +5,7 @@ import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
 import { ProfileSvg } from "../ui_fractions/svg_components/ProfileSvg";
 import { StyleSheet } from "react-native";
-import { LogInSvg } from "../ui_fractions/svg_components/LogInSvg";
-import { SignUpSvg } from "../ui_fractions/svg_components/SignUpSvg";
+import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 
 export const EntryPage = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -19,17 +18,11 @@ export const EntryPage = () => {
         </LayoutFlex>
         <LayoutNavbar>
           <NavSection
-            routes={
-              !accessToken
-                ? [
-                    { title: <LogInSvg style={styles.pic} />, link: "/signin" },
-                    { title: <SignUpSvg style={styles.pic} />, link: "/signup" },
-                  ]
-                : [
-                    { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
-                    { title: <ProfileSvg style={styles.pic} />, link: "/profile" },
-                  ]
-            }
+            routes={[
+              { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
+              { title: <ProfileSvg style={styles.pic} />, link: "/profile" },
+              { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
+            ]}
           />
         </LayoutNavbar>
       </LayoutRoot>

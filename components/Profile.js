@@ -11,7 +11,7 @@ import user, { getFavoriteRoutes } from "../reducers/user";
 import { FavoriteRoute } from "./FavoriteRoute";
 import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
-import { Leave } from "../ui_fractions/svg_components/LeaveSvg";
+import { ProfileSvg } from "../ui_fractions/svg_components/ProfileSvg";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -52,9 +52,9 @@ export const Profile = () => {
       <LayoutNavbar>
         <NavSection
           routes={[
-            { title: <HomeSvg style={styles.pic} color={"white"} />, link: "/entrypage" },
-            { title: <HistorySvg style={styles.pic} />, link: "/history" },
-            { title: <Leave style={styles.large} />, link: "/logout" },
+            { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
+            { title: <ProfileSvg style={styles.pic} />, link: "/profile" },
+            { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
           ]}
         />
       </LayoutNavbar>

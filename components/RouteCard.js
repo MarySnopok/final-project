@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { StyleSheet, View, Text } from "react-native";
 import colors from "../utils/colors.json";
-import { ConsentContainer } from "../ui_fractions/ConsentContainer";
+import { RouteHeadingContainer } from "../ui_fractions/RouteHeadingContainer";
 import { FavButton, FavButtonAfter } from "../ui_fractions/FavButton";
 import { pickRandomBackground } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,7 @@ export const RouteCard = ({ route }) => {
 
   return (
     <View key={route.tags.name} style={[styles.slideContainer, styles.slide1, { backgroundColor: route.color }]}>
-      <ConsentContainer style={{ alignItems: "stretch", justifyContent: "space-between" }}>
+      <RouteHeadingContainer style={{ alignItems: "stretch", justifyContent: "space-between" }}>
         {route.tags.name ? (
           <Text style={styles.typography}>{route.tags.name}</Text>
         ) : (
@@ -49,7 +49,7 @@ export const RouteCard = ({ route }) => {
           </Text>
         )}
         {loadingSaveFavorite ? <ActivityIndicator /> : isFavorite ? <FavButtonAfter onPress={deleteFromFavorite} /> : <FavButton onPress={addToFavorite} />}
-      </ConsentContainer>
+      </RouteHeadingContainer>
       <RouteDetails route={route} />
     </View>
   );

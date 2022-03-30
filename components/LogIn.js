@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Card } from "../ui_fractions/Card";
-import { GeneralButton } from "../ui_fractions/GeneralButton";
+import { SubmitButton } from "../ui_fractions/SubmitButton";
 import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
 import { Subtext } from "../ui_fractions/Subtext";
@@ -11,8 +11,11 @@ import { ConsentContainer } from "../ui_fractions/ConsentContainer";
 import user, { signInUser } from "../reducers/user";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { StyleSheet } from "react-native";
-import { SignUpSvg } from "../ui_fractions/svg_components/SignUpSvg";
 import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
+import { CrossLinks } from "../ui_fractions/CrossLinks";
+import { CommentsText } from "../ui_fractions/CommentsText";
+import { ProfileSvg } from "../ui_fractions/svg_components/ProfileSvg";
+import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
 
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
@@ -55,24 +58,35 @@ export const LogIn = () => {
     <LayoutRoot>
       <LayoutFlex>
         <Card>
-          <Heading>Log In</Heading>
+          <Heading>Login to Your Account</Heading>
           <Input name="username" placeholder={"username"} type="text" value={text} onChange={handleUsernameChange} />
           <Input name="password" placeholder={"password"} type="text" value={password} onChange={handlePasswordChange} />
           {password.length >= 5 && text !== "" ? (
-            <GeneralButton children={"submit"} onPress={onButtonPress} />
+            <SubmitButton children={"login"} onPress={onButtonPress} />
           ) : (
-            <ConsentContainer>
-              <Subtext>please add your credentials.</Subtext>
-            </ConsentContainer>
+            <>
+              <SubmitButton disabled={true} children={"login"} onPress={onButtonPress} />
+              <ConsentContainer>
+                <Subtext>Please add your credentials.</Subtext>
+              </ConsentContainer>
+            </>
           )}
+          <ConsentContainer>
+            <CommentsText>
+              Don't have an account?
+              <CrossLinks routes={[{ title: "Sign Up", link: "/signup" }]} />
+            </CommentsText>
+          </ConsentContainer>
         </Card>
       </LayoutFlex>
+
       <LayoutNavbar>
         <NavSection
           routes={[
             // navigate(-1) the same as going back
             { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
-            { title: <SignUpSvg style={styles.pic} />, link: "/signup" },
+            { title: <ProfileSvg style={styles.pic} />, link: "/profile" },
+            { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
           ]}
         />
       </LayoutNavbar>

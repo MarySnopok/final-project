@@ -11,19 +11,20 @@ export const NavButton = ({ children, onPress }) => {
 
 const styles = StyleSheet.create({
   navbtn: {
-    flex: 0.2,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
-    margin: 8,
-    zIndex: 12,
+    padding: 0,
+    zIndex: 14,
     maxWidth: 100,
   },
 
   content: {
-    fillColor: colors[0].secondary,
+    color: colors[0].secondary,
+    fontWeight: "bold",
+    marginTop: 4,
+    marginRight: 0,
+    marginLeft: 8,
+    fontSize: 16,
+    textDecorationLine: "underline",
   },
 });
