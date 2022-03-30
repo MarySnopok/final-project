@@ -12,6 +12,9 @@ import { FavoriteRoute } from "./FavoriteRoute";
 import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
 import { ProfileSvg } from "../ui_fractions/svg_components/ProfileSvg";
+import { LogInSvg } from "../ui_fractions/svg_components/LogInSvg";
+import colors from "../utils/colors.json";
+import { UserProfileLogOut } from "../ui_fractions/UserProfileLogOut";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -29,7 +32,8 @@ export const Profile = () => {
     <LayoutRoot>
       <LayoutFlex>
         <Card>
-          <Heading>{username}'s favorite routes:</Heading>
+          <UserProfileLogOut children={[{ title: <LogInSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} />
+          <Heading children={`${username}'s favorite routes:`} />
           <View style={styles.container}>
             <FlatList
               data={favoriteRoutes}

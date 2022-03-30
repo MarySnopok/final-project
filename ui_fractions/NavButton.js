@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   navbtn: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 0,
+    // padding: 8,
     zIndex: 14,
     maxWidth: 100,
   },
