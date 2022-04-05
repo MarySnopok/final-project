@@ -19,8 +19,8 @@ export const EntryPage = () => {
         <LayoutNavbar>
           <NavSection
             routes={[
-              { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
-              { title: <ProfileSvg style={styles.pic} />, link: "/profile" },
+              { title: <HomeSvg color={"white"} style={styles.pic} />, link: "/entrypage" },
+              { title: <ProfileSvg color={"white"} style={styles.pic} />, link: "/profile" },
               { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
             ]}
           />

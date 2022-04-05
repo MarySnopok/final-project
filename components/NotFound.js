@@ -12,7 +12,7 @@ export const NotFound = () => {
         <Heading children={"Not found"} />
       </LayoutFlex>
       <LayoutNavbar>
-        <NavSection routes={[{ title: <HomeSvg style={styles.pic} />, link: "/entrypage" }]} />
+        <NavSection routes={[{ title: <HomeSvg color={"white"} style={styles.pic} />, link: "/entrypage" }]} />
       </LayoutNavbar>
     </LayoutRoot>
   );

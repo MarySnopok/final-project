@@ -2,7 +2,7 @@ import * as React from "react";
 import Svg, { Path } from "react-native-svg";
 import colors from "../../utils/colors.json";
 
-export const LogInSvg = (props) => (
+export const LogOutSvg = (props) => (
   <Svg aria-hidden="true" data-prefix="fas" data-icon="login" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" {...props}>
     <Path
       fill={props.color}

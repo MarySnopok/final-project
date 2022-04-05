@@ -12,9 +12,10 @@ import { FavoriteRoute } from "./FavoriteRoute";
 import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
 import { ProfileSvg } from "../ui_fractions/svg_components/ProfileSvg";
-import { LogInSvg } from "../ui_fractions/svg_components/LogInSvg";
+import { LogOutSvg } from "../ui_fractions/svg_components/LogOutSvg";
 import colors from "../utils/colors.json";
 import { UserProfileLogOut } from "../ui_fractions/UserProfileLogOut";
+import { ProfilePicture } from "./ProfilePicture";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -32,8 +33,9 @@ export const Profile = () => {
     <LayoutRoot>
       <LayoutFlex>
         <Card>
-          <UserProfileLogOut children={[{ title: <LogInSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} />
-          <Heading children={`${username}'s favorite routes:`} />
+          <UserProfileLogOut children={[{ title: <LogOutSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} />
+          {/* <Heading children={`Welcome ${username}!`} /> */}
+          <ProfilePicture children={`Welcome ${username}!`} />
           <View style={styles.container}>
             <FlatList
               data={favoriteRoutes}
@@ -56,8 +58,8 @@ export const Profile = () => {
       <LayoutNavbar>
         <NavSection
           routes={[
-            { title: <HomeSvg style={styles.pic} />, link: "/entrypage" },
-            { title: <ProfileSvg style={styles.pic} />, link: "/profile" },
+            { title: <HomeSvg color={"white"} style={styles.pic} />, link: "/entrypage" },
+            { title: <ProfileSvg color={"white"} style={styles.pic} />, link: "/profile" },
             { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
           ]}
         />
