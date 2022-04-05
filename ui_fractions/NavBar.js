@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors[0].dark,
     borderTopWidth: 2,
     alignItems: "flex-start",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     flexDirection: "row",
     padding: 8,
     zIndex: 4,

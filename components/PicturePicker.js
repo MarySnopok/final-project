@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -8,7 +8,6 @@ import user, { saveUserProfilePicture } from "../reducers/user";
 
 export const PicturePicker = () => {
   const profilePicture = useSelector((state) => state.user.userImage);
-  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
 
   const checkForCameraRollPermission = async () => {
@@ -30,7 +29,6 @@ export const PicturePicker = () => {
     });
     console.log(JSON.stringify(result));
     if (!result.cancelled) {
-      //setImage(result.uri);
       console.log(result);
       dispatch(saveUserProfilePicture(result.uri));
     }
@@ -56,7 +54,7 @@ export const PicturePicker = () => {
 
       <View style={imageUploaderStyles.uploadBtnContainer}>
         <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn}>
-          <Text>{image ? "Edit" : "Upload"} Image</Text>
+          <Text>{profilePicture !== null ? "Edit" : "Upload"} Image</Text>
           <AntDesign name="camera" size={20} color={colors[0].dark} />
         </TouchableOpacity>
       </View>

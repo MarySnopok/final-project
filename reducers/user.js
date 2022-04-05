@@ -218,10 +218,6 @@ const user = createSlice({
       coordinatesObject.lat = action.payload.lat;
       coordinatesObject.long = action.payload.long;
     },
-    setUserImage: (store, action) => {
-      console.log("picture", action);
-      store.userImage = action.payload;
-    },
     logout: () => {
       // remove auth token from storage
       AsyncStorage.removeItem("accessToken");
@@ -258,7 +254,7 @@ const user = createSlice({
       });
     });
     builder.addCase(saveUserProfilePicture.pending, (state, action) => {
-      // console.log("action>>", action);
+      console.log("action>>", action);
       state.userImage = action.meta.arg;
     });
   },
