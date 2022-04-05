@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { View, FlatList, StyleSheet } from "react-native";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { Card } from "../ui_fractions/Card";
-import { Heading } from "../ui_fractions/Heading";
 import { NavSection } from "../ui_fractions/NavSection";
 import { distanceInKm, difficulty, duration } from "../utils/constants";
 import user, { getFavoriteRoutes } from "../reducers/user";
@@ -34,7 +33,6 @@ export const Profile = () => {
       <LayoutFlex>
         <Card>
           <UserProfileLogOut children={[{ title: <LogOutSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} />
-          {/* <Heading children={`Welcome ${username}!`} /> */}
           <ProfilePicture children={`Welcome ${username}!`} />
           <View style={styles.container}>
             <FlatList
