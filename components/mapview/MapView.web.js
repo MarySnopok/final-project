@@ -18,6 +18,8 @@ export const MapView = ({
   routes,
   coordinatesIsKnown,
   onRouteClick,
+  selectedRoute,
+  boundaries,
 }) => {
   const mapRef = useRef();
 
@@ -40,12 +42,25 @@ export const MapView = ({
     }
   }, [routes]);
 
+  useEffect(() => {
+    if (mapRef.current && boundaries) {
+      const bbox = [
+        [boundaries.maxlon, boundaries.maxlat],
+        [boundaries.minlon, boundaries.minlat],
+      ];
+      mapRef.current.fitBounds(bbox, {
+        padding: { top: 10, bottom: 240, left: 15, right: 5 },
+      });
+    }
+  }, [boundaries]);
+
   // transform coordinates into mapbox format
   const geojsons = useMemo(
     () =>
       (routes ?? []).map((route) => ({
         type: "FeatureCollection",
         key: route.id,
+        origin: route,
         color: route.color,
         features: route.members
           .filter((el) => el.type === "way")
@@ -60,10 +75,6 @@ export const MapView = ({
       })),
     [routes]
   );
-
-  const onCl = useCallback((c, b) => {
-    console.log("on click", b, c);
-  });
 
   return (
     <Map
@@ -85,6 +96,11 @@ export const MapView = ({
             paint={{
               "line-color": gs.color,
               "line-width": 8,
+              "line-opacity": selectedRoute
+                ? gs.origin === selectedRoute
+                  ? 1 // if we have selected route and it is 
+                  : 0.4 // it is not selected route
+                : 1, // we don't have selected route at all
             }}
             id={`layer-${gs.key}`}
             {...layerStyle}
