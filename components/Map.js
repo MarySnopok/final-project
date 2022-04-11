@@ -55,7 +55,13 @@ export const Map = () => {
     const routeIndex = routes.indexOf(route);
     setSelectedRoute(routeIndex);
     setOverview(false);
-    swiperRef.current.goTo(routeIndex);
+    if (swiperRef.current) {
+      // todo: fix this since it's working far from always
+      // to be more precise: it is not mounted
+      // unless overview is false
+      // therefore swiperRef.current is false
+      swiperRef.current.goTo(routeIndex);
+    }
   }, [routes]);
 
 

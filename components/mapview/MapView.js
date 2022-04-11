@@ -1,13 +1,24 @@
 import Map from "react-native-maps";
 import { StyleSheet, Text } from "react-native";
+import { makeOpaq } from '../../utils/constants';
+import { useEffect, useRef } from "react";
+import { boundsToRegion } from "../../utils/map";
 
-export const MapView = ({lat, long, routes, latDelta, longDelta, coordinatesIsKnown, onRouteClick}) => {
+export const MapView = ({lat, long, routes, latDelta, longDelta, coordinatesIsKnown, onRouteClick, boundaries, selectedRoute}) => {
+  const mapRef = useRef();
+  useEffect(() => {
+    if (mapRef.current) {
+      const region = boundsToRegion(boundaries);
+      mapRef.current.animateToRegion(region);
+    }
+  }, [boundaries])
   return (
       <Map
+      ref={mapRef}
         style={styles.map}
         defaultZoom={10}
         userInterfaceStyle="dark"
-        region={{ latitude: lat, longitude: long, latitudeDelta: latDelta, longitudeDelta: longDelta }}
+        // region={{ latitude: lat, longitude: long, latitudeDelta: latDelta, longitudeDelta: longDelta }}
       >
         {routes.map((route) =>
           route.members
@@ -19,14 +30,9 @@ export const MapView = ({lat, long, routes, latDelta, longDelta, coordinatesIsKn
                 onPress={() => onRouteClick(route)}
                 key={geom.ref + route.id}
                 path={geom.geometry.map((el) => ({ ...el, lng: el.lon }))}
-                strokeColor={route.color}
+                strokeColor={makeOpaq(route.color, selectedRoute ? (route === selectedRoute ? 1 : 0.4) : 1)}
                 strokeWidth={3}
                 coordinates={geom.geometry.map((el) => ({ latitude: el.lat, longitude: el.lon }))}
-                options={{
-                  strokeColor: route.color,
-                  strokeOpacity: 1,
-                  strokeWeight: 3,
-                }}
               />
             ))
         )}

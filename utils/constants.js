@@ -1,4 +1,5 @@
 import colors from "../utils/colors.json";
+import tinycolor from "tinycolor2";
 
 const BASE_URL = "https://final-project-backend-hikernav.herokuapp.com";
 // const BASE_URL = "http://localhost:8080";
@@ -16,6 +17,16 @@ const backgrounds = {
 };
 
 let leftColors = Object.values(backgrounds);
+
+/**
+ * changes alpha channel of givin color
+ * @param {string} color : color;
+ * @param {number} alpha: new alpha
+ * @returns color with set alpha channel
+ */
+export const makeOpaq = (color, alpha) => {
+  return tinycolor(color).setAlpha(alpha).toString("rgb");
+}
 
 export const pickRandomBackground = () => {
   const color = leftColors[Math.floor(Math.random() * leftColors.length)];
