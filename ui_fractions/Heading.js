@@ -12,7 +12,7 @@ export const Heading = ({ children }) => {
 const styles = StyleSheet.create({
   wrapper: {
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     marginBottom: 30,
   },
   typography: {
@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     zIndex: 12,
+    marginTop: 50,
   },
 });

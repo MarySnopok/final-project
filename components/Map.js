@@ -17,6 +17,7 @@ import ui from "../reducers/ui";
 import user, { getUserGeoLocation } from "../reducers/user";
 
 import { MapView } from "./mapview";
+import { SearchSvg } from "../ui_fractions/svg_components/SearchSvg";
 
 export const Map = () => {
   const dispatch = useDispatch();
@@ -106,5 +107,9 @@ const styles = StyleSheet.create({
     right: 100,
     height: 100,
     zIndex: 5,
+  },
+  large: {
+    height: 24,
+    width: 24,
   },
 });

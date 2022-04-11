@@ -6,6 +6,9 @@ import { SubHeading } from "../ui_fractions/SubHeading";
 import { Card } from "../ui_fractions/Card";
 import { NavSection } from "../ui_fractions/NavSection";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
+import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
+import { ProfileSvg } from "../ui_fractions/svg_components/ProfileSvg";
+import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
 
 export const History = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -28,9 +31,9 @@ export const History = () => {
       <LayoutNavbar>
         <NavSection
           routes={[
-            { title: "home", link: "/entrypage" },
-            { title: "profile", link: "/profile" },
-            { title: "log out", link: "/logout" },
+            { title: <HomeSvg color={"white"} style={styles.pic} />, link: "/entrypage" },
+            { title: <ProfileSvg color={"white"} style={styles.pic} />, link: "/profile" },
+            { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
           ]}
         />
       </LayoutNavbar>
@@ -44,5 +47,9 @@ const styles = StyleSheet.create({
     margin: 8,
     alignItems: "center",
     justifyContent: "center",
+  },
+  pic: {
+    height: 20,
+    width: 20,
   },
 });

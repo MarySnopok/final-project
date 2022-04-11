@@ -4,34 +4,27 @@ import { StyleSheet, TouchableHighlight, Text } from "react-native";
 export const NavButton = ({ children, onPress }) => {
   return (
     <TouchableHighlight style={styles.navbtn} underlayColor={colors[0].transparent} activeOpacity={0.78} onPress={onPress}>
-      <Text style={styles.content}>{children}</Text>
+      {typeof children === "string" ? <Text style={styles.content}>{children}</Text> : children}
     </TouchableHighlight>
   );
 };
 
 const styles = StyleSheet.create({
   navbtn: {
-    flex: 0.2,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
-    margin: 8,
-    backgroundColor: colors[0].secondary,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: colors[0].secondary,
-    zIndex: 12,
+    // padding: 8,
+    zIndex: 14,
     maxWidth: 100,
   },
 
   content: {
-    textAlign: "center",
-    fontSize: 14,
-    fontWeight: "normal",
-    color: colors[0].white,
-    textTransform: "lowercase",
+    color: colors[0].secondary,
+    fontWeight: "bold",
+    marginTop: 4,
+    marginRight: 0,
+    marginLeft: 8,
+    fontSize: 16,
+    textDecorationLine: "underline",
   },
 });

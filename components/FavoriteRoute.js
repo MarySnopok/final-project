@@ -1,27 +1,23 @@
 import { ExtraInfo } from "../ui_fractions/ExtraInfo";
 import { BinButton } from "../ui_fractions/BinButton";
-import { RoadSvg } from "../ui_fractions/RoadSvg";
-import { ClockSvg } from "../ui_fractions/ClockSvg";
-import { DumbellSvg } from "../ui_fractions/DumbellSvg";
+import { RoadSvg } from "../ui_fractions/svg_components/RoadSvg";
+import { ClockSvg } from "../ui_fractions/svg_components/ClockSvg";
+import { DumbellSvg } from "../ui_fractions/svg_components/DumbellSvg";
 import { StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { deleteFavorite } from "../reducers/user";
 import { ActivityIndicator, TouchableHighlight } from "react-native";
-import { pickRandomBackground } from "../utils/constants";
-// import { useNavigate } from "react-router";
 
-export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color }) => {
+export const FavoriteRoute = ({ text, distance, duration, difficulty, route, color }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+
   const deleteRoute = async () => {
     setLoading(true);
-    await dispatch(deleteFavorite(id));
+    await dispatch(deleteFavorite(route));
   };
-  // const onPress = () => {
-  //   navigate(`/entrypage/${id}`);
-  // };
+
   return (
     <TouchableHighlight>
       <View style={[styles.maincontainer, { backgroundColor: color }]}>
@@ -55,8 +51,6 @@ export const FavoriteRoute = ({ text, distance, duration, difficulty, id, color 
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
-    borderColor: pickRandomBackground(),
-    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 8,

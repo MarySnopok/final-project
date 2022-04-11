@@ -18,6 +18,25 @@ export const fetchProfile = createAsyncThunk("user/fetchProfile", async (_, thun
   return response.json();
 });
 
+//save user profile picture
+
+export const saveUserProfilePicture = createAsyncThunk("user/saveUserProfilePicture", async (userImage, thunkApi) => {
+  const token = thunkApi.getState().user.accessToken;
+
+  const response = await fetch(API_URL("profile"), {
+    method: "POST",
+    headers: {
+      Authorization: token,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      profilePicture: userImage,
+    }),
+  });
+  return response.json();
+});
+
 // save fav route
 export const saveFavorite = createAsyncThunk("user/saveFavorite", async (route, thunkApi) => {
   const token = thunkApi.getState().user.accessToken;
@@ -40,7 +59,7 @@ export const saveFavorite = createAsyncThunk("user/saveFavorite", async (route, 
 });
 
 // delete fav route
-export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (routeId, thunkApi) => {
+export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (route, thunkApi) => {
   const token = thunkApi.getState().user.accessToken;
 
   const response = await fetch(API_URL("favorite"), {
@@ -52,11 +71,12 @@ export const deleteFavorite = createAsyncThunk("user/deleteFavorite", async (rou
     },
     body: JSON.stringify({
       route: {
-        id: routeId,
+        id: route.id.toString(),
       },
     }),
   });
-  return response.json();
+  const data = await response.json();
+  return data;
 });
 
 export const signUpUser = createAsyncThunk("user/signup", async (body, thunkApi) => {
@@ -162,6 +182,7 @@ const userInitialState = {
     lat: 59.544,
     long: 10.444,
   },
+  userImage: null,
 };
 
 const user = createSlice({
@@ -217,6 +238,7 @@ const user = createSlice({
       });
       state.username = user.username;
       state.email = user.email;
+      state.userImage = user.profilePicture;
     });
     builder.addCase(saveFavorite.fulfilled, (state, action) => {
       const user = action.payload.response;
@@ -232,10 +254,16 @@ const user = createSlice({
         return route;
       });
     });
+    builder.addCase(saveUserProfilePicture.pending, (state, action) => {
+      console.log("action>>", action);
+      state.userImage = action.meta.arg;
+    });
   },
 });
 
 export default user;
+
+export const { setUserImage } = user.actions;
 
 export const getFavoriteRoutes = (state) => state.user.favorite || [];
 // it comes with id as a "string" in favorites, therefore it is always converted to string

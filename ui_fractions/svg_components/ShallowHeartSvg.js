@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-import colors from "../utils/colors.json";
+import colors from "../../utils/colors.json";
 
 export const ShallowHeartSvg = (props) => (
   <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" {...props}>
