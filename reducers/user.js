@@ -147,6 +147,7 @@ export const getUserGeoLocation = createAsyncThunk("user/getLocation", async (_,
     if (data.status !== "granted") {
       // permition was not granted - hiding loader
       thunkApi.dispatch(ui.actions.setLoading(false));
+      console.log('no permissions')
     } else {
       const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
       // user geodata
