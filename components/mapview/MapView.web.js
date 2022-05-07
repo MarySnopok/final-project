@@ -35,7 +35,7 @@ export const MapView = ({
         // to prevent map from thinking that your dragging map itself
         if (mapRef.current) {
           mapRef.current.fitBounds(bbox, {
-            padding: { top: 10, bottom: 240, left: 15, right: 5 },
+            padding: { top: 10, bottom: selectedRoute ? 240 : 10, left: 15, right: 5 },
           });
         }
       }, 1);
