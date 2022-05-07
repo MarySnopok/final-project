@@ -1,5 +1,5 @@
 // See https://docs.mapbox.com/mapbox-gl-js/example/add-image-animated/
-
+import colors from '../../utils/colors.json';
 const size = 100;
 
 // This implements `StyleImageInterface`
@@ -37,7 +37,7 @@ export const pulsingDot = (map) => ({
     // Draw the inner circle.
     context.beginPath();
     context.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2);
-    context.fillStyle = "rgba(255, 100, 100, 1)";
+    context.fillStyle = colors[0].loader;
     context.strokeStyle = "white";
     context.lineWidth = 2 + 4 * (1 - t);
     context.fill();
