@@ -19,7 +19,6 @@ export const MapView = ({
   const onLoad = useCallback((event) => {
     const map = event.target;
     map.addImage("pulsing-dot", pulsingDot(map), { pixelRatio: 2 });
-    console.log(">>> onload", map);
   });
 
   useEffect(() => {
@@ -51,7 +50,7 @@ export const MapView = ({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [long, lat], // icon position [lng, lat]
+            coordinates: [long, lat],
           },
         },
       ],
