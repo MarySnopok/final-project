@@ -1,16 +1,9 @@
-import { useCallback, useMemo, useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback, useMemo } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import Map, { Source, Layer, Marker } from "react-map-gl";
-
-const layerStyle = {
-  type: "line",
-
-  layout: {
-    "line-join": "round",
-    "line-cap": "round",
-  },
-};
+import Map, { Marker, Source, Layer } from "react-map-gl";
+import { ClickableLayer } from "./ClickableSource";
+import { pulsingDot } from "./PulsingDot";
 
 export const MapView = ({
   lat,
@@ -23,24 +16,10 @@ export const MapView = ({
 }) => {
   const mapRef = useRef();
 
-  useEffect(() => {
-    if (routes.length && mapRef.current) {
-      const listeners = routes.map((route) => {
-        const layerId = `layer-${route.id}`;
-        const listener = () => {
-          onRouteClick(route);
-        };
-        mapRef.current.on("click", layerId, listener);
-        return [layerId, listener];
-      });
-
-      return () => {
-        listeners.forEach(([layerId, listener]) => {
-          mapRef.current.off("click", layerId), listener;
-        });
-      };
-    }
-  }, [routes]);
+  const onLoad = useCallback((event) => {
+    const map = event.target;
+    map.addImage("pulsing-dot", pulsingDot(map), { pixelRatio: 2 });
+  });
 
   useEffect(() => {
     if (mapRef.current && boundaries) {
@@ -48,66 +27,69 @@ export const MapView = ({
         [boundaries.maxlon, boundaries.maxlat],
         [boundaries.minlon, boundaries.minlat],
       ];
-      mapRef.current.fitBounds(bbox, {
-        padding: { top: 10, bottom: 240, left: 15, right: 5 },
-      });
+      setTimeout(() => {
+        // fix weird bug: when we press "overview" map "feels" your
+        // touch through the button and thinks that you are dragging
+        // map itself, which cancels fitBounds.
+        // delaying this animation after button is released allows
+        // to prevent map from thinking that your dragging map itself
+        if (mapRef.current) {
+          mapRef.current.fitBounds(bbox, {
+            padding: { top: 10, bottom: selectedRoute ? 240 : 10, left: 15, right: 5 },
+          });
+        }
+      }, 1);
     }
   }, [boundaries]);
 
-  // transform coordinates into mapbox format
-  const geojsons = useMemo(
-    () =>
-      (routes ?? []).map((route) => ({
-        type: "FeatureCollection",
-        key: route.id,
-        origin: route,
-        color: route.color,
-        features: route.members
-          .filter((el) => el.type === "way")
-          .filter((el, i, arr) => arr.findIndex((e) => e.ref === el.ref) === i)
-          .map((geom) => ({
-            type: "Feature",
-            geometry: {
-              type: "LineString",
-              coordinates: geom.geometry.map((g) => [g.lon, g.lat]),
-            },
-          })),
-      })),
-    [routes]
+  const currentPositionGeoJson = useMemo(
+    () => ({
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [long, lat],
+          },
+        },
+      ],
+    }),
+    [long, lat]
   );
 
   return (
     <Map
       ref={mapRef}
-      // onLoad={onMapLoad}
+      onLoad={onLoad}
       initialViewState={{
         longitude: long,
         latitude: lat,
         zoom: 10,
       }}
       mapboxAccessToken="pk.eyJ1IjoiY29yZXltYWxlciIsImEiOiJjbDFjZ3E1OGswN2x6M2RqcGJobm0wbG4yIn0.heKn_mFlXKoEQvAG1bSPCQ"
-      // style={{ width: 600, height: 400 }}
       // mapStyle="mapbox://styles/mapbox/streets-v9"
       mapStyle="mapbox://styles/mapbox/dark-v10"
     >
-      {geojsons.map((gs) => (
-        <Source key={gs.key} id={`source-${gs.key}`} type="geojson" data={gs}>
+      {routes.map((route) => (
+        <ClickableLayer
+          route={route}
+          onClick={onRouteClick}
+          key={route.id}
+          selected={!selectedRoute || route === selectedRoute}
+        />
+      ))}
+      {coordinatesIsKnown && (
+        <Source type="geojson" data={currentPositionGeoJson}>
           <Layer
-            paint={{
-              "line-color": gs.color,
-              "line-width": 8,
-              "line-opacity": selectedRoute
-                ? gs.origin === selectedRoute
-                  ? 1 // if we have selected route and it is 
-                  : 0.4 // it is not selected route
-                : 1, // we don't have selected route at all
+            id="layer-with-pulsing-dot"
+            type="symbol"
+            layout={{
+              "icon-image": "pulsing-dot",
             }}
-            id={`layer-${gs.key}`}
-            {...layerStyle}
           />
         </Source>
-      ))}
-      {coordinatesIsKnown && <Marker longitude={long} latitude={lat} />}
+      )}
     </Map>
   );
 };
