@@ -1,8 +1,9 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback, useMemo } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import Map, { Marker } from "react-map-gl";
+import Map, { Marker, Source, Layer } from "react-map-gl";
 import { ClickableLayer } from "./ClickableSource";
+import { pulsingDot } from "./PulsingDot";
 
 export const MapView = ({
   lat,
@@ -14,6 +15,12 @@ export const MapView = ({
   boundaries,
 }) => {
   const mapRef = useRef();
+
+  const onLoad = useCallback((event) => {
+    const map = event.target;
+    map.addImage("pulsing-dot", pulsingDot(map), { pixelRatio: 2 });
+    console.log(">>> onload", map);
+  });
 
   useEffect(() => {
     if (mapRef.current && boundaries) {
@@ -36,9 +43,26 @@ export const MapView = ({
     }
   }, [boundaries]);
 
+  const currentPositionGeoJson = useMemo(
+    () => ({
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [long, lat], // icon position [lng, lat]
+          },
+        },
+      ],
+    }),
+    [long, lat]
+  );
+
   return (
     <Map
       ref={mapRef}
+      onLoad={onLoad}
       initialViewState={{
         longitude: long,
         latitude: lat,
@@ -56,7 +80,17 @@ export const MapView = ({
           selected={!selectedRoute || route === selectedRoute}
         />
       ))}
-      {coordinatesIsKnown && <Marker longitude={long} latitude={lat} />}
+      {coordinatesIsKnown && (
+        <Source type="geojson" data={currentPositionGeoJson}>
+          <Layer
+            id="layer-with-pulsing-dot"
+            type="symbol"
+            layout={{
+              "icon-image": "pulsing-dot",
+            }}
+          />
+        </Source>
+      )}
     </Map>
   );
 };
