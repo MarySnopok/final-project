@@ -39,30 +39,33 @@ export const pickRandomBackground = () => {
 
 // manipulations with incoming route details
 
-export const distanceRowData = (route) => route.tags.distance;
+export const distanceRowData = (route) => route.totalDistance;
 
 export const distanceInKm = (route) => {
-  const newDistance = parseInt(route.tags.distance, 10);
-  if (isNaN(newDistance)) {
+  const dist = (route.totalDistance / 1000);
+  if (isNaN(dist)) {
     return null;
   }
-  return newDistance;
+
+  if (dist < 10) {
+    return dist.toFixed(1);
+  }
+  return dist.toFixed(0);
 };
 
 export const duration = (route) => {
-  const newDuration = Math.round(parseInt(route.tags.distance, 10) / 4);
+  const newDuration = Math.round(route.totalDistance / 4 / 1000);
   if (isNaN(newDuration)) {
     return null;
   }
   if (newDuration === 0) {
     return 0.5;
   }
-  return newDuration;
+  return newDuration.toFixed(1);
 };
 
 export const difficulty = (route) => {
-  const rowDistance = route.tags.distance;
-  const routeDistance = parseInt(rowDistance, 10);
+  const routeDistance = route.totalDistance / 1000;
   const statements = {
     easy: "easy",
     medium: "medium",
@@ -70,7 +73,7 @@ export const difficulty = (route) => {
     multi: "multi-day",
     unknown: "dare to try",
   };
-  if (!rowDistance) {
+  if (!routeDistance) {
     return statements.unknown;
   }
   if (routeDistance <= 6) {
