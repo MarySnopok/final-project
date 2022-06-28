@@ -10,6 +10,14 @@ const layerStyle = {
   },
 };
 
+const pointStyle = {
+  type: "circle",
+  paint: {
+    "circle-radius": 10,
+    "circle-color": "#007cbf",
+  },
+};
+
 export const ClickableLayer = ({ route, selected, onClick }) => {
   const map = useMap();
   useEffect(() => {
@@ -30,8 +38,8 @@ export const ClickableLayer = ({ route, selected, onClick }) => {
     () => ({
       type: "FeatureCollection",
       key: route.id,
-      features: route.members
-        .filter((el) => el.type === "way")
+      features: route.route
+        // .filter((el) => el.type === "way")
         .filter((el, i, arr) => arr.findIndex((e) => e.ref === el.ref) === i)
         .map((geom) => ({
           type: "Feature",
@@ -44,19 +52,42 @@ export const ClickableLayer = ({ route, selected, onClick }) => {
     [route]
   );
 
+  const geoStart = {
+    type: "FeatureCollection",
+    features: route.edges.map((edge) => ({
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [edge.lon, edge.lat] },
+    })),
+  };
+
   return (
-    <Source id={`source-${route.id}`} type="geojson" data={geoSource}>
-      <Layer
-        paint={{
-          "line-color": route.color,
-          "line-width": 8,
-          "line-opacity": selected
-            ? 1 // if we have selected route and it is
-            : 0.4, // it is not selected route
-        }}
-        id={`layer-${route.id}`}
-        {...layerStyle}
-      />
-    </Source>
+    <>
+      <Source id={`source-${route.id}`} type="geojson" data={geoSource}>
+        <Layer
+          paint={{
+            "line-color": route.color,
+            "line-width": 8,
+            "line-opacity": selected
+              ? 1 // if we have selected route and it is
+              : 0.4, // it is not selected route
+          }}
+          id={`layer-${route.id}`}
+          {...layerStyle}
+        />
+      </Source>
+      <Source id={`source-start-${route.id}`} type="geojson" data={geoStart}>
+        <Layer
+          // paint={{
+          //   "line-color": route.color,
+          //   "line-width": 8,
+          //   "line-opacity": selected
+          //     ? 1 // if we have selected route and it is
+          //     : 0.4, // it is not selected route
+          // }}
+          id={`layer-start-${route.id}`}
+          {...pointStyle}
+        />
+      </Source>
+    </>
   );
 };

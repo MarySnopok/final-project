@@ -139,7 +139,6 @@ export const signInUser = createAsyncThunk("user/signin", async (body, thunkApi)
 });
 
 export const getUserGeoLocation = createAsyncThunk("user/getLocation", async (_, thunkApi) => {
-  console.log("234234");
   try {
     thunkApi.dispatch(ui.actions.setLoading(true));
     console.log("324234");

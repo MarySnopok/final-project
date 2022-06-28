@@ -5,7 +5,7 @@ import { API_URL } from "../utils/constants";
 
 // First, creat the thunk
 export const fetchRoutes = createAsyncThunk("routes/fetchRoutes", async ({ lat, long }) => {
-  const response = await fetch(API_URL("tracks") + "?" + encodeURI(`lat=${lat}&long=${long}`));
+  const response = await fetch(API_URL("tracks2") + "?" + encodeURI(`lat=${lat}&long=${long}`));
   return response.json();
 });
 
@@ -35,7 +35,7 @@ const routes = createSlice({
 
     builder.addCase(fetchRoutes.fulfilled, (state, action) => {
       console.log("ACTIONS", action);
-      const data = action.payload.response.data.map((route) => {
+      const data = action.payload.response.map((route) => {
         route.color = pickRandomBackground();
         return route;
       });
