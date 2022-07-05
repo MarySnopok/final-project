@@ -20,139 +20,138 @@ import { MapView } from "./mapview";
 import { SearchSvg } from "../ui_fractions/svg_components/SearchSvg";
 
 export const Map = () => {
-  const [selectedRoute, setSelectedRoute] = useState(0);
-  const [overview, setOverview] = useState(true); // TODO
-  const dispatch = useDispatch();
-  const coordinates = useSelector((store) => store.user.coordinates);
-  const routesStatus = useSelector(selectRoutesStatus);
-  const routes = useSelector(selectRoutes);
-  const isLoading = useSelector((store) => store.ui.loading);
+  // const [selectedRoute, setSelectedRoute] = useState(0);
+  // const [overview, setOverview] = useState(true); // TODO
+  // const dispatch = useDispatch();
+  // const coordinates = useSelector((store) => store.user.coordinates);
+  // const routesStatus = useSelector(selectRoutesStatus);
+  // const routes = useSelector(selectRoutes);
+  // const isLoading = useSelector((store) => store.ui.loading);
 
-  // *** for individual route rendering
-  const { id } = useParams();
-  useEffect(() => {
-    if (id) {
-      dispatch(ui.actions.setLoading(true));
-      dispatch(fetchOneRoute(id)).then(() => {
-        dispatch(ui.actions.setLoading(false));
-      });
-    }
-  }, [dispatch, id]);
+  // // *** for individual route rendering
+  // const { id } = useParams();
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(ui.actions.setLoading(true));
+  //     dispatch(fetchOneRoute(id)).then(() => {
+  //       dispatch(ui.actions.setLoading(false));
+  //     });
+  //   }
+  // }, [dispatch, id]);
 
-  useEffect(() => {
-    dispatch(ui.actions.setLoading(false));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(ui.actions.setLoading(false));
+  // }, [dispatch]);
 
-  const getLocation = async () => {
-    await dispatch(getUserGeoLocation());
-  };
+  // const getLocation = async () => {
+  //   await dispatch(getUserGeoLocation());
+  // };
 
-  // found routes
-  console.log("routes", routes);
 
-  const swiperRef = useRef(null);
-  const onRouteClick = useCallback((route) => {
-    const routeIndex = routes.indexOf(route);
-    setSelectedRoute(routeIndex);
-    setOverview(false);
-    if (swiperRef.current) {
-      // todo: fix this since it's working far from always
-      // to be more precise: it is not mounted
-      // unless overview is false
-      // therefore swiperRef.current is false
-      swiperRef.current.goTo(routeIndex);
-    }
-  }, [routes]);
+  // const swiperRef = useRef(null);
+  // const onRouteClick = useCallback((route) => {
+  //   const routeIndex = routes.indexOf(route);
+  //   setSelectedRoute(routeIndex);
+  //   setOverview(false);
+  //   if (swiperRef.current) {
+  //     // todo: fix this since it's working far from always
+  //     // to be more precise: it is not mounted
+  //     // unless overview is false
+  //     // therefore swiperRef.current is false
+  //     swiperRef.current.goTo(routeIndex);
+  //   }
+  // }, [routes]);
 
 
 
-  // example from https://github.com/react-native-maps/react-native-maps/blob/master/example/examples/DisplayLatLng.js
-  const { width, height } = Dimensions.get("window");
-  const ASPECT_RATIO = width / height;
-  const LATITUDE = coordinates.lat;
-  const LONGITUDE = coordinates.long;
-  const LATITUDE_DELTA = 0.922;
-  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+  // // example from https://github.com/react-native-maps/react-native-maps/blob/master/example/examples/DisplayLatLng.js
+  // const { width, height } = Dimensions.get("window");
+  // const ASPECT_RATIO = width / height;
+  // const LATITUDE = coordinates.lat;
+  // const LONGITUDE = coordinates.long;
+  // const LATITUDE_DELTA = 0.922;
+  // const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-  const coordinatesIsKnown = !(LATITUDE === 59.544 && LONGITUDE === 10.444);
+  // const coordinatesIsKnown = !(LATITUDE === 59.544 && LONGITUDE === 10.444);
 
   // calculating view
   // if we have routes -- default view must include (fit) all of them
   // otherwise it should show area around some default point
-  const overallBoundaries = useMemo(() => {
-    if (routes.length <= 0) {
-      return {
-        maxlat: LATITUDE + LATITUDE_DELTA,
-        minlat: LATITUDE - LATITUDE_DELTA,
-        maxlon: LONGITUDE + LONGITUDE_DELTA,
-        minlon: LONGITUDE - LONGITUDE_DELTA,
-      }
-    }
-    let boundaries = { ...routes[0].bounds}; // copy them into object since we would mutate it
-    for (let { bounds } of routes) {
-        boundaries.maxlon = Math.max(boundaries.maxlon, bounds.maxlon);
-        boundaries.maxlat = Math.max(boundaries.maxlat, bounds.maxlat);
-        boundaries.minlon = Math.min(boundaries.minlon, bounds.minlon);
-        boundaries.minlat = Math.min(boundaries.minlat, bounds.minlat);
+  // const overallBoundaries = useMemo(() => {
+  //   if (routes.length <= 0) {
+  //     return {
+  //       maxlat: LATITUDE + LATITUDE_DELTA,
+  //       minlat: LATITUDE - LATITUDE_DELTA,
+  //       maxlon: LONGITUDE + LONGITUDE_DELTA,
+  //       minlon: LONGITUDE - LONGITUDE_DELTA,
+  //     }
+  //   }
+  //   let boundaries = { ...routes[0].bounds}; // copy them into object since we would mutate it
+  //   for (let { bounds } of routes) {
+  //       boundaries.maxlon = Math.max(boundaries.maxlon, bounds.maxlon);
+  //       boundaries.maxlat = Math.max(boundaries.maxlat, bounds.maxlat);
+  //       boundaries.minlon = Math.min(boundaries.minlon, bounds.minlon);
+  //       boundaries.minlat = Math.min(boundaries.minlat, bounds.minlat);
 
-    }
-    return boundaries;
-  }, [routes]);
+  //   }
+  //   return boundaries;
+  // }, [routes]);
 
-  if (!routes.length && routesStatus === "fulfilled") {
-    return <NoRoutes>Sorry no routes found near you</NoRoutes>;
-  }
+  // if (!routes.length && routesStatus === "fulfilled") {
+  //   return <NoRoutes>Sorry no routes found near you</NoRoutes>;
+  // }
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         {routesStatus === "init" && (
           <GeneralButton onPress={getLocation}>Search</GeneralButton>
         )}
         {(routesStatus === "loading" || isLoading) && (
           <Loader size={"large"} color={colors[0].loader} />
         )}
-      </View>
-      {routesStatus === "fulfilled" &&
+      </View> */}
+      {/* {routesStatus === "fulfilled" &&
         !overview &&
           <View style={styles.overviewButtonContainer}>
             <GeneralButton onPress={() => setOverview(true)}>
               Overview
             </GeneralButton>
           </View>
-        }
+        } */}
       <MapView
-        lat={LATITUDE}
-        long={LONGITUDE}
-        latDelta={LATITUDE_DELTA}
-        longDelta={LONGITUDE_DELTA}
-        routes={routes}
-        coordinatesIsKnown={coordinatesIsKnown}
-        selectedRoute={!overview && routes.length && routes[selectedRoute]}
-        onRouteClick={onRouteClick}
-        boundaries={overview ? overallBoundaries : routes[selectedRoute].bounds}
+        // lat={LATITUDE}
+        // long={LONGITUDE}
+        // latDelta={LATITUDE_DELTA}
+        // longDelta={LONGITUDE_DELTA}
+        // routes={routes}
+        // coordinatesIsKnown={coordinatesIsKnown}
+        // selectedRoute={!overview && routes.length && routes[selectedRoute]}
+        // onRouteClick={onRouteClick}
+        // boundaries={overview ? overallBoundaries : routes[selectedRoute].bounds}
       />
-      {routes && !overview && (
+      {/* {routes && !overview && (
         <CarouselSlider
           onSelectedRouteChange={setSelectedRoute}
           swiperRef={swiperRef}
           routes={routes}
         />
-      )}
+      )} */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    // flex: 1,
+    // backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "center",
     zIndex: 0,
-    position: "relative",
+    position: "absolute",
+    backgroundColor: "#ff0000",
+    ...StyleSheet.absoluteFill,
   },
-  map: { flex: 1, width: "100%" },
   buttonContainer: {
     position: "absolute",
     bottom: 20,

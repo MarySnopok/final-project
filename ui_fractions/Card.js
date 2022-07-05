@@ -9,12 +9,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors[0].dark,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 8,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // padding: 8,
     zIndex: 2,
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    // width: "100%",
+    // height: "100%",
+    // resizeMode: "cover",
   },
 });

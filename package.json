@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@reduxjs/toolkit": "^1.7.1",
     "@types/react-native-snap-carousel": "^3.8.5",
@@ -24,7 +25,9 @@
     "react-map-gl": "^7.0.10",
     "react-native": "0.68.2",
     "react-native-bouncy-checkbox": "^2.1.10",
+    "react-native-gesture-handler": "~2.2.1",
     "react-native-maps": "0.30.2",
+    "react-native-reanimated": "~2.8.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "12.3.0",
     "react-native-svg-transformer": "^1.0.0",
@@ -43,7 +46,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@expo/webpack-config": "~0.16.21",
-    "expo-cli": "5.0.3"
+    "expo-cli": "5.0.3",
+    "typescript": "~4.3.5"
   },
   "private": true
 }

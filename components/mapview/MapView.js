@@ -6,21 +6,22 @@ import { boundsToRegion } from "../../utils/map";
 
 export const MapView = ({lat, long, routes, latDelta, longDelta, coordinatesIsKnown, onRouteClick, boundaries, selectedRoute}) => {
   const mapRef = useRef();
-  useEffect(() => {
-    if (mapRef.current) {
-      const region = boundsToRegion(boundaries);
-      mapRef.current.animateToRegion(region);
-    }
-  }, [boundaries])
+  // useEffect(() => {
+  //   if (mapRef.current) {
+  //     const region = boundsToRegion(boundaries);
+  //     mapRef.current.animateToRegion(region);
+  //   }
+  // }, [boundaries])
   return (
       <Map
       ref={mapRef}
         style={styles.map}
+        // mapType="terrain"
         defaultZoom={10}
         userInterfaceStyle="dark"
         // region={{ latitude: lat, longitude: long, latitudeDelta: latDelta, longitudeDelta: longDelta }}
       >
-        {routes.map((route) =>
+        {/* {routes.map((route) =>
           route.members
             .filter((el) => el.type === "way")
             // uniqBy
@@ -40,7 +41,7 @@ export const MapView = ({lat, long, routes, latDelta, longDelta, coordinatesIsKn
           <Text>Start your search</Text>
         ) : (
           <Map.Marker key={2} coordinate={{ latitude: lat, longitude: long }} title={"your location"} pinColor={"tomato"} />
-        )}
+        )} */}
       </Map>
   );
 };

@@ -14,6 +14,7 @@ import { LogOut } from "./components/Logout";
 import user from "./reducers/user";
 import routes from "./reducers/routes";
 import ui from "./reducers/ui";
+import { Main } from "./components/Main";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -21,14 +22,20 @@ const reducer = combineReducers({
   ui: ui.reducer,
 });
 
+
+
 const store = configureStore({ reducer });
+declare module 'react-redux' {
+  interface DefaultRootState extends ReturnType<typeof reducer> {}
+} 
 
 export default function App() {
   return (
     <>
       <Provider store={store}>
         <AuthProvider>
-          <Router>
+          <Main />
+          {/* <Router>
             <Routes>
               <Route exact path="/" element={<Consent />} />
               <Route path="/entrypage" element={<EntryPage />} />
@@ -40,7 +47,7 @@ export default function App() {
               <Route path="/logout" element={<LogOut />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </Router>
+          </Router> */}
         </AuthProvider>
       </Provider>
     </>
