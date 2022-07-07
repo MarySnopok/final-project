@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { View, FlatList, StyleSheet } from "react-native";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
@@ -15,26 +15,32 @@ import { LogOutSvg } from "../ui_fractions/svg_components/LogOutSvg";
 import colors from "../utils/colors.json";
 import { UserProfileLogOut } from "../ui_fractions/UserProfileLogOut";
 import { ProfilePicture } from "./ProfilePicture";
+import { Button } from "./UI/Button";
+import { ui } from '../reducers/ui';
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
   const favoriteRoutes = useSelector(getFavoriteRoutes);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onClsoe = useCallback(() => {
+    dispatch(ui.actions.hideLogin());
+  }, [dispatch])
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/signin");
-    }
-  }, [accessToken, navigate]);
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     navigate("/signin");
+  //   }
+  // }, [accessToken, navigate]);
 
   return (
     <LayoutRoot>
-      <LayoutFlex>
+      {/* <LayoutFlex> */}
         <Card>
           <UserProfileLogOut children={[{ title: <LogOutSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} />
           <ProfilePicture children={`Welcome ${username}!`} />
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <FlatList
               data={favoriteRoutes}
               keyExtractor={(route) => route.id}
@@ -50,9 +56,13 @@ export const Profile = () => {
                 />
               )}
             />
+          </View> */}
+          <View style={{flex: 1}} />
+          <View>
+            <Button onPress={onClsoe}>Close</Button>
           </View>
         </Card>
-      </LayoutFlex>
+      {/* </LayoutFlex>
       <LayoutNavbar>
         <NavSection
           routes={[
@@ -61,7 +71,7 @@ export const Profile = () => {
             { title: <HistorySvg color={"white"} style={styles.pic} />, link: "/history" },
           ]}
         />
-      </LayoutNavbar>
+      </LayoutNavbar> */}
     </LayoutRoot>
   );
 };

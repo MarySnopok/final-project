@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Map } from "./Map";
+import { MapMain } from "./Map";
 import { NavSection } from "../ui_fractions/NavSection";
 import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
@@ -14,7 +14,7 @@ export const EntryPage = () => {
     <>
       <LayoutRoot>
         <LayoutFlex>
-          <Map />
+          <MapMain />
         </LayoutFlex>
         <LayoutNavbar>
           <NavSection

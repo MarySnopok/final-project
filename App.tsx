@@ -15,11 +15,13 @@ import user from "./reducers/user";
 import routes from "./reducers/routes";
 import ui from "./reducers/ui";
 import { Main } from "./components/Main";
+import { geoState } from "./reducers/geo";
 
 const reducer = combineReducers({
   user: user.reducer,
   routes: routes.reducer,
   ui: ui.reducer,
+  geo: geoState.reducer,
 });
 
 

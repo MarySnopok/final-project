@@ -164,47 +164,7 @@ export const signInUser = createAsyncThunk<
   }
 });
 
-export const getUserGeoLocation = createAsyncThunk(
-  "user/getLocation",
-  async (_, thunkApi) => {
-    try {
-      thunkApi.dispatch(ui.actions.setLoading(true));
-      console.log("324234");
-      const data = await Location.requestForegroundPermissionsAsync();
-      if (data.status !== "granted") {
-        // permition was not granted - hiding loader
-        thunkApi.dispatch(ui.actions.setLoading(false));
-        console.log("no permissions");
-      } else {
-        const locationData = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Low,
-        });
-        // user geodata
-        console.log("locationdata", locationData);
-        console.log("lat", locationData.coords.latitude);
-        console.log("long", locationData.coords.longitude);
-        thunkApi.dispatch(
-          user.actions.setCoordinates({
-            lat: locationData.coords.latitude,
-            long: locationData.coords.longitude,
-          })
-        );
 
-        await thunkApi.dispatch(
-          fetchRoutes({
-            lat: locationData.coords.latitude,
-            long: locationData.coords.longitude,
-          })
-        );
-        // hide loader when routes fetched
-        thunkApi.dispatch(ui.actions.setLoading(false));
-      }
-    } catch (e) {
-      console.log("err");
-      console.error(e);
-    }
-  }
-);
 
 interface UserState {
   userId?: string;
@@ -326,3 +286,7 @@ export const getFavoriteRoutes = (state) => state.user.favorite || [];
 // it comes with id as a "string" in favorites, therefore it is always converted to string
 export const isRouteFavorite = (routeId) => (state) =>
   getFavoriteRoutes(state).find((route) => route.id === routeId.toString());
+
+
+export const isUserLoggedIn = (state: { user: UserState}) => !!state.user.accessToken;
+export const getUserAvatar = (state: { user: UserState }) => state.user.userImage;

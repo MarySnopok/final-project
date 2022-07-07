@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { SearchResult } from "../utils/types";
 
 interface UIState {
   loading: boolean;
   error: false;
-  loginPage: null | "login" | "singUp";
+  loginPage: null | "login" | "singUp" | "profile";
+  routeState?: 'search-result';
 }
 
 const initialState: UIState = {
@@ -30,6 +32,9 @@ export const ui = createSlice({
     },
     showSingUp: (state) => {
       state.loginPage = "singUp";
+    },
+    showProfile: (state) => {
+      state.loginPage = "profile";
     },
   },
 });

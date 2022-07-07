@@ -12,18 +12,19 @@ import routes, {
   selectRoutes,
   selectRoutesStatus,
   fetchOneRoute,
+  selectResult,
 } from "../reducers/routes";
 import ui from "../reducers/ui";
-import user, { getUserGeoLocation } from "../reducers/user";
+import user from "../reducers/user";
 
-import { MapView } from "./mapview";
+import { Map } from "./mapview";
 import { SearchSvg } from "../ui_fractions/svg_components/SearchSvg";
 
-export const Map = () => {
+export const MapMain = ({ onMove, magicNumber }: { onMove: () => void; magicNumber: number }) => {
   // const [selectedRoute, setSelectedRoute] = useState(0);
   // const [overview, setOverview] = useState(true); // TODO
   // const dispatch = useDispatch();
-  // const coordinates = useSelector((store) => store.user.coordinates);
+  const coordinates = useSelector((store) => store.geo.currentLocation);
   // const routesStatus = useSelector(selectRoutesStatus);
   // const routes = useSelector(selectRoutes);
   // const isLoading = useSelector((store) => store.ui.loading);
@@ -47,7 +48,6 @@ export const Map = () => {
   //   await dispatch(getUserGeoLocation());
   // };
 
-
   // const swiperRef = useRef(null);
   // const onRouteClick = useCallback((route) => {
   //   const routeIndex = routes.indexOf(route);
@@ -62,17 +62,27 @@ export const Map = () => {
   //   }
   // }, [routes]);
 
-
+  const searchResult = useSelector(selectResult);
 
   // // example from https://github.com/react-native-maps/react-native-maps/blob/master/example/examples/DisplayLatLng.js
-  // const { width, height } = Dimensions.get("window");
-  // const ASPECT_RATIO = width / height;
-  // const LATITUDE = coordinates.lat;
-  // const LONGITUDE = coordinates.long;
-  // const LATITUDE_DELTA = 0.922;
-  // const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+  const { width, height } = Dimensions.get("window");
+  const ASPECT_RATIO = width / height;
+  const LATITUDE = coordinates?.lat || 59.544;
+  const LONGITUDE = coordinates?.lon || 10.444;
+  const LATITUDE_DELTA = 0.922;
+  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-  // const coordinatesIsKnown = !(LATITUDE === 59.544 && LONGITUDE === 10.444);
+  const coordinatesIsKnown = !!coordinates;
+
+  const overallBoundaries = useMemo(() => {
+    return {
+      maxlat: LATITUDE + LATITUDE_DELTA,
+      minlat: LATITUDE - LATITUDE_DELTA,
+      maxlon: LONGITUDE + LONGITUDE_DELTA,
+      minlon: LONGITUDE - LONGITUDE_DELTA,
+      __hack: magicNumber
+    };
+  }, [LATITUDE, LONGITUDE, LATITUDE_DELTA, LONGITUDE_DELTA, magicNumber]);
 
   // calculating view
   // if we have routes -- default view must include (fit) all of them
@@ -119,15 +129,17 @@ export const Map = () => {
             </GeneralButton>
           </View>
         } */}
-      <MapView
+      <Map
+        onMove={onMove}
         // lat={LATITUDE}
         // long={LONGITUDE}
         // latDelta={LATITUDE_DELTA}
         // longDelta={LONGITUDE_DELTA}
-        // routes={routes}
+        routes={searchResult.routes}
         // coordinatesIsKnown={coordinatesIsKnown}
         // selectedRoute={!overview && routes.length && routes[selectedRoute]}
         // onRouteClick={onRouteClick}
+        boundaries={overallBoundaries}
         // boundaries={overview ? overallBoundaries : routes[selectedRoute].bounds}
       />
       {/* {routes && !overview && (

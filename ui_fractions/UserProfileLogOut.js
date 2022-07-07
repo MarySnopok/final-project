@@ -11,7 +11,7 @@ export const UserProfileLogOut = ({ children }) => {
         <Text style={styles.typography}>Sign Out</Text>
       </View>
       <View style={styles.corner}>
-        <CrossLinks routes={children} />
+        {/* <CrossLinks routes={children} /> */}
       </View>
     </ConsentContainer>
   );

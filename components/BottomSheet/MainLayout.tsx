@@ -1,39 +1,32 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import { Button, IconButton } from "../UI/Button";
-import Profile from "../../assets/user-solid.svg";
 import ui from "../../reducers/ui";
+import { isUserLoggedIn } from "../../reducers/user";
+import { MiniAvatar } from "./MiniAvatar";
+import { getNearByRoutes } from "../../reducers/routes";
 
 export const MainBottomLayout = () => {
-  const onSearchNearBy = () => {
-    console.log("search nearby");
-  };
   const dispatch = useDispatch();
-  const onAvatarClick = useCallback(() => {
-    dispatch(ui.actions.showLogin());
-  }, []);
+  const onSearchNearBy = () => {
+    // console.log("search nearby");
+    dispatch(getNearByRoutes());
+  };
+
+  const isRoutesLoading = useSelector(state => state.routes.status === 'loading');
+
+
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.button}>
-          <Button onPress={onSearchNearBy}>Search nearby</Button>
+          <Button loading={isRoutesLoading} onPress={onSearchNearBy}>Search nearby</Button>
         </View>
         <View style={styles.userIcon}>
-          <IconButton
-            withBorder
-            icon={
-              <Profile
-                width={28}
-                height={28}
-                color="white"
-                style={{ color: "darkgray" }}
-              />
-            }
-            onPress={onAvatarClick}
-          />
+          <MiniAvatar />
         </View>
       </View>
       <View>

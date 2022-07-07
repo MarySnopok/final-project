@@ -1,15 +1,12 @@
 import colors from "../../utils/colors.json";
-import {
-  StyleSheet,
-  TouchableHighlight,
-  Text,
-} from "react-native";
+import { StyleSheet, TouchableHighlight, Text } from "react-native";
 
 interface ButtonProps {
   onPress: () => void;
   children: React.ReactNode | string;
   disabled?: boolean;
   stretch?: boolean;
+  loading?: boolean;
 }
 
 export const BaseButton: React.FC<ButtonProps> = ({
@@ -17,16 +14,20 @@ export const BaseButton: React.FC<ButtonProps> = ({
   onPress,
   disabled,
   stretch,
+  loading,
 }) => {
+  const dis = disabled || loading;
   return (
     <TouchableHighlight
       disabled={disabled}
       onPress={onPress}
-      style={[styles.btn, stretch && styles.stretch, disabled && styles.disabled]}
+      style={[styles.btn, stretch && styles.stretch, dis && styles.disabled]}
       underlayColor={colors[0].transparent}
       activeOpacity={0.78}
     >
-      {typeof children === "string" ? (
+      {loading ? (
+        <Text>LOADING</Text>
+      ) : typeof children === "string" ? (
         <Text style={styles.content}>{children}</Text>
       ) : (
         children
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   disabled: {
-    backgroundColor: '#ff0cb64c',
+    backgroundColor: "#ff0cb64c",
     borderColor: colors[0].secondary,
     borderWidth: 2,
   },
