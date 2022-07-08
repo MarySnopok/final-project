@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "esModuleInterop": true
   },
   "extends": "expo/tsconfig.base",
-  "files": ["index.d.ts"],
+  "files": ["src/index.d.ts"]
 }
