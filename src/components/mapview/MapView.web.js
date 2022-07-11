@@ -1,9 +1,11 @@
 import { useRef, useEffect, useCallback, useMemo } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import Map, { Marker, Source, Layer } from "react-map-gl";
+import MM, { Marker, Source, Layer } from "react-map-gl";
 import { ClickableLayer } from "./ClickableSource";
 import { pulsingDot } from "./PulsingDot";
+
+export const Map = () => <div>MAP!</div>
 
 export const MapView = ({
   lat,

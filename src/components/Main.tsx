@@ -1,17 +1,19 @@
 import React, {
   useCallback,
+  useEffect,
   useState,
 } from "react";
 import { View, StyleSheet } from "react-native";
 import { MapMain } from "./Map";
 
 import BottomSheet from "@gorhom/bottom-sheet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LogIn } from "./LogIn";
 import { SignUp } from "./SignUp";
 import { Profile } from "./Profile";
 import { useBottomLogic } from "./BottomSheet/useBottomLogic";
 import { BottomLayout } from "./BottomSheet/BottomLayout";
+import { fetchFavorite } from "../reducers/user";
 
 export const Main = () => {
   const [bottomSheetRef, snapPoints, snapIndex, loading, onMapMove] =
@@ -23,6 +25,13 @@ export const Main = () => {
     if (index > 0) {
       setMagicNumber(Math.random());
     }
+  }, []);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("FIRST TIME");
+    dispatch(fetchFavorite());
   }, []);
 
   const loginPage = useSelector((state) => state.app.loginPage);

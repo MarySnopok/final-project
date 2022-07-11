@@ -42,10 +42,24 @@ export interface GeoState {
     status: "init" | "loading" | "success" | "no-access"; // | 'manual'; manual for picking city manually
   }
 
+
+export interface UserState {
+    userId?: string;
+    username?: string;
+    accessToken?: string;
+    email?: string;
+    error?: Error;
+    favorite: RouteId[];
+    coordinates: any; // use actual coordinate type
+    userImage?: string;
+  }
+  
+
 export interface RootState {
     app: AppMainState;
     routes: RoutesState;
     geo: GeoState;
+    user: UserState;
   }
 
 declare module "react-redux" {

@@ -10,8 +10,7 @@ import { pickRandomBackground } from "../utils/constants";
 
 import { API_URL } from "../utils/constants";
 import { FERoute, SearchResult } from "../types/types";
-import { UserState } from "./user";
-import { RootState, RoutesState } from "../types/app.types";
+import { RootState, RoutesState, UserState } from "../types/app.types";
 import { normalize } from "../utils/normalize";
 
 // export const getNearByRoutes = createAsyncThunk(
@@ -35,10 +34,14 @@ export const fetchRoutes = createAsyncThunk(
   async ({ lat, lon, radius }: Point & { radius?: number }, thunkApi) => {
     console.log("GET GEO LOCATION FOR", lat, lon);
     const response = await API.tracks(lat, lon, radius);
-    const { result, data } = normalize(response.routes, (item) => ({
-      ...item,
-      color: pickRandomBackground(),
-    }) as FERoute);
+    const { result, data } = normalize(
+      response.routes,
+      (item) =>
+        ({
+          ...item,
+          color: pickRandomBackground(),
+        } as FERoute)
+    );
 
     // console.log("BE RESPONSE FOR ROUTES", response);
     thunkApi.dispatch(routes.actions.storeRoutes(data));
@@ -67,10 +70,7 @@ const routes = createSlice({
   name: "routes",
   initialState,
   reducers: {
-    storeRoutes: (
-      state,
-      action: PayloadAction<Record<RouteId, FERoute>>
-    ) => {
+    storeRoutes: (state, action: PayloadAction<Record<RouteId, FERoute>>) => {
       state.routes = {
         ...state.routes,
         ...action.payload,
@@ -116,8 +116,13 @@ export const selectRoutes = (state) => state.routes.routes;
 export const getRouteById = (id: RouteId) => (state: RootState) =>
   state.routes.routes[id];
 
+export const getAnyRouteById =
+  (id: RouteId) =>
+  (state: RootState): FERoute =>
+    state.routes.routes[id];
+
 export const isRouteFavorite =
   (id: RouteId) => (state: { user: UserState }) => {
-    return state.user.favorite.some((route) => route.id === id);
+    return state.user.favorite.some((route) => route === id);
     // return false;
   };

@@ -10,26 +10,19 @@ import { deleteFavorite } from "../reducers/user";
 import { ActivityIndicator, TouchableHighlight } from "react-native";
 import { FERoute } from "../types/types";
 import { calculateRouteParams, distanceInKm } from "../utils/routeUtils";
-import { getRouteById, isRouteFavorite } from "../reducers/routes";
+import { getAnyRouteById, getRouteById, isRouteFavorite } from "../reducers/routes";
 import { RouteId } from "../types/BE.types";
 import { appState, openRouteScreen } from "../reducers/app";
+import { FavoriteIcon } from "../ui_fractions/FavoriteIcon";
 
 interface FavoriteRouteProps {
   routeId: RouteId;
 }
 
 export const RouteListItem = ({ routeId }: FavoriteRouteProps) => {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const route = useSelector(getRouteById(routeId));
-
-  const isFavorite = useSelector(isRouteFavorite(routeId));
-
-  const deleteRoute = async () => {
-    setLoading(true);
-    await dispatch(deleteFavorite(route.id));
-  };
+  const route = useSelector(getAnyRouteById(routeId));
 
   const openRoute = useCallback(() => {
     dispatch(openRouteScreen(routeId));
@@ -43,11 +36,7 @@ export const RouteListItem = ({ routeId }: FavoriteRouteProps) => {
       <View style={[styles.maincontainer, { backgroundColor: color }]}>
         <View style={styles.container}>
           <ExtraInfo data={title} />
-          {loading ? (
-            <ActivityIndicator />
-          ) : (
-            <BinButton onPress={deleteRoute} />
-          )}
+          <FavoriteIcon routeId={routeId} />
         </View>
         <View style={styles.iconsContainer}>
           {distance && (

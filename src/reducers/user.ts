@@ -11,6 +11,11 @@ import routes, { fetchRoutes } from "./routes";
 import * as Location from "expo-location";
 import ui from "./ui";
 import { RouteId, User } from "../types/BE.types";
+import { RootState, UserState } from "../types/app.types";
+import { API } from "../utils/api";
+import { normalize } from "../utils/normalize";
+import { FERoute } from "../types/types";
+import routesSlice from "./routes";
 
 // load profile
 export const fetchProfile = createAsyncThunk(
@@ -24,6 +29,29 @@ export const fetchProfile = createAsyncThunk(
       },
     });
     return response.json();
+  }
+);
+
+export const fetchFavorite = createAsyncThunk(
+  "user/fetchFavorite",
+  async (_, thunkApi) => {
+    const token = (thunkApi.getState() as any).user.accessToken;
+    const routes = await API.user.getFavorite(token);
+    console.log("routes", routes);
+
+    const { result, data } = normalize(
+      routes,
+      (item) =>
+        ({
+          ...item,
+          color: pickRandomBackground(),
+        } as FERoute)
+    );
+
+    // console.log("BE RESPONSE FOR ROUTES", response);
+    thunkApi.dispatch(routesSlice.actions.storeRoutes(data));
+
+    return result;
   }
 );
 
@@ -50,9 +78,9 @@ export const saveUserProfilePicture = createAsyncThunk(
 );
 
 // save fav route
-export const saveFavorite = createAsyncThunk(
+export const saveFavorite = createAsyncThunk<User, RouteId>(
   "user/saveFavorite",
-  async (route, thunkApi) => {
+  async (id, thunkApi) => {
     const token = (thunkApi.getState() as any).user.accessToken;
 
     const response = await fetch(API_URL("favorite"), {
@@ -63,10 +91,7 @@ export const saveFavorite = createAsyncThunk(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        route: {
-          id: route.id,
-          tags: route.tags,
-        },
+        routeId: id,
       }),
     });
     return response.json();
@@ -87,9 +112,7 @@ export const deleteFavorite = createAsyncThunk<User, RouteId>(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        route: {
-          id: route,
-        },
+        id: route,
       }),
     });
     const data = await response.json();
@@ -165,19 +188,6 @@ export const signInUser = createAsyncThunk<
   }
 });
 
-
-
-export interface UserState {
-  userId?: string;
-  username?: string;
-  accessToken?: string;
-  email?: string;
-  error?: Error;
-  favorite: any[]; // todo: use actual route DTO
-  coordinates: any; // use actual coordinate type
-  userImage?: string;
-}
-
 const userInitialState: UserState = {
   // userId: ,
   // username: null,
@@ -245,32 +255,26 @@ const user = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchFavorite.fulfilled, (state, routesAction) => {
+      state.favorite = routesAction.payload;
+    });
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
       if (!action.payload.success) {
         return state;
       }
       const user = action.payload.response;
-      state.favorite = user.favorite.map((route) => {
-        route.color = pickRandomBackground();
-        return route;
-      });
+      // state.favorite = user.favorite;
       state.username = user.username;
       state.email = user.email;
       state.userImage = user.profilePicture;
     });
     builder.addCase(saveFavorite.fulfilled, (state, action) => {
       const user = action.payload.response;
-      state.favorite = user.favorite.map((route) => {
-        route.color = pickRandomBackground();
-        return route;
-      });
+      state.favorite = user.favorite.map((route) => route.id);
     });
     builder.addCase(deleteFavorite.fulfilled, (state, action) => {
       const user = action.payload.response;
-      state.favorite = user.favorite.map((route) => {
-        route.color = pickRandomBackground();
-        return route;
-      });
+      state.favorite = user.favorite.map((route) => route.id);
     });
     builder.addCase(saveUserProfilePicture.pending, (state, action) => {
       console.log("action>>", action);
@@ -281,13 +285,12 @@ const user = createSlice({
 
 export default user;
 
-export const { setUserImage } = user.actions;
-
 export const getFavoriteRoutes = (state) => state.user.favorite || [];
 // it comes with id as a "string" in favorites, therefore it is always converted to string
 export const isRouteFavorite = (routeId) => (state) =>
   getFavoriteRoutes(state).find((route) => route.id === routeId.toString());
 
-
-export const isUserLoggedIn = (state: { user: UserState}) => !!state.user.accessToken;
-export const getUserAvatar = (state: { user: UserState }) => state.user.userImage;
+export const isUserLoggedIn = (state: { user: UserState }) =>
+  !!state.user.accessToken;
+export const getUserAvatar = (state: { user: UserState }) =>
+  state.user.userImage;

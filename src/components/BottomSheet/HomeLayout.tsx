@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 
 import { Button, IconButton } from "../UI/Button";
 import ui from "../../reducers/ui";
 import { isUserLoggedIn } from "../../reducers/user";
 import { MiniAvatar } from "./MiniAvatar";
-import { searchNearByRoutes } from '../../reducers/app';
+import { searchNearByRoutes } from "../../reducers/app";
+import { RouteListItem } from "../RouteListItem";
 
 export const HomeLayout = () => {
   const dispatch = useDispatch();
@@ -15,13 +20,14 @@ export const HomeLayout = () => {
     dispatch(searchNearByRoutes());
   };
 
-  const isRoutesLoading = useSelector(state => state.routes.status === 'loading');
+  const favorite = useSelector((state) => state.user.favorite);
+  // const favorite = [];
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.button}>
-          <Button loading={isRoutesLoading} onPress={onSearchNearBy}>Search nearby</Button>
+          <Button onPress={onSearchNearBy}>Search nearby</Button>
         </View>
         <View style={styles.userIcon}>
           <MiniAvatar />
@@ -33,9 +39,13 @@ export const HomeLayout = () => {
           <Text>Search for whatever</Text>
         </View>
       </View>
-      <View>
-        <Text>Login to see favorite</Text>
-      </View>
+      {/* <View> */}
+      <BottomSheetScrollView>
+        <View><Text>Favorite</Text></View>
+        {favorite.map((route) => (
+          <RouteListItem routeId={route} key={route} />
+        ))}
+      </BottomSheetScrollView>
     </View>
   );
 };
