@@ -7,6 +7,7 @@ interface ButtonProps {
   disabled?: boolean;
   stretch?: boolean;
   loading?: boolean;
+  variant?: 'normal' | 'link'
 }
 
 export const BaseButton: React.FC<ButtonProps> = ({
@@ -15,20 +16,21 @@ export const BaseButton: React.FC<ButtonProps> = ({
   disabled,
   stretch,
   loading,
+  variant = 'normal'
 }) => {
   const dis = disabled || loading;
   return (
     <TouchableHighlight
       disabled={disabled}
       onPress={onPress}
-      style={[styles.btn, stretch && styles.stretch, dis && styles.disabled]}
+      style={[styles.btn, stretch && styles.stretch, dis && styles.disabled, styles[`variant_${variant}`]]}
       underlayColor={colors[0].transparent}
       activeOpacity={0.78}
     >
       {loading ? (
         <Text>LOADING</Text>
       ) : typeof children === "string" ? (
-        <Text style={styles.content}>{children}</Text>
+        <Text style={[styles.content, styles[`text_variant_${variant}`]]}>{children}</Text>
       ) : (
         children
       )}
@@ -43,10 +45,20 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 12,
     // flex: 1,
-    backgroundColor: colors[0].secondary,
+    // backgroundColor: colors[0].secondary,
     zIndex: 12,
     borderRadius: 8,
     height: 42,
+  },
+  variant_normal: {
+    backgroundColor: colors[0].secondary,
+  },
+  variant_link: {
+    
+  },
+  text_variant_normal: {},
+  text_variant_link: {
+    color: colors[0].secondary,
   },
   stretch: {
     alignSelf: "stretch",

@@ -6,7 +6,7 @@ import { LayoutFlex, LayoutNavbar, LayoutRoot } from "../ui_fractions/Layout";
 import { Card } from "../ui_fractions/Card";
 import { NavSection } from "../ui_fractions/NavSection";
 import { distanceInKm, difficulty, duration } from "../utils/constants";
-// import user, { getFavoriteRoutes } from "../src/reducers/user";
+import user from "../reducers/user";
 import { RouteListItem } from "./RouteListItem";
 import { HomeSvg } from "../ui_fractions/svg_components/HomeSvg";
 import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
@@ -16,31 +16,41 @@ import colors from "../utils/colors.json";
 import { UserProfileLogOut } from "../ui_fractions/UserProfileLogOut";
 import { ProfilePicture } from "./ProfilePicture";
 import { Button } from "./UI/Button";
-import { ui } from '../reducers/ui';
+import { ui } from "../reducers/ui";
+import { appState } from "../reducers/app";
 
 export const Profile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
   // const favoriteRoutes = useSelector(getFavoriteRoutes);
   const dispatch = useDispatch();
-  const onClsoe = useCallback(() => {
-    dispatch(ui.actions.hideLogin());
-  }, [dispatch])
+  const onClose = useCallback(() => {
+    dispatch(appState.actions.hideLogin());
+  }, [dispatch]);
+
+  const logout = useCallback(() => {
+    dispatch(user.actions.logout());
+  }, []);
   // const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken, navigate]);
+  useEffect(() => {
+    if (!accessToken) {
+      dispatch(appState.actions.showLogin());
+    }
+  }, [accessToken]);
 
   return (
     <LayoutRoot>
       {/* <LayoutFlex> */}
-        <Card>
-          <UserProfileLogOut children={[{ title: <LogOutSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} />
-          <ProfilePicture children={`Welcome ${username}!`} />
-          {/* <View style={styles.container}>
+      <Card>
+        {/* <UserProfileLogOut children={[{ title: <LogOutSvg color={colors[0].secondary} style={styles.large} />, link: "/logout" }]} /> */}
+        <View style={{alignSelf: 'flex-end'}}>
+          <Button variant="link" onPress={logout}>
+            Sign Out
+          </Button>
+        </View>
+        <ProfilePicture children={`Welcome ${username}!`} />
+        {/* <View style={styles.container}>
             <FlatList
               data={favoriteRoutes}
               keyExtractor={(route) => route.id}
@@ -57,11 +67,11 @@ export const Profile = () => {
               )}
             />
           </View> */}
-          <View style={{flex: 1}} />
-          <View>
-            <Button onPress={onClsoe}>Close</Button>
-          </View>
-        </Card>
+        <View style={{ flex: 1 }} />
+        <View>
+          <Button onPress={onClose}>Close</Button>
+        </View>
+      </Card>
       {/* </LayoutFlex>
       <LayoutNavbar>
         <NavSection

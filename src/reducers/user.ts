@@ -21,14 +21,14 @@ import routesSlice from "./routes";
 export const fetchProfile = createAsyncThunk(
   "user/fetchProfile",
   async (_, thunkApi) => {
-    const token = (thunkApi.getState() as any).user.accessToken;
-    const response = await fetch(API_URL("profile"), {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-    });
-    return response.json();
+    try {
+      const token = (thunkApi.getState() as any).user.accessToken;
+      const profile = await API.user.profile(token);
+      return profile;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
 );
 
@@ -37,7 +37,6 @@ export const fetchFavorite = createAsyncThunk(
   async (_, thunkApi) => {
     const token = (thunkApi.getState() as any).user.accessToken;
     const routes = await API.user.getFavorite(token);
-    console.log("routes", routes);
 
     const { result, data } = normalize(
       routes,
@@ -51,7 +50,7 @@ export const fetchFavorite = createAsyncThunk(
     // console.log("BE RESPONSE FOR ROUTES", response);
     thunkApi.dispatch(routesSlice.actions.storeRoutes(data));
 
-    return result;
+    return result as RouteId[];
   }
 );
 
@@ -132,7 +131,6 @@ export const signUpUser = createAsyncThunk(
       body: JSON.stringify(body),
     }).then((resp) => resp.json());
     const response = data.response;
-    console.log("response we go", response);
 
     if (data.success) {
       batch(() => {
@@ -155,12 +153,13 @@ export const signUpUser = createAsyncThunk(
 );
 
 export const signInUser = createAsyncThunk<
-  void,
+  boolean,
   {
     username: string;
     password: string;
   }
 >("user/signin", async (body, thunkApi) => {
+  console.log("LOGIN >", body);
   const data = await fetch(API_URL("signin"), {
     method: "POST",
     headers: {
@@ -170,6 +169,7 @@ export const signInUser = createAsyncThunk<
   }).then((resp) => resp.json());
   const response = data.response;
   console.log("response we go", response);
+  console.log('dadada', data.success);
 
   if (data.success) {
     batch(() => {
@@ -178,6 +178,7 @@ export const signInUser = createAsyncThunk<
       thunkApi.dispatch(user.actions.setAccessToken(response.accessToken));
       thunkApi.dispatch(user.actions.setError(null));
     });
+    return true;
   } else {
     batch(() => {
       thunkApi.dispatch(user.actions.setUserId(null));
@@ -185,6 +186,7 @@ export const signInUser = createAsyncThunk<
       thunkApi.dispatch(user.actions.setAccessToken(null));
       thunkApi.dispatch(user.actions.setError(response));
     });
+    throw new Error();
   }
 });
 
@@ -259,11 +261,7 @@ const user = createSlice({
       state.favorite = routesAction.payload;
     });
     builder.addCase(fetchProfile.fulfilled, (state, action) => {
-      if (!action.payload.success) {
-        return state;
-      }
-      const user = action.payload.response;
-      // state.favorite = user.favorite;
+      const user = action.payload;
       state.username = user.username;
       state.email = user.email;
       state.userImage = user.profilePicture;
@@ -277,7 +275,6 @@ const user = createSlice({
       state.favorite = user.favorite.map((route) => route.id);
     });
     builder.addCase(saveUserProfilePicture.pending, (state, action) => {
-      console.log("action>>", action);
       state.userImage = action.meta.arg;
     });
   },

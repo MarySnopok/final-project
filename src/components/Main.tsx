@@ -1,8 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { MapMain } from "./Map";
 
@@ -13,7 +9,7 @@ import { SignUp } from "./SignUp";
 import { Profile } from "./Profile";
 import { useBottomLogic } from "./BottomSheet/useBottomLogic";
 import { BottomLayout } from "./BottomSheet/BottomLayout";
-import { fetchFavorite } from "../reducers/user";
+import { fetchFavorite, isUserLoggedIn } from "../reducers/user";
 
 export const Main = () => {
   const [bottomSheetRef, snapPoints, snapIndex, loading, onMapMove] =
@@ -29,10 +25,13 @@ export const Main = () => {
 
   const dispatch = useDispatch();
 
+  const isAuth = useSelector(isUserLoggedIn);
   useEffect(() => {
-    console.log("FIRST TIME");
-    dispatch(fetchFavorite());
-  }, []);
+    if (isAuth) {
+      console.log("fetch favorites");
+      dispatch(fetchFavorite());
+    }
+  }, [isAuth]);
 
   const loginPage = useSelector((state) => state.app.loginPage);
 

@@ -13,6 +13,7 @@ export const UserProfileLogOut = ({ children }) => {
       <View style={styles.corner}>
         {/* <CrossLinks routes={children} /> */}
       </View>
+      {/* <Button>Sing out</Button> */}
     </ConsentContainer>
   );
 };

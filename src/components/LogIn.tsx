@@ -19,9 +19,11 @@ import { HistorySvg } from "../ui_fractions/svg_components/HistorySvg";
 import ui from "../reducers/ui";
 import { Button } from "./UI/Button";
 import { Space } from "./UI/Space";
+import { appState } from "../reducers/app";
 
 export const LogIn = () => {
   const [text, setChangeText] = useState("");
+  const [loginError, setLoginError] = useState(false);
   const [password, setPasswordChange] = useState("");
   const accessToken = useSelector((store) => store.user.accessToken);
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ export const LogIn = () => {
     } else if (type === "number") {
       processedData = text;
     }
+    // console.log("TEXT")
     setChangeText(processedData);
   };
 
@@ -44,21 +47,24 @@ export const LogIn = () => {
     setPasswordChange(newPassword);
   };
 
-  useEffect(() => {
-    if (accessToken) {
-      dispatch(ui.actions.hideLogin());
-    }
-  }, [accessToken]);
-
   const onButtonPress = useCallback(async () => {
     console.log("login pressed");
+
+    const payload = await dispatch(
+      signInUser({ username: text, password: password })
+    );
     setChangeText("");
     setPasswordChange("");
-    await dispatch(signInUser({ username: text, password: password }));
-  }, []);
+    console.log("pp", payload);
+    if ((payload as any).error) {
+      setLoginError(true);
+    } else {
+      dispatch(appState.actions.hideLogin());
+    }
+  }, [text, password]);
 
   const goToSingUp = useCallback(() => {
-    dispatch(ui.actions.showSingUp());
+    dispatch(appState.actions.showSingUp());
   }, []);
 
   return (
@@ -67,6 +73,13 @@ export const LogIn = () => {
         <View style={styles.contentBox}>
           <View style={{ flex: 1, flexShrink: 1 }}>
             <Heading>Login to Your Account</Heading>
+            {loginError && (
+              <View>
+                <Text style={styles.extraText}>
+                  Something went wrong during login, please try again
+                </Text>
+              </View>
+            )}
             <Input
               name="username"
               placeholder={"username"}
@@ -130,6 +143,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomText: {
-    alignItems: 'center'
+    alignItems: "center",
   },
 });

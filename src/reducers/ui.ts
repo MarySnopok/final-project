@@ -30,9 +30,7 @@ export const ui = createSlice({
     hideLogin: (state) => {
       state.loginPage = null;
     },
-    showSingUp: (state) => {
-      state.loginPage = "singUp";
-    },
+
     showProfile: (state) => {
       state.loginPage = "profile";
     },

@@ -12,6 +12,8 @@ import { isUserLoggedIn } from "../../reducers/user";
 import { MiniAvatar } from "./MiniAvatar";
 import { searchNearByRoutes } from "../../reducers/app";
 import { RouteListItem } from "../RouteListItem";
+import { Heading } from "../../ui_fractions/Heading";
+import { Headline } from "../UI/Headline";
 
 export const HomeLayout = () => {
   const dispatch = useDispatch();
@@ -33,15 +35,19 @@ export const HomeLayout = () => {
           <MiniAvatar />
         </View>
       </View>
+      {/*
       <View>
         <Text>or</Text>
         <View>
           <Text>Search for whatever</Text>
         </View>
       </View>
+  */}
       {/* <View> */}
-      <BottomSheetScrollView>
-        <View><Text>Favorite</Text></View>
+      <BottomSheetScrollView style={{paddingHorizontal: 20}}>
+        <View>
+          <Headline style={{color: '#666666'}}>Favorite routes</Headline>
+        </View>
         {favorite.map((route) => (
           <RouteListItem routeId={route} key={route} />
         ))}

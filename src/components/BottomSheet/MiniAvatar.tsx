@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Profile from "../../assets/user-solid.svg";
+import { appState } from "../../reducers/app";
 import ui from "../../reducers/ui";
 import { getUserAvatar, isUserLoggedIn } from "../../reducers/user";
 import { IconButton } from "../UI/Button";
@@ -11,7 +12,7 @@ export const MiniAvatar = ({size = 'm'}: {size?: 'm' | 'l'}) => {
   const isLoggedIn = useSelector(isUserLoggedIn);
   const avatar = useSelector(getUserAvatar);
   const onAvatarClick = useCallback(() => {
-    dispatch(isLoggedIn ? ui.actions.showProfile() : ui.actions.showLogin());
+    dispatch(isLoggedIn ? appState.actions.showProfile() : appState.actions.showLogin());
   }, []);
 
   if (avatar) {

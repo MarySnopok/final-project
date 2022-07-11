@@ -1,4 +1,4 @@
-export function normalize<ID extends string, T extends { id: ID }, D = T>(
+export function normalize<ID extends string | number, T extends { id: ID }, D = T>(
   items: T[],
   each?: (item: T) => D,
 ): {

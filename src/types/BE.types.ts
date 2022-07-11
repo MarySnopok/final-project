@@ -3,11 +3,28 @@
  */
 
 /* eslint-disable @typescript-eslint/no-empty-interface */
-export interface User {}
+/* eslint-disable @typescript-eslint/no-empty-interface */
+
+export type RouteId = number;
+
+export interface User {
+  username: string;
+  password: string;
+  email: string;
+  accessToken: string;
+  favorite: { id: RouteId }[];
+  profilePicture?: string;
+  _id: string;
+}
+
+export interface ProfileResponse {
+  username: string;
+  email: string;
+  _id: string;
+  profilePicture?: string;
+}
 
 export interface Empty {}
-
-export type RouteId = string;
 
 export interface APIResponse<T> {
   status: "success" | "failed";
@@ -52,4 +69,8 @@ export interface RoutesResponse {
   routes: ProcessedRoute[];
   location: Point;
   radius: number;
+}
+
+export interface RouteResponse {
+  route: ProcessedRoute;
 }

@@ -91,6 +91,18 @@ export const appState = createSlice({
     popScreen: (state) => {
       state.screenStack.pop();
     },
+    showProfile: (state) => {
+      state.loginPage = "profile";
+    },
+    showLogin: (state) => {
+      state.loginPage = "login";
+    },
+    showSingUp: (state) => {
+      state.loginPage = "singUp";
+    },
+    hideLogin: (state) => {
+      state.loginPage = null;
+    }
   },
 });
 

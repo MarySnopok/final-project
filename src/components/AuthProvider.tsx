@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     AsyncStorage.getItem("accessToken").then(async (token) => {
       if (token) {
-        console.log("TOKEN WE GOT", token);
         dispatch(user.actions.setAccessToken(token));
       }
       setLoading(false);
@@ -21,6 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (accessToken) {
+      console.log('try to load user')
       dispatch(fetchProfile());
     }
   }, [accessToken]);
