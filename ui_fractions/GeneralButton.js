@@ -38,10 +38,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
     margin: 8,
-    backgroundColor: colors[0].normalBackground,
+    backgroundColor: colors[0].grey,
     borderRadius: 100,
     borderWidth: 2,
-    borderColor: colors[0].disabled,
+    borderColor: colors[0].grey,
     zIndex: 12,
   },
 

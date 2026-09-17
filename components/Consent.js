@@ -28,7 +28,7 @@ export const Consent = () => {
                 onCheckMarkChange(isChecked);
               }}
             />
-            <Subtext>Yes, I do agree to share my geo-location data, while using the app.</Subtext>
+            <Subtext>I agree to share my geo-location data, while using the app.</Subtext>
           </ConsentContainer>
         </Box>
         <LinkButton check={check} to="/entrypage">

@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginHorizontal: 0,
     color: colors[0].white,
-    alignItems: "center",
+    justifyContent: "flex-start",
     fontSize: 16,
     lineHeight: 20,
     zIndex: 12,
-    textAlign: "center",
+    textAlign: "left",
   },
 });
