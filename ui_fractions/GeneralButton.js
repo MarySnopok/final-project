@@ -2,13 +2,13 @@ import colors from "../utils/colors.json";
 import { StyleSheet, TouchableHighlight, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export const GeneralButton = ({ children, onPress, check }) => {
+export const GeneralButton = ({ children, onPress, disabled }) => {
   return (
     <SafeAreaView>
       <TouchableHighlight
-        disabled={!check}
+        disabled={disabled}
         onPress={onPress}
-        style={!check ? styles.disabled : styles.btn}
+        style={disabled ? styles.disabled : styles.btn}
         underlayColor={colors[0].transparent}
         activeOpacity={0.78}
       >
