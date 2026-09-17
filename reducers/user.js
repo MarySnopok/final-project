@@ -149,7 +149,7 @@ export const getUserGeoLocation = createAsyncThunk("user/getLocation", async (_,
       thunkApi.dispatch(ui.actions.setLoading(false));
       console.log('no permissions')
     } else {
-      const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
+      const locationData = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 10000 });
       // user geodata
       console.log("locationdata", locationData);
       console.log("lat", locationData.coords.latitude);
@@ -168,6 +168,7 @@ export const getUserGeoLocation = createAsyncThunk("user/getLocation", async (_,
   } catch (e) {
     console.log("err");
     console.error(e);
+    thunkApi.dispatch(ui.actions.setLoading(false));
   }
 });
 
