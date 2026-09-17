@@ -67,7 +67,7 @@ export const MapView = ({
         latitude: lat,
         zoom: 10,
       }}
-      mapboxAccessToken="pk.eyJ1IjoiY29yZXltYWxlciIsImEiOiJjbDFjZ3E1OGswN2x6M2RqcGJobm0wbG4yIn0.heKn_mFlXKoEQvAG1bSPCQ"
+      mapboxAccessToken="REDACTED_MAPBOX_TOKEN"
       // mapStyle="mapbox://styles/mapbox/streets-v9"
       mapStyle="mapbox://styles/mapbox/dark-v10"
     >
