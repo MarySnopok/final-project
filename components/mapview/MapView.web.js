@@ -21,6 +21,19 @@ export const MapView = ({
     map.addImage("pulsing-dot", pulsingDot(map), { pixelRatio: 2 });
   });
 
+  const isFirstCoordsUpdate = useRef(true);
+  useEffect(() => {
+    if (isFirstCoordsUpdate.current) {
+      isFirstCoordsUpdate.current = false;
+      return;
+    }
+    if (mapRef.current) {
+      // flyTo eases out to a wider zoom before flying to the new
+      // location and zooming back in, instead of jump-cutting there
+      mapRef.current.flyTo({ center: [long, lat], zoom: 12, essential: true });
+    }
+  }, [lat, long]);
+
   useEffect(() => {
     if (mapRef.current && boundaries) {
       const bbox = [
