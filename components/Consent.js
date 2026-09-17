@@ -31,7 +31,9 @@ export const Consent = () => {
             <Subtext>Yes, I do agree to share my geo-location data, while using the app.</Subtext>
           </ConsentContainer>
         </Box>
-        {check && <LinkButton to="/entrypage">OK</LinkButton>}
+        <LinkButton check={check} to="/entrypage">
+          Continue
+        </LinkButton>
       </Card>
     </LayoutRoot>
   );

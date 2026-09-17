@@ -1,4 +1,5 @@
 import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Router, Routes, Route } from "./ui_fractions/router/react-router";
 import { Consent } from "./components/Consent";
 import { LogIn } from "./components/LogIn";
@@ -25,7 +26,7 @@ const store = configureStore({ reducer });
 
 export default function App() {
   return (
-    <>
+    <SafeAreaProvider>
       <Provider store={store}>
         <AuthProvider>
           <Router>
@@ -43,6 +44,6 @@ export default function App() {
           </Router>
         </AuthProvider>
       </Provider>
-    </>
+    </SafeAreaProvider>
   );
 }
