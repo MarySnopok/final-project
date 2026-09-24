@@ -1,4 +1,5 @@
 import { useRef, useEffect, useCallback, useMemo } from "react";
+import Constants from "expo-constants";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import Map, { Marker, Source, Layer } from "react-map-gl";
@@ -80,7 +81,7 @@ export const MapView = ({
         latitude: lat,
         zoom: 10,
       }}
-      mapboxAccessToken="REDACTED_MAPBOX_TOKEN"
+      mapboxAccessToken={Constants.manifest.extra.mapboxToken}
       // mapStyle="mapbox://styles/mapbox/streets-v9"
       mapStyle="mapbox://styles/mapbox/dark-v10"
     >
